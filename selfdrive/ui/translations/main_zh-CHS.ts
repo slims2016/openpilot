@@ -428,163 +428,6 @@
     </message>
 </context>
 <context>
-    <name>FrogPilotVehiclesPanel</name>
-    <message>
-        <source>Select Make</source>
-        <translation>汽车品牌</translation>
-    </message>
-	<message>
-        <source>Select Model</source>
-        <translation>汽车型号</translation>
-    </message>
-	<message>
-        <source>Disable Automatic Fingerprint Detection</source>
-        <translation>禁用自动Fingerprint监测</translation>
-    </message>
-	<message>
-        <source>SELECT</source>
-        <translation>选择</translation>
-    </message>
-</context>
-<context>
-    <name>FrogPilotVisualsPanel</name>
-    <message>
-        <source>Custom Themes</source>
-        <translation>主题设置</translation>
-    </message>
-	<message>
-        <source>Color Theme</source>
-        <translation>色彩方案</translation>
-    </message>
-	<message>
-        <source>Icon Pack</source>
-        <translation>图标方案</translation>
-    </message>
-	<message>
-        <source>Turn Signals</source>
-        <translation>转向信号</translation>
-    </message>
-	<message>
-        <source>Sound Pack</source>
-        <translation>提示音效</translation>
-    </message>
-	<message>
-        <source>Alert Volume Control</source>
-        <translation>提示音量设置</translation>
-    </message>
-	<message>
-        <source>Camera View</source>
-        <translation>镜头视角</translation>
-    </message>
-	<message>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-	<message>
-        <source>Standard</source>
-        <translation>标准</translation>
-    </message>
-	<message>
-        <source>Wide</source>
-        <translation>广角</translation>
-    </message>
-	<message>
-        <source>Driver</source>
-        <translation>驾驶员</translation>
-    </message>
-	<message>
-        <source>Compass</source>
-        <translation>指南针</translation>
-    </message>
-	<message>
-        <source>Custom Alerts</source>
-        <translation>自定义提示类型</translation>
-    </message>
-	<message>
-        <source>Custom Onroad UI</source>
-        <translation>行车界面信息设置</translation>
-    </message>
-	<message>
-        <source>Driver Camera On Reverse</source>
-        <translation>倒挡启用驾驶员视角</translation>
-    </message>
-	<message>
-        <source>Model UI</source>
-        <translation>道路模型界面设置</translation>
-    </message>
-	<message>
-        <source>Numerical Temperature Gauge</source>
-        <translation>显示温度数值</translation>
-    </message>
-	<message>
-        <source>Fahrenheit</source>
-        <translation>华氏度</translation>
-    </message>
-	<message>
-        <source>Quality of Life</source>
-        <translation>改善驾驶体验</translation>
-    </message>
-	<message>
-        <source>Random Events</source>
-        <translation>随机事件提示</translation>
-    </message>
-	<message>
-        <source>Screen Brightness</source>
-        <translation>屏幕亮度设置</translation>
-    </message>
-	<message>
-        <source>Steering Wheel Icon</source>
-        <translation>方向盘图标</translation>
-    </message>
-	<message>
-        <source>Rotating</source>
-        <translation>跟随旋转</translation>
-    </message>
-</context>
-<context>
-    <name>FrogPilotNavigationPanel</name>
-    <message>
-        <source>Manage Primeless Navigation Settings</source>
-        <translation>导航设置管理</translation>
-    </message>
-	<message>
-        <source>Maps Scheduler</source>
-        <translation>地图检查周期</translation>
-    </message>
-	<message>
-        <source>Offline Maps Size</source>
-        <translation>离线地图大小</translation>
-    </message>
-	<message>
-        <source>Select Offline Maps</source>
-        <translation>选择离线地图</translation>
-    </message>
-	<message>
-        <source>MANAGE</source>
-        <translation>设置</translation>
-    </message>
-	<message>
-        <source>Back</source>
-        <translation>返回</translation>
-    </message>
-	<message>
-        <source>SELECT</source>
-        <translation>选择</translation>
-    </message>
-	<message>
-        <source>Manually</source>
-        <translation>手动</translation>
-    </message>
-    <message>
-        <source>Monthly</source>
-        <translation>每月</translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation>每周</translation>
-    </message>
-</context>
-<context>
     <name>FrogPilotControlsPanel</name>
     <message>
         <source>Adjustable Personalities</source>
@@ -728,10 +571,167 @@
     </message>
 </context>
 <context>
+    <name>FrogPilotNavigationPanel</name>
+    <message>
+        <source>Manage Primeless Navigation Settings</source>
+        <translation>导航设置管理</translation>
+    </message>
+    <message>
+        <source>Maps Scheduler</source>
+        <translation>地图检查周期</translation>
+    </message>
+    <message>
+        <source>Offline Maps Size</source>
+        <translation>离线地图大小</translation>
+    </message>
+    <message>
+        <source>Select Offline Maps</source>
+        <translation>选择离线地图</translation>
+    </message>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>Manually</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Monthly</source>
+        <translation>每月</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>每周</translation>
+    </message>
+</context>
+<context>
     <name>FrogPilotParamManageControl</name>
     <message>
         <source>MANAGE</source>
         <translation>设置</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotVehiclesPanel</name>
+    <message>
+        <source>Select Make</source>
+        <translation>选择汽车品牌</translation>
+    </message>
+    <message>
+        <source>Select Model</source>
+        <translation>选择车辆型号</translation>
+    </message>
+    <message>
+        <source>Disable Automatic Fingerprint Detection</source>
+        <translation>禁用自动Fingerprint监测</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotVisualsPanel</name>
+    <message>
+        <source>Custom Themes</source>
+        <translation>主题设置</translation>
+    </message>
+    <message>
+        <source>Color Theme</source>
+        <translation>色彩方案</translation>
+    </message>
+    <message>
+        <source>Icon Pack</source>
+        <translation>图标方案</translation>
+    </message>
+    <message>
+        <source>Turn Signals</source>
+        <translation>转向信号</translation>
+    </message>
+    <message>
+        <source>Sound Pack</source>
+        <translation>提示音效</translation>
+    </message>
+    <message>
+        <source>Alert Volume Control</source>
+        <translation>提示音量设置</translation>
+    </message>
+    <message>
+        <source>Camera View</source>
+        <translation>镜头视角</translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>标准</translation>
+    </message>
+    <message>
+        <source>Wide</source>
+        <translation>广角</translation>
+    </message>
+    <message>
+        <source>Driver</source>
+        <translation>驾驶员</translation>
+    </message>
+    <message>
+        <source>Compass</source>
+        <translation>指南针</translation>
+    </message>
+    <message>
+        <source>Custom Alerts</source>
+        <translation>自定义提示类型</translation>
+    </message>
+    <message>
+        <source>Custom Onroad UI</source>
+        <translation>行车界面信息设置</translation>
+    </message>
+    <message>
+        <source>Driver Camera On Reverse</source>
+        <translation>倒挡启用驾驶员视角</translation>
+    </message>
+    <message>
+        <source>Model UI</source>
+        <translation>道路模型界面设置</translation>
+    </message>
+    <message>
+        <source>Numerical Temperature Gauge</source>
+        <translation>显示温度数值</translation>
+    </message>
+    <message>
+        <source>Fahrenheit</source>
+        <translation>华氏度</translation>
+    </message>
+    <message>
+        <source>Quality of Life</source>
+        <translation>改善驾驶体验</translation>
+    </message>
+    <message>
+        <source>Random Events</source>
+        <translation>随机事件提示</translation>
+    </message>
+    <message>
+        <source>Screen Brightness</source>
+        <translation>屏幕亮度设置</translation>
+    </message>
+    <message>
+        <source>Steering Wheel Icon</source>
+        <translation>方向盘图标</translation>
+    </message>
+    <message>
+        <source>Rotating</source>
+        <translation>跟随旋转</translation>
     </message>
 </context>
 <context>
@@ -1230,11 +1230,11 @@ This may take up to a minute.</source>
         <source>TEMP</source>
         <translation>设备温度</translation>
     </message>
-	<message>
+    <message>
         <source>LEFT</source>
         <translation>可用空间</translation>
     </message>
-	<message>
+    <message>
         <source>USED</source>
         <translation>已用空间</translation>
     </message>
