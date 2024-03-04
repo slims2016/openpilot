@@ -1300,7 +1300,7 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>MEMORY</source>
-        <translation>内存</translation>
+        <translation>内存占用</translation>
     </message>
 </context>
 <context>
