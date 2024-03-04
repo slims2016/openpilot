@@ -250,6 +250,10 @@
         <translation>删除行车视频数据</translation>
     </message>
     <message>
+        <source>Delete Toggle Storage Data</source>
+        <translation>删除用户配置参数</translation>
+    </message>
+    <message>
         <source>Delete Screen Recordings</source>
         <translation>删除屏幕录像数据</translation>
     </message>
@@ -344,11 +348,7 @@
     <message>
         <source>Are you sure you want to permanently delete all of your driving footage and data?</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Toggle Storage Data</source>
-        <translation type="unfinished"></translation>
-    </message>
+    </message>    
     <message>
         <source>This button provides a swift and secure way to permanently delete all long term stored toggle settings. Ideal for maintaining privacy or freeing up space.</source>
         <translation type="unfinished"></translation>
@@ -367,7 +367,7 @@
     </message>
     <message>
         <source>Soft Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>软重启</translation>
     </message>
     <message>
         <source>Are you sure you want to soft reboot?</source>
