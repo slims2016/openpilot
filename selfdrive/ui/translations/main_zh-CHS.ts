@@ -68,11 +68,11 @@
     </message>
     <message>
         <source>Hidden Network</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏的无线网络</translation>
     </message>
     <message>
         <source>CONNECT</source>
-        <translation type="unfinished">CONNECT</translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>Enter SSID</source>
@@ -224,6 +224,46 @@
     <message>
         <source>VIEW</source>
         <translation>查看</translation>
+    </message>
+    <message>
+        <source>Error Log</source>
+        <translation>错误日志</translation>
+    </message>
+    <message>
+        <source>Manually</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation>每天</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>每周</translation>
+    </message>
+    <message>
+        <source>Delete Driving Data</source>
+        <translation>删除行车视频数据</translation>
+    </message>
+    <message>
+        <source>Delete Screen Recordings</source>
+        <translation>删除屏幕录像数据</translation>
+    </message>
+    <message>
+        <source>DELETE</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Flash Panda</source>
+        <translation>刷写Panda固件</translation>
+    </message>
+    <message>
+        <source>FLASH</source>
+        <translation>刷写</translation>
     </message>
     <message>
         <source>Change Language</source>
@@ -645,19 +685,39 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>Device</source>
-        <translation>设备</translation>
+        <translation>设备信息 </translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>网络</translation>
+        <translation>网络设置 </translation>
     </message>
     <message>
         <source>Toggles</source>
-        <translation>设定</translation>
+        <translation>基础设定 </translation>
     </message>
     <message>
         <source>Software</source>
-        <translation>软件</translation>
+        <translation>软件更新 </translation>
+    </message>
+    <message>
+        <source>Controls</source>
+        <translation>驾驶控制 </translation>
+    </message>
+    <message>
+        <source>Navigation</source>
+        <translation>导航地图 </translation>
+    </message>
+    <message>
+        <source>Vehicles</source>
+        <translation>车型选择 </translation>
+    </message>
+    <message>
+        <source>Visuals</source>
+        <translation>界面图例 </translation>
+    </message>
+    <message>
+        <source>← Back</source>
+        <translation>← 返回</translation>
     </message>
 </context>
 <context>
@@ -852,6 +912,14 @@ This may take up to a minute.</source>
         <translation>当前版本</translation>
     </message>
     <message>
+        <source>Update Scheduler</source>
+        <translation>检查更新周期</translation>
+    </message>
+    <message>
+        <source>Update Time</source>
+        <translation>自动更新时间</translation>
+    </message>
+    <message>
         <source>Download</source>
         <translation>下载</translation>
     </message>
@@ -914,6 +982,18 @@ This may take up to a minute.</source>
     <message>
         <source>never</source>
         <translation>从未更新</translation>
+    </message>
+    <message>
+        <source>Manually</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation>每天</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>每周</translation>
     </message>
 </context>
 <context>
@@ -1199,6 +1279,156 @@ This may take up to a minute.</source>
     <message>
         <source>Forget</source>
         <translation>忽略</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotParamManageControl</name>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotControlsPanel</name>
+    <message>
+        <source>Adjustable Personalities</source>
+        <translation>跟车距离切换方式</translation>
+    </message>
+    <message>
+        <source>Always on Lateral</source>
+        <translation>持续车道居中</translation>
+    </message>
+    <message>
+        <source>Conditional Experimental Mode</source>
+        <translation>试验模式切换条件</translation>
+    </message>
+    <message>
+        <source>Custom Driving Personalities</source>
+        <translation>调整跟车距离参数</translation>
+    </message>
+    <message>
+        <source>Device Shutdown Timer</source>
+        <translation>自动关机计时</translation>
+    </message>
+    <message>
+        <source>Experimental Mode Via</source>
+        <translation>试验模式切换方式</translation>
+    </message>
+    <message>
+        <source>Fire the Babysitter</source>
+        <translation>附加选项管理</translation>
+    </message>
+    <message>
+        <source>Disable All Logging</source>
+        <translation>停用所有日志</translation>
+    </message>
+    <message>
+        <source>Mute Overheated System Alert</source>
+        <translation>停用过热警报</translation>
+    </message>
+    <message>
+        <source>Offline Mode</source>
+        <translation>启用离线模式</translation>
+    </message>
+    <message>
+        <source>Lateral Tuning</source>
+        <translation>横向控制参数</translation>
+    </message>
+    <message>
+        <source>Steer Ratio</source>
+        <translation>转向比</translation>
+    </message>
+    <message>
+        <source>Steer Ratio (Default: %1)</source>
+        <translation>转向比 (默认: %1)</translation>
+    </message>
+    <message>
+        <source>Min Steer Enable Speed</source>
+        <translation>横向控制启用车速</translation>
+    </message>
+    <message>
+        <source>Longitudinal Tuning</source>
+        <translation>纵向控制参数</translation>
+    </message>
+    <message>
+        <source>Model Selector</source>
+        <translation>驾驶模型选择</translation>
+    </message>
+    <message>
+        <source>Map Turn Speed Control</source>
+        <translation>地图控制过弯速度</translation>
+    </message>
+    <message>
+        <source>Nudgeless Lane Change</source>
+        <translation>打灯自动变道</translation>
+    </message>
+    <message>
+        <source>Enable lane changes without manual steering input.</source>
+        <translation>打开转向灯时，自动执行变道动作，无需手动操作。</translation>
+    </message>
+    <message>
+        <source>Lane Change Timer</source>
+        <translation>变道延时</translation>
+    </message>
+    <message>
+        <source>Lane Detection</source>
+        <translation>车道监测</translation>
+    </message>
+    <message>
+        <source>Lane Detection Threshold</source>
+        <translation>车道宽度</translation>
+    </message>
+    <message>
+        <source>One Lane Change Per Signal</source>
+        <translation>仅变更一条车道</translation>
+    </message>
+    <message>
+        <source>Quality of Life</source>
+        <translation>改善驾驶体验</translation>
+    </message>
+    <message>
+        <source>Pause Lateral On Turn Signal Below</source>
+        <translation>低于设定车速，打灯暂停居中</translation>
+    </message>
+    <message>
+        <source>Speed Limit Controller</source>
+        <translation>自动限速控制</translation>
+    </message>
+    <message>
+        <source>Use Turn Desires</source>
+        <translation>转向期望估算</translation>
+    </message>
+    <message>
+        <source>Vision Turn Speed Controller</source>
+        <translation>视觉控制过弯速度</translation>
+    </message>
+    <message>
+        <source>Distance Button</source>
+        <translation>跟车距离按键</translation>
+    </message>
+    <message>
+        <source>Screen</source>
+        <translation>触屏调整</translation>
+    </message>
+    <message>
+        <source>Enable On Cruise Main</source>
+        <translation>使用巡航按键</translation>
+    </message>
+    <message>
+        <source>LKAS Button</source>
+        <translation>车道辅助按键</translation>
+    </message>
+    <message>
+        <source>Instant</source>
+        <translation>立即变道</translation>
+    </message>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
     </message>
 </context>
 </TS>

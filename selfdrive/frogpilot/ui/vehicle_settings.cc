@@ -99,16 +99,16 @@ FrogPilotVehiclesPanel::FrogPilotVehiclesPanel(SettingsWindow *parent) : FrogPil
   addItem(forceFingerprint);
 
   std::vector<std::tuple<QString, QString, QString, QString>> vehicleToggles {
-    {"EVTable", "EV Lookup Tables", "Smoothen out the gas and brake controls for EV vehicles.", ""},
-    {"GasRegenCmd", "GM Truck Gas Tune", "Increase acceleration and smoothen brake to stop. For use on Silverado/Sierra only.", ""},
-    {"LongPitch", "Long Pitch Compensation", "Reduce speed and acceleration error for greater passenger comfort and improved vehicle efficiency.", ""},
-    {"LowerVolt", "Lower Volt Enable Speed", "Lower the Volt's minimum enable speed to enable openpilot at any speed.", ""},
+    {"EVTable", tr("EV Lookup Tables"), "Smoothen out the gas and brake controls for EV vehicles.", ""},
+    {"GasRegenCmd", tr("GM Truck Gas Tune"), "Increase acceleration and smoothen brake to stop. For use on Silverado/Sierra only.", ""},
+    {"LongPitch", tr("Long Pitch Compensation"), "Reduce speed and acceleration error for greater passenger comfort and improved vehicle efficiency.", ""},
+    {"LowerVolt", tr("Lower Volt Enable Speed"), "Lower the Volt's minimum enable speed to enable openpilot at any speed.", ""},
 
-    {"CrosstrekTorque", "Subaru Crosstrek Torque Increase", "Increases the maximum allowed torque for the Subaru Crosstrek.", ""},
+    {"CrosstrekTorque", tr("Subaru Crosstrek Torque Increase"), "Increases the maximum allowed torque for the Subaru Crosstrek.", ""},
 
-    {"LockDoors", "Lock Doors In Drive", "Automatically lock the doors when in drive and unlock when in park.", ""},
-    {"LongitudinalTune", "Longitudinal Tune", "Use a custom Toyota longitudinal tune.\n\nCydia = More focused on TSS-P vehicles but works for all Toyotas\n\nDragonPilot = Focused on TSS2 vehicles\n\nFrogPilot = Takes the best of both worlds with some personal tweaks focused around my 2019 Lexus ES 350", ""},
-    {"SNGHack", "Stop and Go Hack", "Enable the 'Stop and Go' hack for vehicles without stock stop and go functionality.", ""},
+    {"LockDoors", tr("Lock Doors In Drive"), "Automatically lock the doors when in drive and unlock when in park.", ""},
+    {"LongitudinalTune", tr("Longitudinal Tune"), "Use a custom Toyota longitudinal tune.\n\nCydia = More focused on TSS-P vehicles but works for all Toyotas\n\nDragonPilot = Focused on TSS2 vehicles\n\nFrogPilot = Takes the best of both worlds with some personal tweaks focused around my 2019 Lexus ES 350", ""},
+    {"SNGHack", tr("Stop and Go Hack"), "Enable the 'Stop and Go' hack for vehicles without stock stop and go functionality.", ""},
   };
 
   for (const auto &[param, title, desc, icon] : vehicleToggles) {

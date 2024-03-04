@@ -122,7 +122,8 @@ class CAR(StrEnum):
   TRAILBLAZER_CC = "CHEVROLET TRAILBLAZER 2024 NO ACC"
   XT4 = "CADILLAC XT4 2023"
   TRAX = "CHEVROLET TRAX 2024"
-
+  BABYENCLAVE = " 昂科旗(2020-23)"
+  BABYAVENIR = " 昂科旗·艾维亚(2020-23)"
 
 class Footnote(Enum):
   OBD_II = CarFootnote(
@@ -175,6 +176,8 @@ CAR_INFO: Dict[str, Union[GMCarInfo, List[GMCarInfo]]] = {
   CAR.TRAILBLAZER_CC: GMCarInfo("Chevrolet Trailblazer 2024 No ACC"),
   CAR.XT4: GMCarInfo("Cadillac XT4 2023", "Driver Assist Package"),
   CAR.TRAX: GMCarInfo("Chevrolet TRAX 2024"),
+  CAR.BABYENCLAVE: GMCarInfo(" 昂科旗(2020-23)"),
+  CAR.BABYAVENIR: GMCarInfo(" 昂科旗·艾维亚(2020-23)"),
 }
 
 
@@ -251,7 +254,7 @@ EV_CAR = {CAR.VOLT, CAR.BOLT_EUV, CAR.VOLT_CC, CAR.BOLT_CC}
 CC_ONLY_CAR = {CAR.VOLT_CC, CAR.BOLT_CC, CAR.EQUINOX_CC, CAR.SUBURBAN_CC, CAR.YUKON_CC, CAR.CT6_CC, CAR.TRAILBLAZER_CC}
 
 # We're integrated at the Safety Data Gateway Module on these cars
-SDGM_CAR = {CAR.XT4}
+SDGM_CAR = {CAR.XT4, CAR.BABYENCLAVE, CAR.BABYAVENIR}
 
 # Slow acceleration cars
 SLOW_ACC = {CAR.SILVERADO}

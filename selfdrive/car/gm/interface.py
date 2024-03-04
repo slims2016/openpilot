@@ -336,6 +336,24 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.2
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
+    elif candidate == CAR.BABYENCLAVE:
+      ret.mass = 2050.  #3660. * CV.LB_TO_KG
+      ret.wheelbase = 2.86  #2.78
+      ret.steerRatio = 16.0   #Avenir 15.0 / Others 16.0 #14.4
+      ret.centerToFront = ret.wheelbase * 0.5  #ret.wheelbase * 0.4
+      ret.steerActuatorDelay = 0.2
+      ret.minSteerSpeed = 10 * CV.KPH_TO_MS
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+    
+    elif candidate == CAR.BABYAVENIR:
+      ret.mass = 2050.  #3660. * CV.LB_TO_KG
+      ret.wheelbase = 2.86  #2.78
+      ret.steerRatio = 15.0   #Avenir 15.0 / Others 16.0 #14.4
+      ret.centerToFront = ret.wheelbase * 0.5  #ret.wheelbase * 0.4
+      ret.steerActuatorDelay = 0.2
+      ret.minSteerSpeed = 10 * CV.KPH_TO_MS
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+    
     elif candidate == CAR.CT6_CC:
       ret.wheelbase = 3.11
       ret.mass = 5198. * CV.LB_TO_KG

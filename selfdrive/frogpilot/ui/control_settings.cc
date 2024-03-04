@@ -2,84 +2,84 @@
 
 FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPilotListWidget(parent) {
   const std::vector<std::tuple<QString, QString, QString, QString>> controlToggles {
-    {"AdjustablePersonalities", "Adjustable Personalities", "Use the 'Distance' button on the steering wheel or the onroad UI to switch between openpilot's driving personalities.\n\n1 bar = Aggressive\n2 bars = Standard\n3 bars = Relaxed", "../frogpilot/assets/toggle_icons/icon_distance.png"},
-    {"AlwaysOnLateral", "Always on Lateral", "Maintain openpilot lateral control when the brake or gas pedals are used.\n\nDeactivation occurs only through the 'Cruise Control' button.", "../frogpilot/assets/toggle_icons/icon_always_on_lateral.png"},
+    {"AdjustablePersonalities", tr("Adjustable Personalities"), "Use the 'Distance' button on the steering wheel or the onroad UI to switch between openpilot's driving personalities.\n\n1 bar = Aggressive\n2 bars = Standard\n3 bars = Relaxed", "../frogpilot/assets/toggle_icons/icon_distance.png"},
+    {"AlwaysOnLateral", tr("Always on Lateral"), "Maintain openpilot lateral control when the brake or gas pedals are used.\n\nDeactivation occurs only through the 'Cruise Control' button.", "../frogpilot/assets/toggle_icons/icon_always_on_lateral.png"},
 
-    {"ConditionalExperimental", "Conditional Experimental Mode", "Automatically switches to 'Experimental Mode' under predefined conditions.", "../frogpilot/assets/toggle_icons/icon_conditional.png"},
-    {"CECurves", "Curve Detected Ahead", "Switch to 'Experimental Mode' when a curve is detected.", ""},
-    {"CENavigation", "Navigation Based", "Switch to 'Experimental Mode' based on navigation data. (i.e. Intersections, stop signs, etc.)", ""},
-    {"CESlowerLead", "Slower Lead Detected Ahead", "Switch to 'Experimental Mode' when a slower lead vehicle is detected ahead.", ""},
-    {"CEStopLights", "Stop Lights and Stop Signs", "Switch to 'Experimental Mode' when a stop light or stop sign is detected.", ""},
-    {"CESignal", "Turn Signal When Below Highway Speeds", "Switch to 'Experimental Mode' when using turn signals below highway speeds to help assit with turns.", ""},
+    {"ConditionalExperimental", tr("Conditional Experimental Mode"), "Automatically switches to 'Experimental Mode' under predefined conditions.", "../frogpilot/assets/toggle_icons/icon_conditional.png"},
+    {"CECurves", tr("Curve Detected Ahead"), "Switch to 'Experimental Mode' when a curve is detected.", ""},
+    {"CENavigation", tr("Navigation Based"), "Switch to 'Experimental Mode' based on navigation data. (i.e. Intersections, stop signs, etc.)", ""},
+    {"CESlowerLead", tr("Slower Lead Detected Ahead"), "Switch to 'Experimental Mode' when a slower lead vehicle is detected ahead.", ""},
+    {"CEStopLights", tr("Stop Lights and Stop Signs"), "Switch to 'Experimental Mode' when a stop light or stop sign is detected.", ""},
+    {"CESignal", tr("Turn Signal When Below Highway Speeds"), "Switch to 'Experimental Mode' when using turn signals below highway speeds to help assit with turns.", ""},
 
-    {"CustomPersonalities", "Custom Driving Personalities", "Customize the driving personality profiles to your driving style.", "../frogpilot/assets/toggle_icons/icon_custom.png"},
-    {"DeviceShutdown", "Device Shutdown Timer", "Configure the timer for automatic device shutdown when offroad conserving energy and preventing battery drain.", "../frogpilot/assets/toggle_icons/icon_time.png"},
-    {"ExperimentalModeActivation", "Experimental Mode Via", "Toggle Experimental Mode by double-clicking the 'Lane Departure'/'LKAS' button or double tapping screen.\n\nOverrides 'Conditional Experimental Mode'.", "../assets/img_experimental_white.svg"},
+    {"CustomPersonalities", tr("Custom Driving Personalities"), "Customize the driving personality profiles to your driving style.", "../frogpilot/assets/toggle_icons/icon_custom.png"},
+    {"DeviceShutdown", tr("Device Shutdown Timer"), "Configure the timer for automatic device shutdown when offroad conserving energy and preventing battery drain.", "../frogpilot/assets/toggle_icons/icon_time.png"},
+    {"ExperimentalModeActivation", tr("Experimental Mode Via"), "Toggle Experimental Mode by double-clicking the 'Lane Departure'/'LKAS' button or double tapping screen.\n\nOverrides 'Conditional Experimental Mode'.", "../assets/img_experimental_white.svg"},
 
-    {"FireTheBabysitter", "Fire the Babysitter", "Deactivate some of openpilot's 'Babysitter' protocols for more user autonomy.", "../frogpilot/assets/toggle_icons/icon_babysitter.png"},
-    {"MuteOverheated", "Bypass Thermal Safety Limits", "Allow the device to run at any temperature even above comma's recommended thermal limits.", ""},
-    {"NoLogging", "Disable Logging", "Turn off all data tracking to enhance privacy or reduce thermal load.\n\nWARNING: This action will prevent drive recording and data cannot be recovered!", ""},
-    {"NoUploads", "Disable Uploads", "Turn off all data uploads to comma's servers.\n\nWARNING: This action will prevent your drives from appearing on comma connect which may impact debugging and support!", ""},
-    {"OfflineMode", "Offline Mode", "Allow the device to be offline indefinitely.", ""},
+    {"FireTheBabysitter", tr("Fire the Babysitter"), "Deactivate some of openpilot's 'Babysitter' protocols for more user autonomy.", "../frogpilot/assets/toggle_icons/icon_babysitter.png"},
+    {"MuteOverheated", tr("Bypass Thermal Safety Limits"), "Allow the device to run at any temperature even above comma's recommended thermal limits.", ""},
+    {"NoLogging", tr("Disable Logging"), "Turn off all data tracking to enhance privacy or reduce thermal load.\n\nWARNING: This action will prevent drive recording and data cannot be recovered!", ""},
+    {"NoUploads", tr("Disable Uploads"), "Turn off all data uploads to comma's servers.\n\nWARNING: This action will prevent your drives from appearing on comma connect which may impact debugging and support!", ""},
+    {"OfflineMode", tr("Offline Mode"), "Allow the device to be offline indefinitely.", ""},
 
-    {"LateralTune", "Lateral Tuning", "Modify openpilot's steering behavior.", "../frogpilot/assets/toggle_icons/icon_lateral_tune.png"},
-    {"ForceAutoTune", "Force Auto Tune", "Forces comma's auto lateral tuning for unsupported vehicles.", ""},
-    {"NNFF", "NNFF - Neural Network Feedforward", "Use Twilsonco's Neural Network Feedforward for enhanced precision in lateral control.", ""},
-    {"SteerRatio", steerRatioStock != 0 ? QString("Steer Ratio (Default: %1)").arg(steerRatioStock, 0, 'f', 2) : "Steer Ratio", "Set a custom steer ratio for your vehicle controls.", ""},
-    {"UseLateralJerk", "Use Lateral Jerk", "Include steer torque necessary to achieve desired steer rate (lateral jerk).", ""},
+    {"LateralTune", tr("Lateral Tuning"), "Modify openpilot's steering behavior.", "../frogpilot/assets/toggle_icons/icon_lateral_tune.png"},
+    {"ForceAutoTune", tr("Force Auto Tune"), "Forces comma's auto lateral tuning for unsupported vehicles.", ""},
+    {"NNFF", tr("NNFF - Neural Network Feedforward"), "Use Twilsonco's Neural Network Feedforward for enhanced precision in lateral control.", ""},
+    {"SteerRatio", steerRatioStock != 0 ? QString(tr("Steer Ratio (Default: %1)")).arg(steerRatioStock, 0, 'f', 2) : tr("Steer Ratio"), "Set a custom steer ratio for your vehicle controls.", ""},
+    {"UseLateralJerk", tr("Use Lateral Jerk"), "Include steer torque necessary to achieve desired steer rate (lateral jerk).", ""},
 
-    {"LongitudinalTune", "Longitudinal Tuning", "Modify openpilot's acceleration and braking behavior.", "../frogpilot/assets/toggle_icons/icon_longitudinal_tune.png"},
-    {"AccelerationProfile", "Acceleration Profile", "Change the acceleration rate to be either sporty or eco-friendly.", ""},
-    {"DecelerationProfile", "Deceleration Profile", "Change the deceleration rate to be either sporty or eco-friendly.", ""},
-    {"AggressiveAcceleration", "Aggressive Acceleration With Lead", "Increase acceleration aggressiveness when following a lead vehicle from a stop.", ""},
-    {"StoppingDistance", "Increase Stop Distance Behind Lead", "Increase the stopping distance for a more comfortable stop from lead vehicles.", ""},
-    {"SmoothBraking", "Smoother Braking Behind Lead", "Smoothen out the braking behavior when approaching slower vehicles.", ""},
+    {"LongitudinalTune", tr("Longitudinal Tuning"), "Modify openpilot's acceleration and braking behavior.", "../frogpilot/assets/toggle_icons/icon_longitudinal_tune.png"},
+    {"AccelerationProfile", tr("Acceleration Profile"), "Change the acceleration rate to be either sporty or eco-friendly.", ""},
+    {"DecelerationProfile", tr("Deceleration Profile"), "Change the deceleration rate to be either sporty or eco-friendly.", ""},
+    {"AggressiveAcceleration", tr("Aggressive Acceleration With Lead"), "Increase acceleration aggressiveness when following a lead vehicle from a stop.", ""},
+    {"StoppingDistance", tr("Increase Stop Distance Behind Lead"), "Increase the stopping distance for a more comfortable stop from lead vehicles.", ""},
+    {"SmoothBraking", tr("Smoother Braking Behind Lead"), "Smoothen out the braking behavior when approaching slower vehicles.", ""},
 
-    {"Model", "Model Selector", "Choose your preferred openpilot model.", "../assets/offroad/icon_calibration.png"},
+    {"Model", tr("Model Selector"), "Choose your preferred openpilot model.", "../assets/offroad/icon_calibration.png"},
 
-    {"MTSCEnabled", "Map Turn Speed Control", "Slow down for anticipated curves detected by your downloaded maps.", "../frogpilot/assets/toggle_icons/icon_speed_map.png"},
-    {"DisableMTSCSmoothing", "Disable MTSC UI Smoothing", "Disables the smoothing for the requested speed in the onroad UI.", ""},
-    {"MTSCCurvatureCheck", "Model Curvature Detection Failsafe", "Only trigger MTSC when the model detects a curve in the road. Purely used as a failsafe to prevent false positives. Leave this off if you never experience false positives.", ""},
-    {"MTSCLimit", "Speed Change Hard Cap", "Set a hard cap for MTSC. If MTSC requests a speed decrease greater than this value, it ignores the requested speed from MTSC. Purely used as a failsafe to prevent false positives. Leave this off if you never experience false positives.", ""},
-    {"MTSCAggressiveness", "Turn Speed Aggressiveness", "Set turn speed aggressiveness. Higher values result in faster turns, lower values yield gentler turns.\n\nA change of +- 1% results in the velocity being raised or lowered by about 1 mph.", ""},
+    {"MTSCEnabled", tr("Map Turn Speed Control"), "Slow down for anticipated curves detected by your downloaded maps.", "../frogpilot/assets/toggle_icons/icon_speed_map.png"},
+    {"DisableMTSCSmoothing", tr("Disable MTSC UI Smoothing"), "Disables the smoothing for the requested speed in the onroad UI.", ""},
+    {"MTSCCurvatureCheck", tr("Model Curvature Detection Failsafe"), "Only trigger MTSC when the model detects a curve in the road. Purely used as a failsafe to prevent false positives. Leave this off if you never experience false positives.", ""},
+    {"MTSCLimit", tr("Speed Change Hard Cap"), "Set a hard cap for MTSC. If MTSC requests a speed decrease greater than this value, it ignores the requested speed from MTSC. Purely used as a failsafe to prevent false positives. Leave this off if you never experience false positives.", ""},
+    {"MTSCAggressiveness", tr("Turn Speed Aggressiveness"), "Set turn speed aggressiveness. Higher values result in faster turns, lower values yield gentler turns.\n\nA change of +- 1% results in the velocity being raised or lowered by about 1 mph.", ""},
 
-    {"NudgelessLaneChange", "Nudgeless Lane Change", "Enable lane changes without manual steering input.", "../frogpilot/assets/toggle_icons/icon_lane.png"},
-    {"LaneChangeTime", "Lane Change Timer", "Specify a delay before executing a nudgeless lane change.", ""},
-    {"LaneDetection", "Lane Detection", "Block nudgeless lane changes when a lane isn't detected.", ""},
-    {"LaneDetectionWidth", "Lane Detection Threshold", "Set the required lane width to be qualified as a lane.", ""},
-    {"OneLaneChange", "One Lane Change Per Signal", "Limit to one nudgeless lane change per turn signal activation.", ""},
+    {"NudgelessLaneChange", tr("Nudgeless Lane Change"), "Enable lane changes without manual steering input.", "../frogpilot/assets/toggle_icons/icon_lane.png"},
+    {"LaneChangeTime", tr("Lane Change Timer"), "Specify a delay before executing a nudgeless lane change.", ""},
+    {"LaneDetection", tr("Lane Detection"), "Block nudgeless lane changes when a lane isn't detected.", ""},
+    {"LaneDetectionWidth", tr("Lane Detection Threshold"), "Set the required lane width to be qualified as a lane.", ""},
+    {"OneLaneChange", tr("One Lane Change Per Signal"), "Limit to one nudgeless lane change per turn signal activation.", ""},
 
-    {"QOLControls", "Quality of Life", "Miscellaneous quality of life changes to improve your overall openpilot experience.", "../frogpilot/assets/toggle_icons/quality_of_life.png"},
-    {"DisableOnroadUploads", "Disable Onroad Uploads", "Prevent large data uploads when onroad.", ""},
-    {"HigherBitrate", "Higher Bitrate Recording", "Increases the quality of the footage uploaded to comma connect.", ""},
-    {"NavChill", "Navigate on Chill Mode", "Allows cars without longitudinal support to navigate. Allows navigation without experimental mode.", ""},
-    {"PauseLateralOnSignal", "Pause Lateral On Turn Signal Below", "Temporarily disable lateral control during turn signal use below the set speed.", ""},
-    {"ReverseCruise", "Reverse Cruise Increase", "Reverses the 'long press' functionality when increasing the max set speed. Useful to increase the max speed quickly.", ""},
-    {"SetSpeedOffset", "Set Speed Offset", "Set an offset for your desired set speed.", ""},
+    {"QOLControls", tr("Quality of Life"), "Miscellaneous quality of life changes to improve your overall openpilot experience.", "../frogpilot/assets/toggle_icons/quality_of_life.png"},
+    {"DisableOnroadUploads", tr("Disable Onroad Uploads"), "Prevent large data uploads when onroad.", ""},
+    {"HigherBitrate", tr("Higher Bitrate Recording"), "Increases the quality of the footage uploaded to comma connect.", ""},
+    {"NavChill", tr("Navigate on Chill Mode"), "Allows cars without longitudinal support to navigate. Allows navigation without experimental mode.", ""},
+    {"PauseLateralOnSignal", tr("Pause Lateral On Turn Signal Below"), "Temporarily disable lateral control during turn signal use below the set speed.", ""},
+    {"ReverseCruise", tr("Reverse Cruise Increase"), "Reverses the 'long press' functionality when increasing the max set speed. Useful to increase the max speed quickly.", ""},
+    {"SetSpeedOffset", tr("Set Speed Offset"), "Set an offset for your desired set speed.", ""},
 
-    {"SpeedLimitController", "Speed Limit Controller", "Automatically adjust vehicle speed to match speed limits using 'Open Street Map's, 'Navigate On openpilot', or your car's dashboard (TSS2 Toyotas only).", "../assets/offroad/icon_speed_limit.png"},
-    {"SLCControls", "Controls Settings", "Manage settings for the controls.", ""},
-    {"Offset1", "Speed Limit Offset (0-34 mph)", "Speed limit offset for speed limits between 0-34 mph.", ""},
-    {"Offset2", "Speed Limit Offset (35-54 mph)", "Speed limit offset for speed limits between 35-54 mph.", ""},
-    {"Offset3", "Speed Limit Offset (55-64 mph)", "Speed limit offset for speed limits between 55-64 mph.", ""},
-    {"Offset4", "Speed Limit Offset (65-99 mph)", "Speed limit offset for speed limits between 65-99 mph.", ""},
-    {"SLCFallback", "Fallback Method", "Choose your fallback method for when there are no speed limits currently being obtained from Navigation, OSM, and the car's dashboard.", ""},
-    {"SLCOverride", "Override Method", "Choose your preferred method to override the current speed limit.", ""},
-    {"SLCPriority", "Priority Order", "Determine the priority order for what speed limits to use.", ""},
-    {"SLCQOL", "Quality of Life Settings", "Manage quality of life settings.", ""},
-    {"SLCConfirmation", "Confirm New Speed Limits", "Don't automatically start using the new speed limit until it's been manually confirmed first.", ""},
-    {"ForceMPHDashboard", "Force MPH From Dashboard Readings", "Force MPH readings from the dashboard. Only use this if you live in an area where the speed limits from your dashboard are in KPH but you use MPH.", ""},
-    {"SetSpeedLimit", "Use Current Speed Limit As Set Speed", "Sets your max speed to the current speed limit if one is populated when you initially enable openpilot.", ""},
-    {"SLCVisuals", "Visuals Settings", "Manage visual settings.", ""},
-    {"ShowSLCOffset", "Show Speed Limit Offset", "Show the speed limit offset seperated from the speed limit in the onroad UI when using 'Speed Limit Controller'.", ""},
-    {"UseVienna", "Use Vienna Speed Limit Signs", "Use the Vienna (EU) speed limit style signs as opposed to MUTCD (US).", ""},
+    {"SpeedLimitController", tr("Speed Limit Controller"), "Automatically adjust vehicle speed to match speed limits using 'Open Street Map's, 'Navigate On openpilot', or your car's dashboard (TSS2 Toyotas only).", "../assets/offroad/icon_speed_limit.png"},
+    {"SLCControls", tr("Controls Settings"), "Manage settings for the controls.", ""},
+    {"Offset1", tr("Speed Limit Offset (0-34 mph)"), "Speed limit offset for speed limits between 0-34 mph.", ""},
+    {"Offset2", tr("Speed Limit Offset (35-54 mph)"), "Speed limit offset for speed limits between 35-54 mph.", ""},
+    {"Offset3", tr("Speed Limit Offset (55-64 mph)"), "Speed limit offset for speed limits between 55-64 mph.", ""},
+    {"Offset4", tr("Speed Limit Offset (65-99 mph)"), "Speed limit offset for speed limits between 65-99 mph.", ""},
+    {"SLCFallback", tr("Fallback Method"), "Choose your fallback method for when there are no speed limits currently being obtained from Navigation, OSM, and the car's dashboard.", ""},
+    {"SLCOverride", tr("Override Method"), "Choose your preferred method to override the current speed limit.", ""},
+    {"SLCPriority", tr("Priority Order"), "Determine the priority order for what speed limits to use.", ""},
+    {"SLCQOL", tr("Quality of Life Settings"), "Manage quality of life settings.", ""},
+    {"SLCConfirmation", tr("Confirm New Speed Limits"), "Don't automatically start using the new speed limit until it's been manually confirmed first.", ""},
+    {"ForceMPHDashboard", tr("Force MPH From Dashboard Readings"), "Force MPH readings from the dashboard. Only use this if you live in an area where the speed limits from your dashboard are in KPH but you use MPH.", ""},
+    {"SetSpeedLimit", tr("Use Current Speed Limit As Set Speed"), "Sets your max speed to the current speed limit if one is populated when you initially enable openpilot.", ""},
+    {"SLCVisuals", tr("Visuals Settings"), "Manage visual settings.", ""},
+    {"ShowSLCOffset", tr("Show Speed Limit Offset"), "Show the speed limit offset seperated from the speed limit in the onroad UI when using 'Speed Limit Controller'.", ""},
+    {"UseVienna", tr("Use Vienna Speed Limit Signs"), "Use the Vienna (EU) speed limit style signs as opposed to MUTCD (US).", ""},
 
-    {"TurnDesires", "Use Turn Desires", "Use turn desires for enhanced precision in turns below the minimum lane change speed.", "../assets/navigation/direction_continue_right.png"},
+    {"TurnDesires", tr("Use Turn Desires"), "Use turn desires for enhanced precision in turns below the minimum lane change speed.", "../assets/navigation/direction_continue_right.png"},
 
-    {"VisionTurnControl", "Vision Turn Speed Controller", "Slow down for detected road curvature for smoother curve handling.", "../frogpilot/assets/toggle_icons/icon_vtc.png"},
-    {"DisableVTSCSmoothing", "Disable VTSC UI Smoothing", "Disables the smoothing for the requested speed in the onroad UI.", ""},
-    {"CurveSensitivity", "Curve Detection Sensitivity", "Set curve detection sensitivity. Higher values prompt earlier responses, lower values lead to smoother but later reactions.", ""},
-    {"TurnAggressiveness", "Turn Speed Aggressiveness", "Set turn speed aggressiveness. Higher values result in faster turns, lower values yield gentler turns.", ""},
+    {"VisionTurnControl", tr("Vision Turn Speed Controller"), "Slow down for detected road curvature for smoother curve handling.", "../frogpilot/assets/toggle_icons/icon_vtc.png"},
+    {"DisableVTSCSmoothing", tr("Disable VTSC UI Smoothing"), "Disables the smoothing for the requested speed in the onroad UI.", ""},
+    {"CurveSensitivity", tr("Curve Detection Sensitivity"), "Set curve detection sensitivity. Higher values prompt earlier responses, lower values lead to smoother but later reactions.", ""},
+    {"TurnAggressiveness", tr("Turn Speed Aggressiveness"), "Set turn speed aggressiveness. Higher values result in faster turns, lower values yield gentler turns.", ""},
   };
 
   for (const auto &[param, title, desc, icon] : controlToggles) {
@@ -537,7 +537,7 @@ void FrogPilotControlsPanel::updateCarToggles() {
         timer->deleteLater();
 
         FrogPilotParamValueControl *steerRatioToggle = static_cast<FrogPilotParamValueControl*>(toggles["SteerRatio"]);
-        steerRatioToggle->setTitle(QString("Steer Ratio (Default: %1)").arg(steerRatioStock, 0, 'f', 2));
+        steerRatioToggle->setTitle(QString(tr("Steer Ratio (Default: %1)")).arg(steerRatioStock, 0, 'f', 2));
         steerRatioToggle->updateControl(steerRatioStock * 0.75, steerRatioStock * 1.25, "", 0.01);
         steerRatioToggle->refresh();
       }
@@ -545,7 +545,7 @@ void FrogPilotControlsPanel::updateCarToggles() {
     timer->start();
   } else {
     FrogPilotParamValueControl *steerRatioToggle = static_cast<FrogPilotParamValueControl*>(toggles["SteerRatio"]);
-    steerRatioToggle->setTitle(QString("Steer Ratio (Default: %1)").arg(steerRatioStock, 0, 'f', 2));
+    steerRatioToggle->setTitle(QString(tr("Steer Ratio (Default: %1)")).arg(steerRatioStock, 0, 'f', 2));
     steerRatioToggle->updateControl(steerRatioStock * 0.75, steerRatioStock * 1.25, "", 0.01);
     steerRatioToggle->refresh();
   }
