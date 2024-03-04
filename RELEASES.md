@@ -1,5 +1,6 @@
 Version 0.9.6 (2024-02-27)
 ========================
+* 主要菜单汉化完成 (2024-03-04)
 * New driving model
   * Vision model trained on more data
   * Improved driving performance
