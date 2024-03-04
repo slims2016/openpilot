@@ -735,31 +735,31 @@
     </message>
     <message>
         <source>Acceleration Path</source>
-        <translation>加速路线</translation>
+        <translation>车辆行驶路线</translation>
     </message>
     <message>
         <source>Adjacent Paths</source>
-        <translation>相邻车道</translation>
+        <translation>相邻车道路线</translation>
     </message>
     <message>
         <source>Blind Spot Path</source>
-        <translation>盲区路线</translation>
+        <translation>盲区监测路线</translation>
     </message>
     <message>
         <source>FPS Counter</source>
-        <translation>刷新速率</translation>
+        <translation>刷新速率FPS</translation>
     </message>
     <message>
         <source>Lead Info and Logics</source>
-        <translation>前车参考信息</translation>
+        <translation>前车分析信息</translation>
     </message>
     <message>
         <source>Pedals Being Pressed</source>
-        <translation>踏板状态</translation>
+        <translation>油门刹车踏板状态</translation>
     </message>
     <message>
         <source>Road Name</source>
-        <translation>道路名称</translation>
+        <translation>当前道路名称</translation>
     </message>
 </context>
 <context>
