@@ -510,6 +510,10 @@
         <translation>变道延时</translation>
     </message>
     <message>
+        <source>Instant</source>
+        <translation>立即</translation>
+    </message>
+    <message>
         <source>Lane Detection</source>
         <translation>车道监测</translation>
     </message>
@@ -556,10 +560,6 @@
     <message>
         <source>LKAS Button</source>
         <translation>车道辅助按键</translation>
-    </message>
-    <message>
-        <source>Instant</source>
-        <translation>立即变道</translation>
     </message>
     <message>
         <source>MANAGE</source>
@@ -732,6 +732,34 @@
     <message>
         <source>Rotating</source>
         <translation>跟随旋转</translation>
+    </message>
+    <message>
+        <source>Acceleration Path</source>
+        <translation>加速路线</translation>
+    </message>
+    <message>
+        <source>Adjacent Paths</source>
+        <translation>相邻车道</translation>
+    </message>
+    <message>
+        <source>Blind Spot Path</source>
+        <translation>盲区路线</translation>
+    </message>
+    <message>
+        <source>FPS Counter</source>
+        <translation>刷新速率</translation>
+    </message>
+    <message>
+        <source>Lead Info and Logics</source>
+        <translation>前车参考信息</translation>
+    </message>
+    <message>
+        <source>Pedals Being Pressed</source>
+        <translation>踏板状态</translation>
+    </message>
+    <message>
+        <source>Road Name</source>
+        <translation>道理名称</translation>
     </message>
 </context>
 <context>

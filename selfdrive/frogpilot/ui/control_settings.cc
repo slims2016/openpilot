@@ -200,7 +200,7 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPil
     } else if (param == "DeviceShutdown") {
       std::map<int, QString> shutdownLabels;
       for (int i = 0; i <= 33; ++i) {
-        shutdownLabels[i] = i == 0 ? "Instant" : i <= 3 ? QString::number(i * 15) + " mins" : QString::number(i - 3) + (i == 4 ? " hour" : " hours");
+        shutdownLabels[i] = i == 0 ? tr("Instant") : i <= 3 ? QString::number(i * 15) + " mins" : QString::number(i - 3) + (i == 4 ? " hour" : " hours");
       }
       toggle = new FrogPilotParamValueControl(param, title, desc, icon, 0, 33, shutdownLabels, this, false);
 
@@ -330,7 +330,7 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(SettingsWindow *parent) : FrogPil
     } else if (param == "LaneChangeTime") {
       std::map<int, QString> laneChangeTimeLabels;
       for (int i = 0; i <= 10; ++i) {
-        laneChangeTimeLabels[i] = i == 0 ? "Instant" : QString::number(i / 2.0) + " seconds";
+        laneChangeTimeLabels[i] = i == 0 ? tr("Instant") : QString::number(i / 2.0) + " seconds";
       }
       toggle = new FrogPilotParamValueControl(param, title, desc, icon, 0, 10, laneChangeTimeLabels, this, false);
     } else if (param == "LaneDetectionWidth") {
