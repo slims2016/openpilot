@@ -348,7 +348,7 @@
     <message>
         <source>Are you sure you want to permanently delete all of your driving footage and data?</source>
         <translation type="unfinished"></translation>
-    </message>    
+    </message>
     <message>
         <source>This button provides a swift and secure way to permanently delete all long term stored toggle settings. Ideal for maintaining privacy or freeing up space.</source>
         <translation type="unfinished"></translation>
@@ -759,7 +759,7 @@
     </message>
     <message>
         <source>Road Name</source>
-        <translation>道理名称</translation>
+        <translation>道路名称</translation>
     </message>
 </context>
 <context>
