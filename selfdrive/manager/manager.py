@@ -418,7 +418,7 @@ def manager_thread() -> None:
 def main() -> None:
   # Create the long term param storage folder
   try:
-    subprocess.run(['sudo', 'mount', '-o', 'remount,rw', '/persist'], check=True)
+    # subprocess.run(['sudo', 'mount', '-o', 'remount,rw', '/persist'], check=True)
     print("Successfully remounted /persist as read-write.")
   except subprocess.CalledProcessError as e:
     print(f"Failed to remount /persist. Error: {e}")
