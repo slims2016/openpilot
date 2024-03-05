@@ -1,6 +1,8 @@
 Version 0.9.6 (2024-02-27)
 ========================
 * VM测试分支 (2024-03-05)
+  * Remove Soft Reboot
+  * https://github.com/FrogAi/FrogPilot/commit/e20c58fe223139fbf777425cc060d8959afc564a
 * New driving model
   * Vision model trained on more data
   * Improved driving performance

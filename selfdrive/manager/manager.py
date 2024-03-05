@@ -402,7 +402,8 @@ def manager_thread() -> None:
 
     # Exit main loop when uninstall/shutdown/reboot is needed
     shutdown = False
-    for param in ("DoUninstall", "DoShutdown", "DoReboot", "DoSoftReboot"):
+    //for param in ("DoUninstall", "DoShutdown", "DoReboot", "DoSoftReboot"):
+    for param in ("DoUninstall", "DoShutdown", "DoReboot"):
       if params.get_bool(param):
         shutdown = True
         params.put("LastManagerExitReason", f"{param} {datetime.datetime.now()}")

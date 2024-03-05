@@ -332,10 +332,10 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
   power_layout->addWidget(reboot_btn);
   QObject::connect(reboot_btn, &QPushButton::clicked, this, &DevicePanel::reboot);
 
-  QPushButton *softreboot_btn = new QPushButton(tr("Soft Reboot"));
-  softreboot_btn->setObjectName("softreboot_btn");
-  power_layout->addWidget(softreboot_btn);
-  QObject::connect(softreboot_btn, &QPushButton::clicked, this, &DevicePanel::softreboot);
+  // QPushButton *softreboot_btn = new QPushButton(tr("Soft Reboot"));
+  // softreboot_btn->setObjectName("softreboot_btn");
+  // power_layout->addWidget(softreboot_btn);
+  // QObject::connect(softreboot_btn, &QPushButton::clicked, this, &DevicePanel::softreboot);
 
   QPushButton *poweroff_btn = new QPushButton(tr("Power Off"));
   poweroff_btn->setObjectName("poweroff_btn");
@@ -394,17 +394,17 @@ void DevicePanel::reboot() {
   }
 }
 
-void DevicePanel::softreboot() {
-  if (!uiState()->engaged()) {
-    if (ConfirmationDialog::confirm(tr("Are you sure you want to soft reboot?"), tr("Soft Reboot"), this)) {
-      if (!uiState()->engaged()) {
-        params.putBool("DoSoftReboot", true);
-      }
-    }
-  } else {
-    ConfirmationDialog::alert(tr("Disengage to Soft Reboot"), this);
-  }
-}
+// void DevicePanel::softreboot() {
+//   if (!uiState()->engaged()) {
+//     if (ConfirmationDialog::confirm(tr("Are you sure you want to soft reboot?"), tr("Soft Reboot"), this)) {
+//       if (!uiState()->engaged()) {
+//         params.putBool("DoSoftReboot", true);
+//       }
+//     }
+//   } else {
+//     ConfirmationDialog::alert(tr("Disengage to Soft Reboot"), this);
+//   }
+// }
 
 void DevicePanel::poweroff() {
   if (!uiState()->engaged()) {
