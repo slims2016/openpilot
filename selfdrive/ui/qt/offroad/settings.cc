@@ -266,6 +266,18 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
   });
   addItem(deleteFootageBtn);
 
+  // Delete screen records button
+  auto deleteScreenRecordBtn = new ButtonControl(tr("Delete Screen Recordings"), tr("DELETE"), tr("This button provides a swift and secure way to permanently delete all "
+    "stored screen recordings from your device. Ideal for maintaining privacy or freeing up space.")
+  );
+  connect(deleteScreenRecordBtn, &ButtonControl::clicked, [this]() {
+    if (!ConfirmationDialog::confirm(tr("Are you sure you want to permanently delete all of your screen recordings?"), tr("Delete"), this)) return;
+    std::thread([&] {
+      std::system("rm -rf /data/media/0/videos");
+    }).detach();
+  });
+  addItem(deleteScreenRecordBtn);
+
   // Delete long term toggle storage button
   auto deleteStorageParamsBtn = new ButtonControl(tr("Delete Toggle Storage Data"), tr("DELETE"), tr("This button provides a swift and secure way to permanently delete all "
     "long term stored toggle settings. Ideal for maintaining privacy or freeing up space.")
