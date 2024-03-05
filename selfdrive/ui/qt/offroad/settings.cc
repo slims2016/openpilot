@@ -285,7 +285,7 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
   connect(deleteStorageParamsBtn, &ButtonControl::clicked, [this]() {
     if (!ConfirmationDialog::confirm(tr("Are you sure you want to permanently delete all of your long term toggle settings storage?"), tr("Delete"), this)) return;
     std::thread([&] {
-      std::system("rm -rf /persist/comma/params");
+      std::system("rm -rf /persist/comma/params && rm -f /data/params/d/*");
     }).detach();
   });
   addItem(deleteStorageParamsBtn);
