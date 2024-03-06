@@ -130,6 +130,16 @@ SoftwarePanel::SoftwarePanel(QWidget* parent) : ListWidget(parent), scene(uiStat
   });
   addItem(uninstallBtn);
 
+  // git checkout button
+  auto gitCheckoutBtn = new ButtonControl(tr("GitHub Checkout"), tr("CHECKOUT"), "Git checkout the local compile changes.");
+  connect(gitCheckoutBtn, &ButtonControl::clicked, [&]() {
+    if (ConfirmationDialog::confirm(tr("Are you sure you want to git checkout all of your local compile changes?"), tr("Checkout"), this)) {
+      std::system("cd /data/openpilot && git checkout .");
+      params.putBool("DoReboot", true);
+    }
+  });
+  addItem(gitCheckoutBtn);
+
   // error log button
   errorLogBtn = new ButtonControl(tr("Error Log"), tr("VIEW"), "View the error log for debugging purposes when openpilot crashes.");
   connect(errorLogBtn, &ButtonControl::clicked, [=]() {
