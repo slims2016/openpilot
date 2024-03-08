@@ -219,7 +219,7 @@ def crash_log(candidate):
     "OfflineMode", "LateralTune", "ForceAutoTune", "NNFF", "SteerRatio", "UseLateralJerk", "LongitudinalTune", "AccelerationProfile",
     "DecelerationProfile", "AggressiveAcceleration", "StoppingDistance", "SmoothBraking", "Model", "MTSCEnabled", "DisableMTSCSmoothing",
     "MTSCAggressiveness", "MTSCCurvatureCheck", "MTSCLimit", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection", "LaneDetectionWidth",
-    "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "PauseLateralOnSignal", "ReverseCruise", "ReverseCruiseUI",
+    "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "MinSteerSpeedStandard", "MinSteerSpeedEngage", "PauseLateralOnSignal", "ReverseCruise", "ReverseCruiseUI",
     "SetSpeedLimit", "SetSpeedOffset",  "SpeedLimitController", "Offset1", "Offset2", "Offset3", "Offset4", "SLCConfirmation", "SLCFallback",
     "SLCPriority1", "SLCPriority2", "SLCPriority3", "SLCOverride", "TurnDesires", "VisionTurnControl", "DisableVTSCSmoothing", "CurveSensitivity",
     "TurnAggressiveness"
