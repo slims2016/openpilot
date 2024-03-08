@@ -342,6 +342,8 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"OSMDownloadProgress", CLEAR_ON_MANAGER_START},
     {"PathEdgeWidth", PERSISTENT},
     {"PathWidth", PERSISTENT},
+    {"MinSteerSpeedStandard", PERSISTENT},
+    {"MinSteerSpeedEngage", PERSISTENT},
     {"PauseLateralOnSignal", PERSISTENT},
     {"PedalsOnUI", PERSISTENT},
     {"PersonalitiesViaScreen", PERSISTENT},
