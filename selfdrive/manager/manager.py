@@ -81,8 +81,9 @@ def manager_init() -> None:
     ("DisengageOnAccelerator", "0"),
     ("GsmMetered", "1"),
     ("HasAcceptedTerms", "0"),
-    ("LanguageSetting", "main_en"),
+    ("LanguageSetting", "main_zh-CHS"), #main_en
     ("OpenpilotEnabledToggle", "1"),
+    ("IsMetric", "1"), # null
     ("LongitudinalPersonality", str(log.LongitudinalPersonality.standard)),
 
     # Default FrogPilot parameters
@@ -133,13 +134,14 @@ def manager_init() -> None:
     ("DriveStats", "1"),
     ("DynamicPathWidth", "0"),
     ("EngageVolume", "100"),
-    ("EVTable", "1"),
+    ("EVTable", "0"),
     ("ExperimentalModeActivation", "1"),
     ("ExperimentalModeViaLKAS", "0"),
     ("ExperimentalModeViaScreen", "1"),
     ("Fahrenheit", "0"),
     ("FireTheBabysitter", "0"),
     ("ForceAutoTune", "0"),
+    ("ForceFingerprint", "1"),
     ("ForceMPHDashboard", "0"),
     ("FPSCounter", "0"),
     ("FrogPilotDrives", "0"),
@@ -150,21 +152,22 @@ def manager_init() -> None:
     ("GasRegenCmd", "0"),
     ("GoatScream", "1"),
     ("GreenLightAlert", "0"),
+    ("HideAOLStatusBar", "0"),
     ("HideSpeed", "0"),
     ("HideSpeedUI", "0"),
     ("HigherBitrate", "0"),
     ("LaneChangeTime", "0"),
     ("LaneDetection", "1"),
-    ("LaneDetectionWidth", "60"),
-    ("LaneLinesWidth", "4"),
+    ("LaneDetectionWidth", "19"), #60 feet -> 1.9 meters
+    ("LaneLinesWidth", "10"), #4 inches -> 10 cm
     ("LateralTune", "1"),
     ("LeadDepartingAlert", "0"),
     ("LeadInfo", "0"),
     ("LockDoors", "0"),
     ("LongitudinalTune", "1"),
-    ("LongPitch", "1"),
+    ("LongPitch", "0"),
     ("LoudBlindspotAlert", "0"),
-    ("LowerVolt", "1"),
+    ("LowerVolt", "0"),
     ("MapStyle", "0"),
     ("MTSCAggressiveness", "100"),
     ("MTSCCurvatureCheck", "0"),
@@ -177,15 +180,17 @@ def manager_init() -> None:
     ("NoLogging", "0"),
     ("NoUploads", "0"),
     ("NudgelessLaneChange", "1"),
-    ("NumericalTemp", "0"),
-    ("Offset1", "5"),
-    ("Offset2", "5"),
-    ("Offset3", "5"),
-    ("Offset4", "10"),
+    ("NumericalTemp", "1"), #0
+    ("Offset1", "8"), #5mph -> 8kph
+    ("Offset2", "8"), #5mph -> 8kph
+    ("Offset3", "8"), #5mph -> 8kph
+    ("Offset4", "16"), #10mph -> 16kph
     ("OneLaneChange", "1"),
     ("PathEdgeWidth", "20"),
-    ("PathWidth", "61"),
-    ("PauseLateralOnSignal", "0"),
+    ("PathWidth", "20"), #61 feet -> 2.0 meters
+    ("MinSteerSpeedStandard", "30"), #kph
+    ("MinSteerSpeedEngage", "20"), #kph
+    ("PauseLateralOnSignal", "0"), #kph
     ("PedalsOnUI", "1"),
     ("PersonalitiesViaScreen", "1"),
     ("PersonalitiesViaWheel", "1"),
@@ -200,7 +205,7 @@ def manager_init() -> None:
     ("RelaxedJerk", "1.0"),
     ("ReverseCruise", "0"),
     ("ReverseCruiseUI", "1"),
-    ("RoadEdgesWidth", "2"),
+    ("RoadEdgesWidth", "5"), #2 inches -> 5 cm
     ("RoadNameUI", "1"),
     ("RotatingWheel", "1"),
     ("ScreenBrightness", "101"),
@@ -238,7 +243,13 @@ def manager_init() -> None:
     ("WarningSoftVolume", "100"),
     ("WarningImmediateVolume", "100"),
     ("WheelIcon", "3"),
-    ("WheelSpeed", "0")
+    ("WheelSpeed", "0"),
+    ("DashSpeedRatio1", "1.079"),
+    ("DashSpeedRatio2", "1.068"),
+    ("DashSpeedRatio3", "1.056"),
+    ("SetSpeedRatio1", "1.065"),
+    ("SetSpeedRatio2", "1.055"),
+    ("SetSpeedRatio3", "1.045"),
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))

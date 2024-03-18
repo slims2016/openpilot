@@ -219,7 +219,7 @@ def crash_log(candidate):
     "OfflineMode", "LateralTune", "ForceAutoTune", "NNFF", "SteerRatio", "UseLateralJerk", "LongitudinalTune", "AccelerationProfile",
     "DecelerationProfile", "AggressiveAcceleration", "StoppingDistance", "SmoothBraking", "Model", "MTSCEnabled", "DisableMTSCSmoothing",
     "MTSCAggressiveness", "MTSCCurvatureCheck", "MTSCLimit", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection", "LaneDetectionWidth",
-    "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "PauseLateralOnSignal", "ReverseCruise", "ReverseCruiseUI",
+    "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "MinSteerSpeedStandard", "MinSteerSpeedEngage", "PauseLateralOnSignal", "ReverseCruise", "ReverseCruiseUI",
     "SetSpeedLimit", "SetSpeedOffset",  "SpeedLimitController", "Offset1", "Offset2", "Offset3", "Offset4", "SLCConfirmation", "SLCFallback",
     "SLCPriority1", "SLCPriority2", "SLCPriority3", "SLCOverride", "TurnDesires", "VisionTurnControl", "DisableVTSCSmoothing", "CurveSensitivity",
     "TurnAggressiveness"
@@ -231,7 +231,9 @@ def crash_log(candidate):
     "Compass", "CustomAlerts", "GreenLightAlert", "LeadDepartingAlert", "LoudBlindspotAlert", "SpeedLimitChangedAlert", "CustomUI", "AccelerationPath",
     "AdjacentPath", "AdjacentPathMetrics", "BlindSpotPath", "FPSCounter", "LeadInfo", "UseSI", "PedalsOnUI", "RoadNameUI", "UseVienna", "DriverCamera",
     "ModelUI", "DynamicPathWidth", "LaneLinesWidth", "PathEdgeWidth", "PathWidth", "RoadEdgesWidth", "UnlimitedLength", "QOLVisuals", "DriveStats",
-    "FullMap", "HideSpeed", "HideSpeedUI", "ShowSLCOffset", "SpeedLimitChangedAlert", "WheelSpeed", "RandomEvents", "ScreenBrightness", "WheelIcon",
+    "FullMap", "HideSpeed", "HideSpeedUI", "ShowSLCOffset", "SpeedLimitChangedAlert", "WheelSpeed", 
+    "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SetSpeedRatio1", "SetSpeedRatio2", "SetSpeedRatio3", 
+    "RandomEvents", "ScreenBrightness", "WheelIcon",
     "RotatingWheel", "NumericalTemp", "Fahrenheit", "ShowCPU", "ShowGPU", "ShowIP", "ShowMemoryUsage", "ShowStorageLeft", "ShowStorageUsed", "Sidebar"
   ], [
     "FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes"

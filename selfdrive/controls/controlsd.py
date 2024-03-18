@@ -848,6 +848,11 @@ class Controls:
 
     signal_check = not ((CS.leftBlinker or CS.rightBlinker) and CS.vEgo < self.pause_lateral_on_signal and not CS.standstill)
 
+    #测试最低启用速度
+    #1.非巡航状态下，速度小于standard，暂停横向控制
+    #2.在巡航状态下，速度小于engage，暂停横向控制
+    min_steer_speed_check = not ((self.state not in ACTIVE_STATES) and CS.vEgo < max(self.CP.minSteerSpeed, self.min_steer_speed_standard) and not CS.standstill) and \
+                            not ((self.state in ACTIVE_STATES) and CS.vEgo < max(self.CP.minSteerSpeed, self.min_steer_speed_engage) and not CS.standstill)
     # Always on lateral
     self.FPCC.alwaysOnLateral |= CS.cruiseState.enabled or self.always_on_lateral_main
     self.FPCC.alwaysOnLateral &= self.always_on_lateral
@@ -861,7 +866,8 @@ class Controls:
     # Check which actuators can be enabled
     standstill = CS.vEgo <= max(self.CP.minSteerSpeed, MIN_LATERAL_CONTROL_SPEED) or CS.standstill
     CC.latActive = (self.active or self.FPCC.alwaysOnLateral) and signal_check and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
-                   (not standstill or self.joystick_mode) and not self.openpilot_crashed
+                   (not standstill or self.joystick_mode) and not self.openpilot_crashed and \
+                   min_steer_speed_check
     CC.longActive = self.enabled and not self.events.contains(ET.OVERRIDE_LONGITUDINAL) and self.CP.openpilotLongitudinalControl and not self.openpilot_crashed
 
     actuators = CC.actuators
@@ -1206,6 +1212,11 @@ class Controls:
 
     quality_of_life = self.params.get_bool("QOLControls")
     self.pause_lateral_on_signal = self.params.get_int("PauseLateralOnSignal") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
+    #MinSteerSpeedStandard, convert to MS
+    self.min_steer_speed_standard = self.params.get_int("MinSteerSpeedStandard") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
+    #MinSteerSpeedEngage, convert to MS
+    self.min_steer_speed_engage = self.params.get_int("MinSteerSpeedEngage") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
+
     self.frogpilot_variables.reverse_cruise_increase = quality_of_life and self.params.get_bool("ReverseCruise")
     self.frogpilot_variables.set_speed_offset = self.params.get_int("SetSpeedOffset") * (1 if self.is_metric else CV.MPH_TO_KPH) if quality_of_life else 0
 

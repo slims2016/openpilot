@@ -441,7 +441,7 @@ def transform_lng(lng, lat):
 
 def get_all_toggle_values():
   all_keys = [
-    "AdjustablePersonalities", "PersonalitiesViaWheel", "PersonalitiesViaScreen", "AlwaysOnLateral", "AlwaysOnLateralMain",
+    "AdjustablePersonalities", "PersonalitiesViaWheel", "PersonalitiesViaScreen", "AlwaysOnLateral", "AlwaysOnLateralMain", "HideAOLStatusBar",
     "ConditionalExperimental", "CESpeed", "CESpeedLead", "CECurves", "CECurvesLead", "CENavigation", "CENavigationIntersections",
     "CENavigationLead", "CENavigationTurns", "CESlowerLead", "CEStopLights", "CEStopLightsLead", "CESignal", "CustomPersonalities",
     "AggressiveFollow", "AggressiveJerk", "StandardFollow", "StandardJerk", "RelaxedFollow", "RelaxedJerk", "DeviceShutdown",
@@ -449,18 +449,19 @@ def get_all_toggle_values():
     "NoLogging", "MuteOverheated", "OfflineMode", "LateralTune", "ForceAutoTune", "NNFF", "SteerRatio", "UseLateralJerk", "LongitudinalTune",
     "AccelerationProfile", "DecelerationProfile", "AggressiveAcceleration", "StoppingDistance", "SmoothBraking", "Model", "MTSCEnabled",
     "DisableMTSCSmoothing", "MTSCAggressiveness", "MTSCCurvatureCheck", "MTSCLimit", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection",
-    "LaneDetectionWidth", "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "PauseLateralOnSignal",
+    "LaneDetectionWidth", "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "MinSteerSpeedStandard", "MinSteerSpeedEngage", "PauseLateralOnSignal",
     "ReverseCruise", "ReverseCruiseUI", "SetSpeedLimit", "SetSpeedOffset",  "SpeedLimitController", "Offset1", "Offset2", "Offset3", "Offset4",
     "SLCConfirmation", "SLCFallback", "SLCPriority1", "SLCPriority2", "SLCPriority3", "SLCOverride", "TurnDesires", "VisionTurnControl",
-    "DisableVTSCSmoothing", "CurveSensitivity", "TurnAggressiveness", "EVTable", "GasRegenCmd", "LongPitch", "LowerVolt", "CrosstrekTorque",
+    "DisableVTSCSmoothing", "CurveSensitivity", "TurnAggressiveness", "ForceFingerprint", "EVTable", "GasRegenCmd", "LongPitch", "LowerVolt", "CrosstrekTorque",
     "CydiaTune", "DragonPilotTune", "FrogsGoMooTune", "LockDoors", "SNGHack", "CustomTheme", "CustomColors", "CustomIcons", "CustomSignals",
     "CustomSounds", "GoatScream", "AlertVolumeControl", "DisengageVolume", "EngageVolume", "PromptVolume", "PromptDistractedVolume", "RefuseVolume",
     "WarningSoftVolume", "WarningImmediateVolume", "CameraView", "Compass", "CustomAlerts", "GreenLightAlert", "LeadDepartingAlert", "LoudBlindspotAlert",
     "SpeedLimitChangedAlert", "CustomUI", "AccelerationPath", "AdjacentPath", "AdjacentPathMetrics", "BlindSpotPath", "FPSCounter", "LeadInfo", "UseSI",
     "PedalsOnUI", "RoadNameUI", "UseVienna", "DriverCamera", "ModelUI", "DynamicPathWidth", "LaneLinesWidth", "PathEdgeWidth", "PathWidth",
     "RoadEdgesWidth", "UnlimitedLength", "QOLVisuals", "DriveStats", "FullMap", "HideSpeed", "HideSpeedUI", "ShowSLCOffset", "WheelSpeed",
+    "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SetSpeedRatio1", "SetSpeedRatio2", "SetSpeedRatio3",
     "RandomEvents", "ScreenBrightness", "WheelIcon", "RotatingWheel", "NumericalTemp", "Fahrenheit", "ShowCPU", "ShowGPU", "ShowIP", "ShowMemoryUsage",
-    "ShowStorageLeft", "ShowStorageUsed", "Sidebar"
+    "ShowStorageLeft", "ShowStorageUsed", "Sidebar", "FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes"
   ]
 
   toggle_values = {}
@@ -476,8 +477,10 @@ def get_all_toggle_values():
 def store_toggle_values(updated_values):
   for key, value in updated_values.items():
     try:
-      params.put(key, value.encode('utf-8'))
-      params_storage.put(key, value.encode('utf-8'))
+      # readonly key
+      if key not in ["FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes"]:
+        params.put(key, value.encode('utf-8'))
+        params_storage.put(key, value.encode('utf-8'))
     except Exception as e:
       print(f"Failed to update {key}: {e}")
 
