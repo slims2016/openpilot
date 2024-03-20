@@ -122,8 +122,9 @@ class CAR(StrEnum):
   TRAILBLAZER_CC = "CHEVROLET TRAILBLAZER 2024 NO ACC"
   XT4 = "CADILLAC XT4 2023"
   TRAX = "CHEVROLET TRAX 2024"
-  BABYENCLAVE = " 昂科旗(2020-23)"
-  BABYAVENIR = " 昂科旗·艾维亚(2020-23)"
+  # 昂科旗
+  BABYENCLAVE = "BUICK BABY ENCLAVE 2020"
+  BABYAVENIR = "BUICK BABY ENCLAVE AVENIR 2020"
 
 class Footnote(Enum):
   OBD_II = CarFootnote(
@@ -176,8 +177,9 @@ CAR_INFO: Dict[str, Union[GMCarInfo, List[GMCarInfo]]] = {
   CAR.TRAILBLAZER_CC: GMCarInfo("Chevrolet Trailblazer 2024 No ACC"),
   CAR.XT4: GMCarInfo("Cadillac XT4 2023", "Driver Assist Package"),
   CAR.TRAX: GMCarInfo("Chevrolet TRAX 2024"),
-  CAR.BABYENCLAVE: GMCarInfo(" 昂科旗(2020-23)"),
-  CAR.BABYAVENIR: GMCarInfo(" 昂科旗·艾维亚(2020-23)"),
+  # 昂科旗
+  CAR.BABYENCLAVE: GMCarInfo("BUICK BABY ENCLAVE 2020"),
+  CAR.BABYAVENIR: GMCarInfo("BUICK BABY ENCLAVE AVENIR 2020"),
 }
 
 
