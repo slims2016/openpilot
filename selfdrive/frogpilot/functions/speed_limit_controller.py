@@ -3,6 +3,8 @@ import json
 from openpilot.common.conversions import Conversions as CV
 from openpilot.common.params import Params
 
+from openpilot.selfdrive.frogpilot.functions.frogpilot_functions import CRUISING_SPEED
+
 
 params = Params()
 params_memory = Params("/dev/shm/params")
@@ -38,7 +40,7 @@ class SpeedLimitController:
   @property
   def speed_limit(self) -> float:
     limits = [self.car_speed_limit, self.map_speed_limit, self.nav_speed_limit]
-    filtered_limits = [limit for limit in limits if limit >= 1]
+    filtered_limits = [limit for limit in limits if limit > CRUISING_SPEED]
 
     if self.highest and filtered_limits:
       return max(filtered_limits)
@@ -51,34 +53,25 @@ class SpeedLimitController:
       "Offline Maps": self.map_speed_limit,
     }
 
-    priorities = [
-      self.speed_limit_priority1,
-      self.speed_limit_priority2,
-      self.speed_limit_priority3,
-    ]
-
-    for priority in priorities:
-      speed_limit_value = speed_limits.get(priority, 0)
-      if speed_limit_value >= 1:
-        return speed_limit_value
+    for priority in self.priorities:
+      limit = speed_limits.get(priority)
+      if limit and limit > CRUISING_SPEED:
+        self.update_previous_limit(limit)
+        return limit
 
     if self.use_previous_limit:
       return self.prv_speed_limit
 
     return 0
 
-  def update_previous_limit(self, speed_limit: float):
-    if self.prv_speed_limit != speed_limit:
-      params.put_float("PreviousSpeedLimit", speed_limit)
-      self.prv_speed_limit = speed_limit
+  def update_previous_limit(self, new_limit: float):
+    if self.prv_speed_limit != new_limit:
+      params.put_float("PreviousSpeedLimit", new_limit)
+      self.prv_speed_limit = new_limit
 
   @property
   def desired_speed_limit(self) -> float:
-    if self.speed_limit != 0:
-      self.update_previous_limit(self.speed_limit)
-      return self.speed_limit + self.offset
-    else:
-      return 0
+    return self.speed_limit + self.offset if self.speed_limit != 0 else 0
 
   @property
   def experimental_mode(self) -> bool:
@@ -101,12 +94,16 @@ class SpeedLimitController:
     self.offset3 = params.get_int("Offset3") * conversion
     self.offset4 = params.get_int("Offset4") * conversion
 
-    self.speed_limit_priority1 = params.get("SLCPriority1", encoding='utf-8')
-    self.speed_limit_priority2 = params.get("SLCPriority2", encoding='utf-8')
-    self.speed_limit_priority3 = params.get("SLCPriority3", encoding='utf-8')
+    speed_limit_priority1 = params.get("SLCPriority1", encoding='utf-8')
 
-    self.highest = self.speed_limit_priority1 == "Highest"
-    self.lowest = self.speed_limit_priority1 == "Lowest"
+    self.highest = speed_limit_priority1 == "Highest"
+    self.lowest = speed_limit_priority1 == "Lowest"
+
+    self.priorities = [
+      speed_limit_priority1,
+      params.get("SLCPriority2", encoding='utf-8'),
+      params.get("SLCPriority3", encoding='utf-8'),
+    ]
 
     slc_fallback = params.get_int("SLCFallback")
     self.use_experimental_mode = slc_fallback == 1

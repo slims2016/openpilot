@@ -83,7 +83,8 @@ def manager_init() -> None:
     ("DisengageOnAccelerator", "0"),
     ("GsmMetered", "1"),
     ("HasAcceptedTerms", "0"),
-    ("LanguageSetting", "main_en"),
+    ("LanguageSetting", "main_zh-CHS"), #main_en
+    ("IsMetric", "1"), # null
     ("OpenpilotEnabledToggle", "1"),
     ("UpdaterAvailableBranches", ""),
     ("LongitudinalPersonality", str(log.LongitudinalPersonality.standard)),
@@ -101,7 +102,7 @@ def manager_init() -> None:
     ("AlwaysOnLateral", "1"),
     ("AlwaysOnLateralMain", "0"),
     ("BlindSpotPath", "1"),
-    ("CameraView", "1"),
+    ("CameraView", "0"),
     ("CarMake", ""),
     ("CarModel", ""),
     ("CECurves", "1"),
@@ -114,7 +115,7 @@ def manager_init() -> None:
     ("CESpeed", "0"),
     ("CESpeedLead", "0"),
     ("CEStopLights", "1"),
-    ("CEStopLightsLead", "0"),
+    ("CEStopLightsLead", "1"),
     ("Compass", "0"),
     ("ConditionalExperimental", "1"),
     ("CrosstrekTorque", "1"),
@@ -136,6 +137,7 @@ def manager_init() -> None:
     ("DisengageVolume", "100"),
     ("DragonPilotTune", "0"),
     ("DriverCamera", "0"),
+    ("DriverPrivacyProtection", "0"),
     ("DriveStats", "1"),
     ("DynamicPathWidth", "0"),
     ("EngageVolume", "100"),
@@ -171,8 +173,8 @@ def manager_init() -> None:
     ("HolidayThemes", "1"),
     ("LaneChangeTime", "0"),
     ("LaneDetection", "1"),
-    ("LaneDetectionWidth", "60"),
-    ("LaneLinesWidth", "4"),
+    ("LaneDetectionWidth", "19"), #60 feet -> 1.9 meters
+    ("LaneLinesWidth", "10"), #4 inches -> 10 cm
     ("LateralTune", "1"),
     ("LeadDepartingAlert", "0"),
     ("LeadInfo", "0"),
@@ -197,14 +199,16 @@ def manager_init() -> None:
     ("NudgelessLaneChange", "1"),
     ("NumericalTemp", "0"),
     ("OfflineMode", "0"),
-    ("Offset1", "5"),
-    ("Offset2", "5"),
-    ("Offset3", "5"),
-    ("Offset4", "10"),
+    ("Offset1", "8"), #5mph -> 8kph
+    ("Offset2", "8"), #5mph -> 8kph
+    ("Offset3", "8"), #5mph -> 8kph
+    ("Offset4", "16"), #10mph -> 16kph
     ("OneLaneChange", "1"),
     ("PathEdgeWidth", "20"),
-    ("PathWidth", "61"),
-    ("PauseLateralOnSignal", "0"),
+    ("PathWidth", "20"), #61 feet -> 2.0 meters
+    ("MinSteerSpeedStandard", "30"), #kph
+    ("MinSteerSpeedEngage", "20"), #kph
+    ("PauseLateralOnSignal", "0"), #kph
     ("PedalsOnUI", "1"),
     ("PersonalitiesViaScreen", "1"),
     ("PersonalitiesViaWheel", "1"),
@@ -219,7 +223,7 @@ def manager_init() -> None:
     ("RelaxedJerk", "1.0"),
     ("ReverseCruise", "0"),
     ("ReverseCruiseUI", "1"),
-    ("RoadEdgesWidth", "2"),
+    ("RoadEdgesWidth", "5"), #2 inches -> 5 cm
     ("RoadNameUI", "1"),
     ("RotatingWheel", "1"),
     ("ScreenBrightness", "101"),
@@ -258,6 +262,7 @@ def manager_init() -> None:
     ("SteerRatio", "0"),
     ("StockTune", "0"),
     ("StoppingDistance", "0"),
+    ("TrafficMode", "0"),
     ("TurnAggressiveness", "100"),
     ("TurnDesires", "0"),
     ("UnlimitedLength", "1"),
@@ -269,7 +274,15 @@ def manager_init() -> None:
     ("WarningSoftVolume", "100"),
     ("WarningImmediateVolume", "100"),
     ("WheelIcon", "3"),
-    ("WheelSpeed", "0")
+    ("WheelSpeed", "0"),
+    ("DashSpeedRatio1", "1.065"),
+    ("DashSpeedRatio2", "1.055"),
+    ("DashSpeedRatio3", "1.045"),
+    ("SetSpeedRatio1", "1.065"),
+    ("SetSpeedRatio2", "1.055"),
+    ("SetSpeedRatio3", "1.045"),
+    ("SpeedDecimal", "0"),
+    ("CalibrationCircle", "1"),    
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))
@@ -393,6 +406,24 @@ def manager_thread() -> None:
       if os.path.isfile(os.path.join(sentry.CRASHES_DIR, 'error.txt')):
         os.remove(os.path.join(sentry.CRASHES_DIR, 'error.txt'))
 
+      # Store the previous drive's data
+      keys = ["FrogPilotKilometers", "FrogPilotMinutes"]
+      for key in keys:
+        current_value = params.get_float(key)
+        value_to_add = params_memory.get_float(key)
+        new_value = current_value + value_to_add
+
+        params.put_float(key, new_value)
+        params_storage.put_float(key, new_value)
+        params_memory.remove(key)
+
+        # Only count the drive if it lasted longer than 5 minutes
+        if key == "FrogPilotMinutes" and value_to_add >= 5:
+          new_frogpilot_drives = params.get_int("FrogPilotDrives") + 1
+
+          params.put_int("FrogPilotDrives", new_frogpilot_drives)
+          params_storage.put_int("FrogPilotDrives", new_frogpilot_drives)
+
     # update onroad params, which drives boardd's safety setter thread
     if started != started_prev:
       write_onroad_params(started, params)
@@ -413,7 +444,7 @@ def manager_thread() -> None:
 
     # Exit main loop when uninstall/shutdown/reboot is needed
     shutdown = False
-    for param in ("DoUninstall", "DoShutdown", "DoReboot"):
+    for param in ("DoUninstall", "DoShutdown", "DoReboot", "DoSoftReboot"):
       if params.get_bool(param):
         shutdown = True
         params.put("LastManagerExitReason", f"{param} {datetime.datetime.now()}")
@@ -489,6 +520,9 @@ def main() -> None:
   if params.get_bool("DoUninstall"):
     cloudlog.warning("uninstalling")
     HARDWARE.uninstall()
+  elif params.get_bool("DoSoftReboot"):
+    cloudlog.warning("softreboot")
+    HARDWARE.soft_reboot()
   elif params.get_bool("DoReboot"):
     cloudlog.warning("reboot")
     HARDWARE.reboot()

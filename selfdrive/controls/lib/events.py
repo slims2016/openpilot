@@ -238,8 +238,11 @@ def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.
 
 
 def below_steer_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
+  params = Params()
+  quality_of_life = params.get_bool("QOLControls")
+  min_steer_speed_standard = params.get_int("MinSteerSpeedStandard") * (CV.KPH_TO_MS if metric else CV.MPH_TO_MS) if quality_of_life else 0
   return Alert(
-    f"Steer Unavailable Below {get_display_speed(CP.minSteerSpeed, metric)}",
+    f"Steer Unavailable Below {get_display_speed(max(CP.minSteerSpeed,min_steer_speed_standard), metric)}",
     "",
     AlertStatus.userPrompt, AlertSize.small,
     Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 0.4)
@@ -748,7 +751,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.noGps: {
-    ET.PERMANENT: no_gps_alert,
+    #ET.PERMANENT: no_gps_alert,
   },
 
   EventName.soundsUnavailable: {
@@ -1128,10 +1131,10 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
 
   EventName.yourFrogTriedToKillMe: {
     ET.PERMANENT: Alert(
-      "Your frog tried to kill me...",
-      "😡",
-      AlertStatus.frogpilot, AlertSize.mid,
-      Priority.MID, VisualAlert.none, AudibleAlert.angry, 5.),
+      "Your frog tried to kill me",
+      "😠",
+      AlertStatus.frogpilot, AlertSize.small,
+      Priority.MID, VisualAlert.none, AudibleAlert.angry, 3.),
   },
 }
 

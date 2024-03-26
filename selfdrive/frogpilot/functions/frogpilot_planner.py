@@ -2,13 +2,13 @@ import cereal.messaging as messaging
 import numpy as np
 
 from openpilot.common.conversions import Conversions as CV
-from openpilot.common.numpy_fast import clip
+from openpilot.common.numpy_fast import clip, interp
 from openpilot.selfdrive.car.interfaces import ACCEL_MIN, ACCEL_MAX
 from openpilot.selfdrive.controls.lib.desire_helper import LANE_CHANGE_SPEED_MIN
 from openpilot.selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc import STOP_DISTANCE
 from openpilot.selfdrive.controls.lib.longitudinal_planner import A_CRUISE_MIN, get_max_accel
 
-from openpilot.selfdrive.frogpilot.functions.frogpilot_functions import CRUISING_SPEED, FrogPilotFunctions
+from openpilot.selfdrive.frogpilot.functions.frogpilot_functions import CITY_SPEED_LIMIT, CRUISING_SPEED, FrogPilotFunctions
 
 from openpilot.selfdrive.frogpilot.functions.conditional_experimental_mode import ConditionalExperimentalMode
 from openpilot.selfdrive.frogpilot.functions.map_turn_speed_controller import MapTurnSpeedController
@@ -16,6 +16,8 @@ from openpilot.selfdrive.frogpilot.functions.speed_limit_controller import Speed
 
 
 TARGET_LAT_A = 1.9  # m/s^2
+
+TRAFFIC_MODE_BP = [0., CITY_SPEED_LIMIT / 4, CITY_SPEED_LIMIT / 3, CITY_SPEED_LIMIT / 2, CITY_SPEED_LIMIT]
 
 class FrogPilotPlanner:
   def __init__(self, CP, params, params_memory):
@@ -28,6 +30,7 @@ class FrogPilotPlanner:
     self.mtsc = MapTurnSpeedController()
 
     self.override_slc = False
+    self.traffic_mode_active = False
 
     self.overridden_speed = 0
     self.mtsc_target = 0
@@ -87,16 +90,27 @@ class FrogPilotPlanner:
     # Update the current road curvature
     self.road_curvature = self.fpf.road_curvature(modelData, v_ego)
 
+    # Update the current state of "Traffic Mode"
+    self.traffic_mode_active = self.traffic_mode and self.params_memory.get_bool("TrafficModeActive")
+    if self.traffic_mode_active:
+      self.traffic_mode_t_follow = interp(v_ego, TRAFFIC_MODE_BP, [.50, .65, .80, .95, 1.])
+
     # Update the desired stopping distance
     self.stop_distance = STOP_DISTANCE
 
     # Update the max allowed speed
     self.v_cruise = self.update_v_cruise(carState, controlsState, enabled, modelData, v_cruise, v_ego)
 
+    # self.params_memory.put_int("CSLCSpeed", int(round(self.v_cruise * CV.MS_TO_MPH)))
+    self.params_memory.put_float("CSLCSpeed", round(self.v_cruise, 4)) #using ms
+
   def update_v_cruise(self, carState, controlsState, enabled, modelData, v_cruise, v_ego):
     # Offsets to adjust the max speed to match the cluster
     v_ego_cluster = max(carState.vEgoCluster, v_ego)
-    v_ego_diff = v_ego_cluster - v_ego
+    if self.CSLC:
+      v_ego_diff = 0
+    else:
+      v_ego_diff = v_ego_cluster - v_ego
 
     v_cruise_cluster = max(controlsState.vCruiseCluster, controlsState.vCruise) * CV.KPH_TO_MS
     v_cruise_diff = v_cruise_cluster - v_cruise
@@ -110,6 +124,8 @@ class FrogPilotPlanner:
       if self.mtsc_curvature_check and self.road_curvature < 1.0 and not mtsc_active:
         self.mtsc_target = v_cruise
       if v_ego - self.mtsc_limit >= self.mtsc_target:
+        self.mtsc_target = v_cruise
+      if self.mtsc_target < 12 * CV.MPH_TO_MS:
         self.mtsc_target = v_cruise
     else:
       self.mtsc_target = v_cruise
@@ -137,8 +153,7 @@ class FrogPilotPlanner:
         if self.speed_limit_controller_override == 1:
           # Set the speed limit to the manual set speed
           if carState.gasPressed:
-            self.overridden_speed = v_ego + v_ego_diff
-          self.overridden_speed = np.clip(self.overridden_speed, self.slc_target, v_cruise + v_cruise_diff)
+            self.overridden_speed = np.clip(v_ego + v_ego_diff, self.slc_target, v_cruise + v_cruise_diff)
         elif self.speed_limit_controller_override == 2:
           # Set the speed limit to the max set speed
           self.overridden_speed = v_cruise + v_cruise_diff
@@ -171,7 +186,7 @@ class FrogPilotPlanner:
     targets = [self.mtsc_target, max(self.overridden_speed, self.slc_target) - v_ego_diff, self.vtsc_target]
     filtered_targets = [target for target in targets if target > CRUISING_SPEED]
 
-    return min(filtered_targets + [v_cruise]) if filtered_targets else v_cruise
+    return (min(filtered_targets) if filtered_targets else v_cruise)
 
   def publish(self, sm, pm, mpc):
     frogpilot_plan_send = messaging.new_message('frogpilotPlan')
@@ -204,6 +219,8 @@ class FrogPilotPlanner:
   def update_frogpilot_params(self, params):
     self.is_metric = params.get_bool("IsMetric")
 
+    self.CSLC = params.get_bool("CSLCEnabled")
+
     self.conditional_experimental_mode = params.get_bool("ConditionalExperimental")
     if self.conditional_experimental_mode:
       self.cem.update_frogpilot_params(self.is_metric, params)
@@ -235,6 +252,7 @@ class FrogPilotPlanner:
     self.aggressive_acceleration = longitudinal_tune and params.get_bool("AggressiveAcceleration")
     self.increased_stopping_distance = params.get_int("StoppingDistance") * (1 if self.is_metric else CV.FOOT_TO_METER) if longitudinal_tune else 0
     self.smoother_braking = longitudinal_tune and params.get_bool("SmoothBraking")
+    self.traffic_mode = longitudinal_tune and params.get_bool("TrafficMode")
 
     self.map_turn_speed_controller = params.get_bool("MTSCEnabled")
     if self.map_turn_speed_controller:

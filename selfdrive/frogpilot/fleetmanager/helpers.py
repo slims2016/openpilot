@@ -465,6 +465,11 @@ def get_all_toggle_values():
     "HideUIElements", "HideAlerts", "HideMapIcon", "HideMaxSpeed", "ScreenBrightness", "ScreenBrightnessOnroad", "ScreenTimeout", "ScreenTimeoutOnroad",
     "ScreenRecorder", "StandbyMode", "WheelIcon", "RotatingWheel", "NumericalTemp", "Fahrenheit", "ShowCPU", "ShowGPU", "ShowIP", "ShowMemoryUsage",
     "ShowStorageLeft", "ShowStorageUsed", "Sidebar",
+
+    "MinSteerSpeedStandard", "MinSteerSpeedEngage",
+    "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SetSpeedRatio1", "SetSpeedRatio2", "SetSpeedRatio3", "SpeedDecimal",
+    "FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes", "CarMake", "CarModel", 
+    "DriverPrivacyProtection", "CSLCEnabled", "CalibrationCircle",
   ]
 
   toggle_values = {}
@@ -480,8 +485,10 @@ def get_all_toggle_values():
 def store_toggle_values(updated_values):
   for key, value in updated_values.items():
     try:
-      params.put(key, value.encode('utf-8'))
-      params_storage.put(key, value.encode('utf-8'))
+      # readonly key
+      if key not in ["FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes", "CarMake", "CarModel"]:
+        params.put(key, value.encode('utf-8'))
+        params_storage.put(key, value.encode('utf-8'))
     except Exception as e:
       print(f"Failed to update {key}: {e}")
 

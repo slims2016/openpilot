@@ -193,7 +193,6 @@ class Soundd:
       AudibleAlert.fart: MAX_VOLUME,
       AudibleAlert.firefox: MAX_VOLUME,
       AudibleAlert.noice: MAX_VOLUME,
-      AudibleAlert.uwu: MAX_VOLUME,
     }
 
     self.alert_volume_control = self.params.get_bool("AlertVolumeControl")
@@ -221,7 +220,7 @@ class Soundd:
     }
 
     holiday_themes = custom_theme and self.params.get_bool("HolidayThemes")
-    current_holiday_theme = self.params_memory.get_int("CurrentHolidayTheme") if holiday_themes else 0
+    current_holiday_theme = self.params.get_int("CurrentHolidayTheme") if holiday_themes else 0
 
     holiday_theme_configuration = {
       1: "april_fools",

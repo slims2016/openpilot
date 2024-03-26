@@ -71,7 +71,7 @@ class ConditionalExperimentalMode:
       return True
 
     # Navigation check
-    if self.navigation and modelData.navEnabled and (frogpilotNavigation.approachingIntersection or frogpilotNavigation.approachingTurn) and (self.navigation_lead or not self.lead_detected):
+    if self.navigation and (frogpilotNavigation.approachingIntersection or frogpilotNavigation.approachingTurn) and (self.navigation_lead or not self.lead_detected):
       self.status_value = 7 if frogpilotNavigation.approachingIntersection else 8
       return True
 

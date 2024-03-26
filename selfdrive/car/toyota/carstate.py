@@ -182,7 +182,18 @@ class CarState(CarStateBase):
     if self.CP.carFingerprint != CAR.PRIUS_V:
       self.lkas_hud = copy.copy(cp_cam.vl["LKAS_HUD"])
 
+    # if openpilot does not control longitudinal, in this case, assume 0x343 is on bus0
+    # 1) the car is no longer sending standstill
+    # 2) the car is still in standstill
+    if not self.CP.openpilotLongitudinalControl:
+      self.stock_resume_ready = cp.vl["ACC_CONTROL"]["RELEASE_STANDSTILL"] == 1
+
     # FrogPilot functions
+    if self.CP.flags & ToyotaFlags.SMART_DSU:
+      distance_pressed = cp.vl["SDSU"]["FD_BUTTON"] == 1
+    elif self.CP.openpilotLongitudinalControl:
+      # KRKeegan - Add support for toyota distance button
+      distance_pressed = cp_acc.vl["ACC_CONTROL"]["DISTANCE"] == 1
 
     # Switch the current state of Experimental Mode if the LKAS button is double pressed
     if frogpilot_variables.experimental_mode_via_lkas and ret.cruiseState.available and self.CP.carFingerprint != CAR.PRIUS_V:
@@ -196,19 +207,6 @@ class CarState(CarStateBase):
           self.fpf.update_experimental_mode()
 
       self.lkas_previously_pressed = lkas_pressed
-
-    if self.CP.carFingerprint not in UNSUPPORTED_DSU_CAR:
-      # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
-      self.personality_profile = cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"] - 1
-
-    if self.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR) or self.CP.flags & ToyotaFlags.SMART_DSU:
-      # distance button is wired to the ACC module (camera or radar)
-      if self.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR):
-        distance_pressed = cp_acc.vl["ACC_CONTROL"]["DISTANCE"]
-      else:
-        distance_pressed = cp.vl["SDSU"]["FD_BUTTON"]
-    else:
-      distance_pressed = False
 
     # Distance button functions
     if ret.cruiseState.available:
@@ -229,10 +227,24 @@ class CarState(CarStateBase):
         else:
           self.fpf.update_experimental_mode()
 
+      # Switch the current state of Traffic Mode if the button is held down for 2.5 seconds
+      if self.distance_pressed_counter == CRUISE_LONG_PRESS * 5 and frogpilot_variables.traffic_mode:
+        self.fpf.update_traffic_mode()
+
+        # Revert the previous changes to Experimental Mode
+        if frogpilot_variables.experimental_mode_via_distance:
+          if frogpilot_variables.conditional_experimental_mode:
+            self.fpf.update_cestatus_lkas()
+          else:
+            self.fpf.update_experimental_mode()
+
       self.distance_previously_pressed = distance_pressed
 
     # Update the distance lines on the dash upon ignition/onroad UI button clicked
     if frogpilot_variables.personalities_via_wheel and ret.cruiseState.available:
+      # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
+      self.personality_profile = cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"] - 1
+
       # Sync with the onroad UI button
       if self.fpf.personality_changed_via_ui:
         self.profile_restored = False
@@ -328,7 +340,7 @@ class CarState(CarStateBase):
     if CP.enableBsm:
       messages.append(("BSM", 1))
 
-    if CP.carFingerprint in RADAR_ACC_CAR and not CP.flags & ToyotaFlags.DISABLE_RADAR.value:
+    if not CP.openpilotLongitudinalControl or (CP.carFingerprint in RADAR_ACC_CAR and not CP.flags & ToyotaFlags.DISABLE_RADAR.value):
       if not CP.flags & ToyotaFlags.SMART_DSU.value:
         messages += [
           ("ACC_CONTROL", 33),
@@ -343,9 +355,7 @@ class CarState(CarStateBase):
       ]
 
     if CP.flags & ToyotaFlags.SMART_DSU:
-      messages += [
-        ("SDSU", 100),
-      ]
+      messages.append(("SDSU", 33))
 
     messages += [("SECONDARY_STEER_ANGLE", 0)]
 
@@ -371,5 +381,8 @@ class CarState(CarStateBase):
         ("ACC_CONTROL", 33),
         ("PCS_HUD", 1),
       ]
+
+    if not CP.openpilotLongitudinalControl and CP.carFingerprint not in (TSS2_CAR, UNSUPPORTED_DSU_CAR):
+      messages.append(("ACC_CONTROL", 33))
 
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 2)

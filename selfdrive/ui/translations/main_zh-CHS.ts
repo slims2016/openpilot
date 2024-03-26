@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Disable Internet Check</source>
-        <translation type="unfinished"></translation>
+        <translation>禁用网络检查</translation>
     </message>
 </context>
 <context>
@@ -72,11 +72,11 @@
     </message>
     <message>
         <source>Hidden Network</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏的无线网络</translation>
     </message>
     <message>
         <source>CONNECT</source>
-        <translation type="unfinished">CONNECT</translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>Enter SSID</source>
@@ -123,6 +123,41 @@
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+    <message>
+        <source>Reboot Later</source>
+        <translation>稍后重启</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>否</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotConfirmationDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>好的</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Reboot Later</source>
+        <translation>稍后重启</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>否</translation>
     </message>
 </context>
 <context>
@@ -230,6 +265,82 @@
         <translation>查看</translation>
     </message>
     <message>
+        <source>Error Log</source>
+        <translation>错误日志</translation>
+    </message>
+    <message>
+        <source>Manually</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Daily</source>
+        <translation>每天</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>每周</translation>
+    </message>
+    <message>
+        <source>Delete Driving Data</source>
+        <translation>删除行车视频数据</translation>
+    </message>
+    <message>
+        <source>Delete Toggle Storage Data</source>
+        <translation>删除用户配置参数</translation>
+    </message>
+    <message>
+        <source>Delete Screen Recordings</source>
+        <translation>删除屏幕录像数据</translation>
+    </message>
+    <message>
+        <source>DELETE</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>FrogPilot Backups</source>
+        <translation>FrogPilot系统备份</translation>
+    </message>
+    <message>
+        <source>Toggle Backups</source>
+        <translation>配置参数备份</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>备份</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translation>还原</translation>
+    </message>
+    <message>
+        <source>Delete Data</source>
+        <translation>删除视频文件及配置</translation>
+    </message>
+    <message>
+        <source>Screen Recordings</source>
+        <translation>录屏</translation>
+    </message>
+    <message>
+        <source>Driving Data</source>
+        <translation>行车</translation>
+    </message>
+    <message>
+        <source>Deep Storage Toggles</source>
+        <translation>配置</translation>
+    </message>
+    <message>
+        <source>Flash Panda</source>
+        <translation>刷写Panda固件</translation>
+    </message>
+    <message>
+        <source>FLASH</source>
+        <translation>刷写</translation>
+    </message>
+    <message>
         <source>Change Language</source>
         <translation>切换语言</translation>
     </message>
@@ -298,27 +409,11 @@
         <translation>预览</translation>
     </message>
     <message>
-        <source>Delete Driving Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DELETE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This button provides a swift and secure way to permanently delete all stored driving footage and data from your device. Ideal for maintaining privacy or freeing up space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete all of your driving footage and data?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Toggle Storage Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -330,46 +425,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name your backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a backup to delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this backup?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a restore point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to restore this version of FrogPilot?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to restore this toggle backup?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flash Panda</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FLASH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Are you sure you want to flash the Panda?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -377,24 +432,36 @@
         <source>Flash</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Soft Reboot</source>
+        <translation>软重启</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to soft reboot?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disengage to Soft Reboot</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DriveStats</name>
     <message>
         <source>Drives</source>
-        <translation type="unfinished"></translation>
+        <translation>行程</translation>
     </message>
     <message>
         <source>Hours</source>
-        <translation type="unfinished"></translation>
+        <translation>小时</translation>
     </message>
     <message>
         <source>ALL TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>全部行驶统计</translation>
     </message>
     <message>
         <source>PAST WEEK</source>
-        <translation type="unfinished"></translation>
+        <translation>上周行驶小计</translation>
     </message>
     <message>
         <source>FROGPILOT</source>
@@ -402,11 +469,11 @@
     </message>
     <message>
         <source>KM</source>
-        <translation type="unfinished"></translation>
+        <translation>公里</translation>
     </message>
     <message>
         <source>Miles</source>
-        <translation type="unfinished"></translation>
+        <translation>英里</translation>
     </message>
 </context>
 <context>
@@ -425,6 +492,521 @@
     <message>
         <source>CHILL MODE ON</source>
         <translation>轻松模式运行</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotControlsPanel</name>
+    <message>
+        <source>Adjustable Personalities</source>
+        <translation>跟车距离切换方式</translation>
+    </message>
+    <message>
+        <source>Always on Lateral</source>
+        <translation>持续车道居中</translation>
+    </message>
+    <message>
+        <source>Conditional Experimental Mode</source>
+        <translation>特定场景下的试验模式</translation>
+    </message>
+    <message>
+        <source>Custom Driving Personalities</source>
+        <translation>调整跟车距离参数</translation>
+    </message>
+    <message>
+        <source>Device Shutdown Timer</source>
+        <translation>自动关机计时</translation>
+    </message>
+    <message>
+        <source>Experimental Mode Via</source>
+        <translation>试验模式切换方式</translation>
+    </message>
+    <message>
+        <source>Experimental Mode Activation</source>
+        <translation>试验模式切换方式</translation>
+    </message>
+    <message>
+        <source>Fire the Babysitter</source>
+        <translation>附加选项管理</translation>
+    </message>
+    <message>
+        <source>Reboot required to take effect.</source>
+        <translation>该设置将在重启之后生效</translation>
+    </message>
+    <message>
+        <source>Reboot Now</source>
+        <translation>立即重启</translation>
+    </message>
+    <message>
+        <source>Disable All Logging</source>
+        <translation>停用所有日志</translation>
+    </message>
+    <message>
+        <source>Mute Overheated System Alert</source>
+        <translation>停用过热警报</translation>
+    </message>
+    <message>
+        <source>Offline Mode</source>
+        <translation>启用离线模式</translation>
+    </message>
+    <message>
+        <source>Lateral Tuning</source>
+        <translation>横向控制参数</translation>
+    </message>
+    <message>
+        <source>Steer Ratio</source>
+        <translation>转向比</translation>
+    </message>
+    <message>
+        <source>Steer Ratio (Default: %1)</source>
+        <translation>转向比 (默认: %1)</translation>
+    </message>
+    <message>
+        <source>Min Steer Enable Speed</source>
+        <translation>横向控制启用车速</translation>
+    </message>
+    <message>
+        <source>Longitudinal Tuning</source>
+        <translation>纵向控制参数</translation>
+    </message>
+    <message>
+        <source>Model Selector</source>
+        <translation>驾驶模型选择</translation>
+    </message>
+    <message>
+        <source>Calibration Circle</source>
+        <translation>模型校准次数</translation>
+    </message>
+    <message>
+        <source>Map Turn Speed Control</source>
+        <translation>地图控制过弯速度</translation>
+    </message>
+    <message>
+        <source>Nudgeless Lane Change</source>
+        <translation>打灯自动变道</translation>
+    </message>
+    <message>
+        <source>Enable lane changes without manual steering input.</source>
+        <translation>打开转向灯时，自动执行变道动作，无需手动操作。</translation>
+    </message>
+    <message>
+        <source>Lane Change Timer</source>
+        <translation>变道延时</translation>
+    </message>
+    <message>
+        <source>Instant</source>
+        <translation>立即</translation>
+    </message>
+    <message>
+        <source>Lane Detection</source>
+        <translation>车道监测</translation>
+    </message>
+    <message>
+        <source>Lane Detection Threshold</source>
+        <translation>车道宽度</translation>
+    </message>
+    <message>
+        <source>One Lane Change Per Signal</source>
+        <translation>仅变更一条车道</translation>
+    </message>
+    <message>
+        <source>Quality of Life</source>
+        <translation>改善驾驶体验</translation>
+    </message>
+    <message>
+        <source>Standard Min Steer Speed</source>
+        <translation>标准居中启用车速</translation>
+    </message>
+    <message>
+        <source>Engaged Min Steer Speed</source>
+        <translation>自适应巡航居中车速</translation>
+    </message>
+    <message>
+        <source>Pause Lateral On Turn Signal Below</source>
+        <translation>低于设定车速，打灯暂停居中</translation>
+    </message>
+    <message>
+        <source>Speed Limit Controller</source>
+        <translation>自动限速控制</translation>
+    </message>
+    <message>
+        <source>Use Turn Desires</source>
+        <translation>转向期望估算</translation>
+    </message>
+    <message>
+        <source>Vision Turn Speed Controller</source>
+        <translation>视觉控制过弯速度</translation>
+    </message>
+    <message>
+        <source>Distance Button</source>
+        <translation>跟车距离按键</translation>
+    </message>
+    <message>
+        <source>Screen</source>
+        <translation>触屏调整</translation>
+    </message>
+    <message>
+        <source>Enable On Cruise Main</source>
+        <translation>使用巡航按键</translation>
+    </message>
+    <message>
+        <source>Hide AOL Status Bar</source>
+        <translation>隐藏AOL状态显示</translation>
+    </message>
+    <message>
+        <source>Disable Logging</source>
+        <translation>禁用行车日志记录</translation>
+    </message>
+    <message>
+        <source>Disable Uploads</source>
+        <translation>禁用行驶数据上传</translation>
+    </message>
+    <message>
+        <source>Bypass Thermal Safety Limits</source>
+        <translation>忽略设备高温警报</translation>
+    </message>
+    <message>
+        <source>LKAS Button</source>
+        <translation>车道辅助按键</translation>
+    </message>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotNavigationPanel</name>
+    <message>
+        <source>Manage Primeless Navigation Settings</source>
+        <translation>导航设置管理</translation>
+    </message>
+    <message>
+        <source>Maps Scheduler</source>
+        <translation>地图检查周期</translation>
+    </message>
+    <message>
+        <source>Offline Maps Size</source>
+        <translation>离线地图大小</translation>
+    </message>
+    <message>
+        <source>Select Offline Maps</source>
+        <translation>选择离线地图</translation>
+    </message>
+    <message>
+        <source>Download Offline Maps</source>
+        <translation>下载离线地图</translation>
+    </message>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>DOWNLOAD</source>
+        <translation>下载</translation>
+    </message>
+    <message>
+        <source>Cancel Download</source>
+        <translation>取消下载</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Manually</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Monthly</source>
+        <translation>每月</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>每周</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotParamManageControl</name>
+    <message>
+        <source>MANAGE</source>
+        <translation>设置</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotVehiclesPanel</name>
+    <message>
+        <source>Select Make</source>
+        <translation>选择汽车品牌</translation>
+    </message>
+    <message>
+        <source>Select Model</source>
+        <translation>选择车辆型号</translation>
+    </message>
+    <message>
+        <source>Disable Automatic Fingerprint Detection</source>
+        <translation>禁用自动指纹监测</translation>
+    </message>
+    <message>
+        <source>GM SDGM CSLC</source>
+        <translation>巡航限速控制CSLC</translation>
+    </message>
+    <message>
+        <source>SELECT</source>
+        <translation>选择</translation>
+    </message>
+</context>
+<context>
+    <name>FrogPilotVisualsPanel</name>
+    <message>
+        <source>Custom Themes</source>
+        <translation>主题设置</translation>
+    </message>
+    <message>
+        <source>Holiday Themes</source>
+        <translation>节日主题</translation>
+    </message>
+    <message>
+        <source>Color Theme</source>
+        <translation>色彩方案</translation>
+    </message>
+    <message>
+        <source>Icon Pack</source>
+        <translation>图标方案</translation>
+    </message>
+    <message>
+        <source>Turn Signals</source>
+        <translation>转向信号</translation>
+    </message>
+    <message>
+        <source>Sound Pack</source>
+        <translation>提示音效</translation>
+    </message>
+    <message>
+        <source>Alert Volume Control</source>
+        <translation>提示音量设置</translation>
+    </message>
+    <message>
+        <source>Camera View</source>
+        <translation>镜头视角</translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>标准</translation>
+    </message>
+    <message>
+        <source>Wide</source>
+        <translation>广角</translation>
+    </message>
+    <message>
+        <source>Driver</source>
+        <translation>驾驶员</translation>
+    </message>
+    <message>
+        <source>Compass</source>
+        <translation>指南针</translation>
+    </message>
+    <message>
+        <source>Custom Alerts</source>
+        <translation>自定义提示类型</translation>
+    </message>
+    <message>
+        <source>Green Light Alert</source>
+        <translation>绿灯信号提醒</translation>
+    </message>
+    <message>
+        <source>Lead Departing Alert</source>
+        <translation>前车起步提醒</translation>
+    </message>
+    <message>
+        <source>Loud Blindspot Alert</source>
+        <translation>盲区增强音量</translation>
+    </message>
+    <message>
+        <source>Speed Limit Changed Alert</source>
+        <translation>限速变化提醒</translation>
+    </message>
+    <message>
+        <source>Custom Onroad UI</source>
+        <translation>行车界面信息</translation>
+    </message>
+    <message>
+        <source>Driver Camera On Reverse</source>
+        <translation>倒挡启用驾驶员视角</translation>
+    </message>
+    <message>
+        <source>Driver Privacy Protection</source>
+        <translation>驾驶员隐私保护</translation>
+    </message>
+    <message>
+        <source>Model UI</source>
+        <translation>道路模型界面</translation>
+    </message>
+    <message>
+        <source>Numerical Temperature Gauge</source>
+        <translation>显示温度数值</translation>
+    </message>
+    <message>
+        <source>Fahrenheit</source>
+        <translation>华氏度</translation>
+    </message>
+    <message>
+        <source>Quality of Life</source>
+        <translation>改善驾驶体验</translation>
+    </message>
+    <message>
+        <source>Random Events</source>
+        <translation>随机事件提示</translation>
+    </message>
+    <message>
+        <source>Screen Management</source>
+        <translation>屏幕设置选项</translation>
+    </message>
+    <message>
+        <source>Hide UI Elements</source>
+        <translation>隐藏行车图例</translation>
+    </message>
+    <message>
+        <source>Alerts</source>
+        <translation>提醒</translation>
+    </message>
+    <message>
+        <source>Max Map Icon</source>
+        <translation>地图</translation>
+    </message>
+    <message>
+        <source>Max Speed</source>
+        <translation>定速</translation>
+    </message>
+    <message>
+        <source>Screen Brightness</source>
+        <translation>屏幕亮度设置</translation>
+    </message>
+    <message>
+        <source>Screen Brightness (Onroad)</source>
+        <translation>行车亮度设置</translation>
+    </message>
+    <message>
+        <source>Screen Recorder</source>
+        <translation>显示录屏按钮</translation>
+    </message>
+    <message>
+        <source>Screen Recorder</source>
+        <translation>显示录屏按钮</translation>
+    </message>
+    <message>
+        <source>Screen Timeout</source>
+        <translation>熄屏时长设置</translation>
+    </message>
+    <message>
+        <source>Screen Timeout (Onroad)</source>
+        <translation>行车熄屏时长</translation>
+    </message>
+    <message>
+        <source>Standby Mode</source>
+        <translation>自动点亮屏幕</translation>
+    </message>
+    <message>
+        <source>Steering Wheel Icon</source>
+        <translation>方向盘图标</translation>
+    </message>
+    <message>
+        <source>Rotating</source>
+        <translation>跟随旋转</translation>
+    </message>
+    <message>
+        <source>Acceleration Path</source>
+        <translation>车辆行驶路线</translation>
+    </message>
+    <message>
+        <source>Adjacent Paths</source>
+        <translation>相邻车道路线</translation>
+    </message>
+    <message>
+        <source>Blind Spot Path</source>
+        <translation>盲区监测路线</translation>
+    </message>
+    <message>
+        <source>FPS Counter</source>
+        <translation>刷新速率FPS</translation>
+    </message>
+    <message>
+        <source>Lead Info and Logics</source>
+        <translation>前车分析信息</translation>
+    </message>
+    <message>
+        <source>Pedals Being Pressed</source>
+        <translation>油门刹车踏板状态</translation>
+    </message>
+    <message>
+        <source>Road Name</source>
+        <translation>当前道路名称</translation>
+    </message>
+    <message>
+        <source>Dynamic Path Width</source>
+        <translation>动态行驶路线宽度</translation>
+    </message>
+    <message>
+        <source>Path Width</source>
+        <translation>行驶路线宽度</translation>
+    </message>
+    <message>
+        <source>Path Edges</source>
+        <translation>路线边缘比例</translation>
+    </message>
+    <message>
+        <source>Lane Lines</source>
+        <translation>车道分割线宽度</translation>
+    </message>
+    <message>
+        <source>Road Edges</source>
+        <translation>车道边缘宽度</translation>
+    </message>
+    <message>
+        <source>'Unlimited' Road UI Length</source>
+        <translation>延伸道路界面</translation>
+    </message>
+    <message>
+        <source>Use Wheel Speed</source>
+        <translation>使用轮上车速</translation>
+    </message>
+    <message>
+        <source>Dash Speed Ratio L</source>
+        <translation>仪表低速系数</translation>
+    </message>
+    <message>
+        <source>Dash Speed Ratio M</source>
+        <translation>仪表中速系数</translation>
+    </message>
+    <message>
+        <source>Dash Speed Ratio H</source>
+        <translation>仪表高速系数</translation>
+    </message>
+    <message>
+        <source>Set Speed Ratio L</source>
+        <translation>巡航低速系数</translation>
+    </message>
+    <message>
+        <source>Set Speed Ratio M</source>
+        <translation>巡航中速系数</translation>
+    </message>
+    <message>
+        <source>Set Speed Ratio H</source>
+        <translation>巡航高速系数</translation>
     </message>
 </context>
 <context>
@@ -678,7 +1260,7 @@
     </message>
     <message>
         <source>openpilot</source>
-        <translation type="vanished">openpilot</translation>
+        <translation>openpilot</translation>
     </message>
     <message numerus="yes">
         <source>%n minute(s) ago</source>
@@ -764,43 +1346,43 @@ This may take up to a minute.</source>
     <name>SettingsWindow</name>
     <message>
         <source>×</source>
-        <translation type="vanished">×</translation>
+        <translation>×</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>设备</translation>
+        <translation>设备信息 </translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>网络</translation>
+        <translation>网络设置 </translation>
     </message>
     <message>
         <source>Toggles</source>
-        <translation>设定</translation>
+        <translation>基础设定 </translation>
     </message>
     <message>
         <source>Software</source>
-        <translation>软件</translation>
-    </message>
-    <message>
-        <source>← Back</source>
-        <translation type="unfinished"></translation>
+        <translation>软件更新 </translation>
     </message>
     <message>
         <source>Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>驾驶控制 </translation>
     </message>
     <message>
         <source>Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>导航地图 </translation>
     </message>
     <message>
         <source>Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>车型选择 </translation>
     </message>
     <message>
         <source>Visuals</source>
-        <translation type="unfinished"></translation>
+        <translation>界面图例 </translation>
+    </message>
+    <message>
+        <source>← Back</source>
+        <translation>← 返回</translation>
     </message>
 </context>
 <context>
@@ -924,6 +1506,14 @@ This may take up to a minute.</source>
         <translation>设备温度</translation>
     </message>
     <message>
+        <source>LEFT</source>
+        <translation>可用空间</translation>
+    </message>
+    <message>
+        <source>USED</source>
+        <translation>已用空间</translation>
+    </message>
+    <message>
         <source>HIGH</source>
         <translation>过热</translation>
     </message>
@@ -985,18 +1575,26 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>MEMORY</source>
-        <translation type="unfinished"></translation>
+        <translation>内存占用</translation>
     </message>
 </context>
 <context>
     <name>SoftwarePanel</name>
     <message>
         <source>Updates are only downloaded while the car is off.</source>
-        <translation type="vanished">车辆熄火时才能下载升级文件。</translation>
+        <translation>车辆熄火时才能下载升级文件。</translation>
     </message>
     <message>
         <source>Current Version</source>
         <translation>当前版本</translation>
+    </message>
+    <message>
+        <source>Update Scheduler</source>
+        <translation>检查更新周期</translation>
+    </message>
+    <message>
+        <source>Update Time</source>
+        <translation>自动更新时间</translation>
     </message>
     <message>
         <source>Download</source>
@@ -1043,6 +1641,18 @@ This may take up to a minute.</source>
         <translation>卸载</translation>
     </message>
     <message>
+        <source>GitHub Checkout</source>
+        <translation>GitHub代码签出</translation>
+    </message>
+    <message>
+        <source>CHECKOUT</source>
+        <translation>签出</translation>
+    </message>
+    <message>
+        <source>Checkout</source>
+        <translation>签出</translation>
+    </message>
+    <message>
         <source>failed to check for update</source>
         <translation>检查更新失败</translation>
     </message>
@@ -1063,24 +1673,16 @@ This may take up to a minute.</source>
         <translation>从未更新</translation>
     </message>
     <message>
-        <source>Updates are only downloaded while the car is off or in park.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>手动</translation>
     </message>
     <message>
         <source>Daily</source>
-        <translation type="unfinished"></translation>
+        <translation>每天</translation>
     </message>
     <message>
         <source>Weekly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update Scheduler</source>
-        <translation type="unfinished"></translation>
+        <translation>每周</translation>
     </message>
     <message>
         <source>Choose the frequency to automatically update FrogPilot.
@@ -1091,16 +1693,12 @@ Weekly updates start at midnight every Sunday.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a time to automatically update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">错误日志</translation>
     </message>
     <message>
         <source>VIEW</source>

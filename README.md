@@ -1,4 +1,19 @@
-[![openpilot on the comma 3X](https://i.imgur.com/6l2qbf5.png)](https://comma.ai/shop/comma-3x)
+![openpilot on the comma 3X](https://i.imgur.com/6l2qbf5.png)
+
+Table of Contents
+=======================
+
+* [What is openpilot?](#what-is-openpilot)
+* [What is FrogPilot?](#what-is-frogpilot)
+* [Features](#features)
+* [How to Install](#how-to-install)
+* [Bug reports / Feature Requests](#bug-reports--feature-requests)
+* [Discord](#discord)
+* [Donations](#donations)
+* [Credits](#credits)
+* [Licensing](#licensing)
+
+---
 
 What is openpilot?
 ------
@@ -7,21 +22,30 @@ What is openpilot?
 
 <table>
   <tr>
-    <td><a href="https://youtu.be/NmBfgOanCyk" title="Video By Greer Viau"><img src="https://github.com/commaai/openpilot/assets/8762862/2f7112ae-f748-4f39-b617-fabd689c3772"></a></td>
-    <td><a href="https://youtu.be/VHKyqZ7t8Gw" title="Video By Logan LeGrand"><img src="https://github.com/commaai/openpilot/assets/8762862/92351544-2833-40d7-9e0b-7ef7ae37ec4c"></a></td>
-    <td><a href="https://youtu.be/SUIZYzxtMQs" title="A drive to Taco Bell"><img src="https://github.com/commaai/openpilot/assets/8762862/05ceefc5-2628-439c-a9b2-89ce77dc6f63"></a></td>
+    <td><a href="https://youtu.be/NmBfgOanCyk" title="Video By Greer Viau"><img src="https://i.imgur.com/1w8c6d2.jpg"></a></td>
+    <td><a href="https://youtu.be/VHKyqZ7t8Gw" title="Video By Logan LeGrand"><img src="https://i.imgur.com/LnBucik.jpg"></a></td>
+    <td><a href="https://youtu.be/VxiR4iyBruo" title="Video By Charlie Kim"><img src="https://i.imgur.com/4Qoy48c.jpg"></a></td>
+    <td><a href="https://youtu.be/-IkImTe1NYE" title="Video By Aragon"><img src="https://i.imgur.com/04VNzPf.jpg"></a></td>
+  </tr>
+  <tr>
+    <td><a href="https://youtu.be/iIUICQkdwFQ" title="Video By Logan LeGrand"><img src="https://i.imgur.com/b1LHQTy.jpg"></a></td>
+    <td><a href="https://youtu.be/XOsa0FsVIsg" title="Video By PinoyDrives"><img src="https://i.imgur.com/6FG0Bd8.jpg"></a></td>
+    <td><a href="https://youtu.be/bCwcJ98R_Xw" title="Video By JS"><img src="https://i.imgur.com/zO18CbW.jpg"></a></td>
+    <td><a href="https://youtu.be/BQ0tF3MTyyc" title="Video By Tsai-Fi"><img src="https://i.imgur.com/eZzelq3.jpg"></a></td>
   </tr>
 </table>
+
 
 What is FrogPilot? 🐸
 ------
 
-FrogPilot is a fully open-sourced fork of openpilot, featuring clear and focused commits aimed at benefiting the openpilot community. It thrives on contributions from both users and developers, focusing on a collaborative, community-led approach to deliver an advanced openpilot experience for all!
+FrogPilot is a bi-weekly updated and 100% open-sourced fork of openpilot with clean commits dedicated to serve the openpilot community. FrogPilot is shaped by user and developer contributions, emphasizing collaborative, community-driven development to provide a bleeding-edge openpilot experience for everyone!
 
 ------
 FrogPilot was last updated on:
+<img width="10%" align="left" src="./selfdrive/assets/img_spinner_comma.png">
 
-**March 15th, 2024**
+**March 1st, 2024**
 
 Features
 ------
@@ -177,26 +201,27 @@ Discord
 
 [Join the FrogPilot Community Discord for easy access to updates, bug reporting, feature requests, future planned updates, and other FrogPilot related discussions!](https://discord.gg/frogpilot)
 
+Donations
+------
+
+I DO NOT accept donations! So if anyone is claiming to be me or to be a part of FrogPilot and is asking for any type of financial compensation, IT IS A SCAM!
+
+I work on FrogPilot on my own and is purely a passion project to refine my skills and to help improve openpilot for the community. I do not and will not ever expect any type of financial exchange for my work. The only thing I’ll ever ask for in return is constructive feedback!
+
 Credits
 ------
 
-* [AlexandreSato](https://github.com/AlexandreSato)
-* [Crwusiz](https://github.com/crwusiz)
-* [DragonPilot](https://github.com/dragonpilot-community)
-* [ErichMoraga](https://github.com/ErichMoraga)
-* [Garrettpall](https://github.com/garrettpall)
-* [Henrycc](https://github.com/henryccy)
-* [KRKeegan](https://github.com/krkeegan)
-* [Mike8643](https://github.com/mike8643)
-* [Move-Fast](https://github.com/move-fast)
-* [Neokii](https://github.com/Neokii)
-* [OPGM](https://github.com/opgm)
-* [OPKR](https://github.com/openpilotkr)
-* [Pfeiferj](https://github.com/pfeiferj)
-* [ServerDummy](https://github.com/ServerDummy)
-* [Sunnyhaibin](https://github.com/sunnyhaibin)
-* [Thinkpad4by3](https://github.com/Thinkpad4by3)
-* [Twilsonco](https://github.com/twilsonco)
+* [AlexandreSato](https://github.com/AlexandreSato/openpilot)
+* [Aragon7777](https://github.com/Aragon7777/openpilot)
+* [Crwusiz](https://github.com/crwusiz/openpilot)
+* [DragonPilot](https://github.com/dragonpilot-community/dragonpilot)
+* [ErichMoraga](https://github.com/ErichMoraga/openpilot)
+* [KRKeegan](https://github.com/krkeegan/openpilot)
+* [Move-Fast](https://github.com/move-fast/openpilot)
+* [OPGM](https://github.com/opgm/openpilot)
+* [Pfeiferj](https://github.com/pfeiferj/openpilot)
+* [Sunnyhaibin](https://github.com/sunnyhaibin/sunnypilot)
+* [Twilsonco](https://github.com/twilsonco/openpilot)
 
 Licensing
 ------
@@ -213,5 +238,5 @@ NO WARRANTY EXPRESSED OR IMPLIED.**
 
 <img src="https://d1qb2nb5cznatu.cloudfront.net/startups/i/1061157-bc7e9bf3b246ece7322e6ffe653f6af8-medium_jpg.jpg?buster=1458363130" width="75"></img> <img src="https://cdn-images-1.medium.com/max/1600/1*C87EjxGeMPrkTuVRVWVg4w.png" width="225"></img>
 
-![openpilot tests](https://github.com/commaai/openpilot/actions/workflows/selfdrive_tests.yaml/badge.svg)
+[![openpilot tests](https://github.com/commaai/openpilot/workflows/openpilot%20tests/badge.svg?event=push)](https://github.com/commaai/openpilot/actions)
 [![codecov](https://codecov.io/gh/commaai/openpilot/branch/master/graph/badge.svg)](https://codecov.io/gh/commaai/openpilot)

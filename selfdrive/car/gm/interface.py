@@ -12,6 +12,10 @@ from openpilot.selfdrive.car.gm.values import CAR, CruiseButtons, CarControllerP
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase, TorqueFromLateralAccelCallbackType, FRICTION_THRESHOLD, LatControlInputs, NanoFFModel
 from openpilot.selfdrive.controls.lib.drive_helpers import get_friction
 
+from openpilot.common.params import Params
+
+params = Params() #params_memory = Params("/dev/shm/params")
+
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
 GearShifter = car.CarState.GearShifter
@@ -148,6 +152,19 @@ class CarInterface(CarInterfaceBase):
       ret.minEnableSpeed = -1.  # engage speed is decided by ASCM
       ret.minSteerSpeed = 30 * CV.MPH_TO_MS
       ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_SDGM
+
+      # Used for CEM with CSLC
+      ret.openpilotLongitudinalControl = params.get_bool("CSLCEnabled") #True 
+      ret.longitudinalTuning.deadzoneBP = [0.]
+      ret.longitudinalTuning.deadzoneV = [0.9]  # == 2 mph allowable delta
+      ret.stoppingDecelRate = 7.45  # == 16.67 mph/s (OFF + ON = 30 frames)
+      ret.longitudinalActuatorDelayLowerBound = 1.
+      ret.longitudinalActuatorDelayUpperBound = 2.
+
+      ret.longitudinalTuning.kpBP = [7.15, 7.2, 28.]  # 7.15 m/s == 16 mph
+      ret.longitudinalTuning.kpV = [0., 4., 2.]  # set lower end to 0 since we can't drive below that speed
+      ret.longitudinalTuning.kiBP = [0.]
+      ret.longitudinalTuning.kiV = [0.1]
 
     else:  # ASCM, OBD-II harness
       ret.openpilotLongitudinalControl = True
@@ -334,6 +351,26 @@ class CarInterface(CarInterfaceBase):
       ret.steerRatio = 14.4
       ret.centerToFront = ret.wheelbase * 0.4
       ret.steerActuatorDelay = 0.2
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+
+    elif candidate == CAR.BABYENCLAVE:
+      ret.mass = 2050.  #3660. * CV.LB_TO_KG
+      ret.wheelbase = 2.86  #2.78
+      ret.steerRatio = 16.0   #Avenir 15.0 / Others 16.0 #14.4
+      ret.centerToFront = ret.wheelbase * 0.5  #ret.wheelbase * 0.4
+      ret.steerActuatorDelay = 0.2
+      ret.minSteerSpeed = 10 * CV.KPH_TO_MS
+      #ret.wheelSpeedFactor = 1.05
+      CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
+
+    elif candidate == CAR.BABYAVENIR:
+      ret.mass = 2050.  #3660. * CV.LB_TO_KG
+      ret.wheelbase = 2.86  #2.78
+      ret.steerRatio = 15.0   #Avenir 15.0 / Others 16.0 #14.4
+      ret.centerToFront = ret.wheelbase * 0.5  #ret.wheelbase * 0.4
+      ret.steerActuatorDelay = 0.2
+      ret.minSteerSpeed = 10 * CV.KPH_TO_MS
+      #ret.wheelSpeedFactor = 1.05
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     elif candidate == CAR.CT6_CC:

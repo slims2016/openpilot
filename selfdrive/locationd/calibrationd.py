@@ -65,6 +65,7 @@ class Calibrator:
 
     # Read saved calibration
     self.params = Params()
+    self.calibration_circle = max(1, self.params.get_int("CalibrationCircle"))
     calibration_params = self.params.get("CalibrationParams")
     rpy_init = RPY_INIT
     wide_from_device_euler = WIDE_FROM_DEVICE_EULER_INIT
@@ -144,7 +145,7 @@ class Calibrator:
     else:
       self.calib_spread = np.zeros(3)
 
-    if self.valid_blocks < INPUTS_NEEDED:
+    if self.valid_blocks < (INPUTS_NEEDED * self.calibration_circle):
       if self.cal_status == log.LiveCalibrationData.Status.recalibrating:
         self.cal_status = log.LiveCalibrationData.Status.recalibrating
       else:
@@ -192,7 +193,7 @@ class Calibrator:
     else:
       height_certain = True
 
-    certain_if_calib = (rpy_certain and height_certain) or (self.valid_blocks < INPUTS_NEEDED)
+    certain_if_calib = (rpy_certain and height_certain) or (self.valid_blocks < (INPUTS_NEEDED * self.calibration_circle))
     if not (straight_and_fast and certain_if_calib):
       return None
 
@@ -236,14 +237,14 @@ class Calibrator:
     liveCalibration = msg.liveCalibration
     liveCalibration.validBlocks = self.valid_blocks
     liveCalibration.calStatus = self.cal_status
-    liveCalibration.calPerc = min(100 * (self.valid_blocks * BLOCK_SIZE + self.idx) // (INPUTS_NEEDED * BLOCK_SIZE), 100)
+    liveCalibration.calPerc = min(100 * (self.valid_blocks * BLOCK_SIZE + self.idx) // (INPUTS_NEEDED * self.calibration_circle * BLOCK_SIZE), 100)
     liveCalibration.rpyCalib = smooth_rpy.tolist()
     liveCalibration.rpyCalibSpread = self.calib_spread.tolist()
     liveCalibration.wideFromDeviceEuler = self.wide_from_device_euler.tolist()
     liveCalibration.height = self.height.tolist()
 
     if self.not_car:
-      liveCalibration.validBlocks = INPUTS_NEEDED
+      liveCalibration.validBlocks = INPUTS_NEEDED * self.calibration_circle
       liveCalibration.calStatus = log.LiveCalibrationData.Status.calibrated
       liveCalibration.calPerc = 100.
       liveCalibration.rpyCalib = [0, 0, 0]
