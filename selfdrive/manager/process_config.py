@@ -11,7 +11,7 @@ def driverview(started: bool, params: Params, params_memory: Params, CP: car.Car
   return started or params.get_bool("IsDriverViewEnabled")
 
 def drivermonitor(started: bool, params: Params, params_memory: Params, CP: car.CarParams) -> bool:
-  return not params.get_bool("DriverPrivacyProtection") and (started or params.get_bool("IsDriverViewEnabled"))
+  return (not params.get_bool("DriverPrivacyProtection")) and (started or params.get_bool("IsDriverViewEnabled"))
 
 def notcar(started: bool, params: Params, params_memory: Params, CP: car.CarParams) -> bool:
   return started and CP.notCar

@@ -138,10 +138,11 @@ def manager_init() -> None:
     ("DragonPilotTune", "0"),
     ("DriverCamera", "0"),
     ("DriverPrivacyProtection", "0"),
+    ("DriverPrivacyProtectionFake", "0"),
     ("DriveStats", "1"),
     ("DynamicPathWidth", "0"),
     ("EngageVolume", "100"),
-    ("EVTable", "1"),
+    ("EVTable", "0"),
     ("ExperimentalModeActivation", "1"),
     ("ExperimentalModeViaDistance", "0"),
     ("ExperimentalModeViaLKAS", "0"),
@@ -149,7 +150,7 @@ def manager_init() -> None:
     ("Fahrenheit", "0"),
     ("FireTheBabysitter", "0"),
     ("ForceAutoTune", "0"),
-    ("ForceFingerprint", "0"),
+    ("ForceFingerprint", "1"),
     ("ForceMPHDashboard", "0"),
     ("FPSCounter", "0"),
     ("FrogPilotDrives", "0"),
@@ -282,7 +283,8 @@ def manager_init() -> None:
     ("SetSpeedRatio2", "1.055"),
     ("SetSpeedRatio3", "1.045"),
     ("SpeedDecimal", "0"),
-    ("CalibrationCircle", "1"),    
+    ("CalibrationCycles", "1"), 
+    ("OnStarGPS", "0"),    
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))
