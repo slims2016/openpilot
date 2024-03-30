@@ -200,10 +200,10 @@ def manager_init() -> None:
     ("NudgelessLaneChange", "1"),
     ("NumericalTemp", "0"),
     ("OfflineMode", "0"),
-    ("Offset1", "8"), #5mph -> 8kph
-    ("Offset2", "8"), #5mph -> 8kph
-    ("Offset3", "8"), #5mph -> 8kph
-    ("Offset4", "16"), #10mph -> 16kph
+    ("Offset1", "5"), #5mph -> 8kph
+    ("Offset2", "3"), #5mph -> 8kph
+    ("Offset3", "4"), #5mph -> 8kph
+    ("Offset4", "5"), #10mph -> 16kph
     ("OneLaneChange", "1"),
     ("PathEdgeWidth", "20"),
     ("PathWidth", "20"), #61 feet -> 2.0 meters
