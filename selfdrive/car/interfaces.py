@@ -482,6 +482,9 @@ class CarStateBase(ABC):
     self.out = car.CarState.new_message()
 
     self.cruise_buttons = 0
+    self.onstar_gps_longitude = 0. # ONSTAR_GPS_TEST
+    self.onstar_gps_latitude = 0. # ONSTAR_GPS_TEST
+    # self.onstar_gps_altitude = 0. # ONSTAR_GPS_TEST
     self.left_blinker_cnt = 0
     self.right_blinker_cnt = 0
     self.steering_pressed_cnt = 0

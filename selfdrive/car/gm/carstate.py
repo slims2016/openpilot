@@ -43,9 +43,25 @@ class CarState(CarStateBase):
     if self.CP.carFingerprint not in SDGM_CAR:
       self.cruise_buttons = pt_cp.vl["ASCMSteeringButton"]["ACCButtons"]
       self.buttons_counter = pt_cp.vl["ASCMSteeringButton"]["RollingCounter"]
+
+      ret.onstarGpsLongitude = 0. # ONSTAR_GPS_TEST
+      ret.onstarGpsLatitude = 0. # ONSTAR_GPS_TEST
+      ret.onstarGpsAltitude = 0. # ONSTAR_GPS_TEST
+      ret.onstarGpsBearing = 0. # ONSTAR_GPS_TEST
+
+      ret.currentGearNumber = 0 # ONSTAR_GPS_TEST
+      ret.nextGearNumber = 0 # ONSTAR_GPS_TEST
     else:
       self.cruise_buttons = cam_cp.vl["ASCMSteeringButton"]["ACCButtons"]
       self.buttons_counter = cam_cp.vl["ASCMSteeringButton"]["RollingCounter"]
+
+      ret.onstarGpsLongitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLongitude"] # ONSTAR_GPS_TEST
+      ret.onstarGpsLatitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLatitude"] # ONSTAR_GPS_TEST
+      ret.onstarGpsAltitude = 0. #pt_cp.vl["WrongGPSAltitude"]["GPSAltitude"] # ONSTAR_GPS_TEST
+      ret.onstarGpsBearing = cam_cp.vl["SPEED_RELATED"]["GPSBearing"] # ONSTAR_GPS_TEST
+      ret.currentGearNumber = pt_cp.vl["ECMPRDNL2"]["CurrentGearNumber"] # ONSTAR_GPS_TEST
+      ret.nextGearNumber = pt_cp.vl["ECMPRDNL2"]["NextGearNumber"] # ONSTAR_GPS_TEST
+
     self.pscm_status = copy.copy(pt_cp.vl["PSCMStatus"])
     # This is to avoid a fault where you engage while still moving backwards after shifting to D.
     # An Equinox has been seen with an unsupported status (3), so only check if either wheel is in reverse (2)
@@ -260,12 +276,17 @@ class CarState(CarStateBase):
           ("BCMDoorBeltStatus", 10),
           ("BCMGeneralPlatformStatus", 10),
           ("ASCMSteeringButton", 33),
+          ("TCICOnStarGPSPosition", 10), #10Hz # ONSTAR_GPS_TEST
+          ("SPEED_RELATED", 10), #10Hz # ONSTAR_GPS_TEST
+          # ("WrongGPSAltitude", 20), #20Hz # ONSTAR_GPS_TEST
+          # ("ECMPRDNL2", 40), #40Hz # ONSTAR_GPS_TEST
         ]
         if CP.enableBsm:
           messages.append(("BCMBlindSpotMonitor", 10))
       else:
         messages += [
           ("AEBCmd", 10),
+          # ("ECMPRDNL2", 10), #10Hz # ONSTAR_GPS_TEST
         ]
       if CP.carFingerprint not in CC_ONLY_CAR:
         messages += [
@@ -284,6 +305,7 @@ class CarState(CarStateBase):
       ("EBCMFrictionBrakeStatus", 20),
       ("PSCMSteeringAngle", 100),
       ("ECMAcceleratorPos", 80),
+      # ("WrongGPSAltitude", 20), #20Hz # ONSTAR_GPS_TEST
     ]
 
     if CP.carFingerprint in SDGM_CAR:
@@ -301,6 +323,7 @@ class CarState(CarStateBase):
         ("BCMDoorBeltStatus", 10),
         ("BCMGeneralPlatformStatus", 10),
         ("ASCMSteeringButton", 33),
+        # ("TCICOnStarGPSPosition", 10), #10Hz # ONSTAR_GPS_TEST        
       ]
       if CP.enableBsm:
         messages.append(("BCMBlindSpotMonitor", 10))

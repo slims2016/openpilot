@@ -265,6 +265,11 @@ DBC: Dict[str, Dict[str, str]] = defaultdict(lambda: dbc_dict('gm_global_a_power
 DBC[CAR.VOLT] = dbc_dict('gm_global_a_powertrain_volt', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis')
 DBC[CAR.VOLT_CC] = DBC[CAR.VOLT]
 
+# SDGM_CAR dbc
+DBC[CAR.XT4] = dbc_dict('gm_global_a_powertrain_sdgm', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis')
+DBC[CAR.BABYENCLAVE] = DBC[CAR.XT4]
+DBC[CAR.BABYAVENIR] = DBC[CAR.XT4]
+
 EV_CAR = {CAR.VOLT, CAR.BOLT_EUV, CAR.VOLT_CC, CAR.BOLT_CC}
 CC_ONLY_CAR = {CAR.VOLT_CC, CAR.BOLT_CC, CAR.EQUINOX_CC, CAR.SUBURBAN_CC, CAR.YUKON_CC, CAR.CT6_CC, CAR.TRAILBLAZER_CC}
 
