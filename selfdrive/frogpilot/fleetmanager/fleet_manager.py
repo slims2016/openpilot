@@ -27,7 +27,7 @@ import secrets
 import threading
 import time
 
-from flask import Flask, jsonify, render_template, Response, request, send_from_directory, session, redirect, url_for
+from flask import Flask, jsonify, render_template, Response, request, send_from_directory, session, redirect, url_for, send_file
 import requests
 from requests.exceptions import ConnectionError
 from openpilot.common.realtime import set_core_affinity
@@ -84,10 +84,14 @@ def route(route):
   links = ""
   segments = ""
   for segment in fleet.segments_in_route(route):
-    links += "<a href='"+route+"?"+segment.split("--")[2]+","+query_type+"'>"+segment+"</a><br>"
+    links += "<a href='"+route+"?"+segment.split("--")[2]+","+query_type+"'>"+segment+"</a> | <a href='/qlog/"+segment+"'>qlog</a><br>"
     segments += "'"+segment+"',"
   return render_template("route.html", route=route, query_type=query_type, links=links, segments=segments, query_segment=query_segment)
 
+@app.route("/qlog/<segment>")
+def qlog_downlod_file(segment):
+  # return send_from_directory("/data/media/0/realdata/", segment + "/qlog", as_attachment=True)
+  return send_file("/data/media/0/realdata/"+segment+"/qlog", as_attachment=True, download_name=segment+".qlog")
 
 @app.route("/footage/")
 @app.route("/footage")
