@@ -286,6 +286,7 @@ def manager_init() -> None:
     ("CalibrationCycles", "1"), 
     ("OnStarGPS", "0"),    
     ("GearNumber", "0"), #GEAR_NUMBER_TEST
+    ("GearNumber", "0"), #FROGPILOT_PREBUILT_TEST
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))

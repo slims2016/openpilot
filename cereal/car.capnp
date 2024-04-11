@@ -187,6 +187,7 @@ struct CarState {
 
   currentGearNumber @52 :Int16; # TEST ONSTAR GPS
   nextGearNumber @53 :Int16; # TEST ONSTAR GPS
+  brakePressed2 @54 :Bool;  # TEST_BRAKE_PEDAL
 
   yawRate @22 :Float32;     # best estimate of yaw rate
   standstill @18 :Bool;

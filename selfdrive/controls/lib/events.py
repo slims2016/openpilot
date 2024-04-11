@@ -258,12 +258,20 @@ def calibration_incomplete_alert(CP: car.CarParams, CS: car.CarState, sm: messag
 
 
 def no_gps_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
-  return Alert(
-    "Poor GPS reception",
-    "Hardware malfunctioning if sky is visible",
-    AlertStatus.normal, AlertSize.mid,
-    Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
-
+  params = Params()
+  random_events = params.get_bool("RandomEvents")
+  if random_events: #Normal GPS Error
+    return Alert(
+      "Poor GPS reception",
+      "Hardware malfunctioning if sky is visible",
+      AlertStatus.normal, AlertSize.mid,
+      Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
+  else: #Show Controls Mismatch Error
+    return Alert(
+      "Controls Mismatch",
+      "请谨慎驾驶，人工接管方向盘",
+      AlertStatus.normal, AlertSize.mid,
+      Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
 
 def torque_nn_load_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   model_name = params_memory.get("NNFFModelName")
@@ -751,7 +759,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.noGps: {
-    #ET.PERMANENT: no_gps_alert,
+    ET.PERMANENT: no_gps_alert,
   },
 
   EventName.soundsUnavailable: {
