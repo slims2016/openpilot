@@ -8,6 +8,9 @@ from openpilot.selfdrive.car.interfaces import CarStateBase
 from openpilot.selfdrive.car.gm.values import DBC, AccState, CanBus, STEER_THRESHOLD, GMFlags, CC_ONLY_CAR, CAMERA_ACC_CAR, SDGM_CAR
 from openpilot.selfdrive.controls.lib.drive_helpers import CRUISE_LONG_PRESS
 
+from openpilot.common.params import Params #Fixed XT5 OnStar CAN Errors
+params = Params()
+
 TransmissionType = car.CarParams.TransmissionType
 NetworkLocation = car.CarParams.NetworkLocation
 GearShifter = car.CarState.GearShifter
@@ -55,10 +58,17 @@ class CarState(CarStateBase):
       self.cruise_buttons = cam_cp.vl["ASCMSteeringButton"]["ACCButtons"]
       self.buttons_counter = cam_cp.vl["ASCMSteeringButton"]["RollingCounter"]
 
-      ret.onstarGpsLongitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLongitude"] # ONSTAR_GPS_TEST
-      ret.onstarGpsLatitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLatitude"] # ONSTAR_GPS_TEST
-      ret.onstarGpsAltitude = 0. #pt_cp.vl["WrongGPSAltitude"]["GPSAltitude"] # ONSTAR_GPS_TEST
-      ret.onstarGpsBearing = cam_cp.vl["SPEED_RELATED"]["GPSBearing"] # ONSTAR_GPS_TEST
+      if params.get_bool("OnStarGPS"):
+        ret.onstarGpsLongitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLongitude"] # ONSTAR_GPS_TEST
+        ret.onstarGpsLatitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLatitude"] # ONSTAR_GPS_TEST
+        ret.onstarGpsAltitude = 0. #pt_cp.vl["WrongGPSAltitude"]["GPSAltitude"] # ONSTAR_GPS_TEST
+        ret.onstarGpsBearing = cam_cp.vl["SPEED_RELATED"]["GPSBearing"] # ONSTAR_GPS_TEST
+      else:
+        ret.onstarGpsLongitude = 0. # ONSTAR_GPS_TEST
+        ret.onstarGpsLatitude = 0. # ONSTAR_GPS_TEST
+        ret.onstarGpsAltitude = 0. # ONSTAR_GPS_TEST
+        ret.onstarGpsBearing = 0. # ONSTAR_GPS_TEST
+
       ret.currentGearNumber = pt_cp.vl["ECMPRDNL2"]["CurrentGearNumber"] # ONSTAR_GPS_TEST
       ret.nextGearNumber = pt_cp.vl["ECMPRDNL2"]["NextGearNumber"] # ONSTAR_GPS_TEST
 
@@ -281,11 +291,15 @@ class CarState(CarStateBase):
           ("BCMDoorBeltStatus", 10),
           ("BCMGeneralPlatformStatus", 10),
           ("ASCMSteeringButton", 33),
-          ("TCICOnStarGPSPosition", 10), #10Hz # ONSTAR_GPS_TEST
-          ("SPEED_RELATED", 10), #10Hz # ONSTAR_GPS_TEST
-          # ("WrongGPSAltitude", 20), #20Hz # ONSTAR_GPS_TEST
-          # ("ECMPRDNL2", 40), #40Hz # ONSTAR_GPS_TEST
         ]
+        if params.get_bool("OnStarGPS"):
+          messages += [
+            ("TCICOnStarGPSPosition", 10), #10Hz # ONSTAR_GPS_TEST
+            ("SPEED_RELATED", 10), #10Hz # ONSTAR_GPS_TEST
+            # ("WrongGPSAltitude", 20), #20Hz # ONSTAR_GPS_TEST
+            # ("ECMPRDNL2", 40), #40Hz # ONSTAR_GPS_TEST
+          ]
+
         if CP.enableBsm:
           messages.append(("BCMBlindSpotMonitor", 10))
       else:
