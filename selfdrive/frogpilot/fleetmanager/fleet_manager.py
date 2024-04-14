@@ -84,14 +84,31 @@ def route(route):
   links = ""
   segments = ""
   for segment in fleet.segments_in_route(route):
-    links += "<a href='"+route+"?"+segment.split("--")[2]+","+query_type+"'>"+segment+"</a> | <a href='/qlog/"+segment+"'>qlog</a><br>"
+    links += "<a href='"+route+"?"+segment.split("--")[2]+","+query_type+"'>"+segment+"</a><br>"
+    links += "log files: ( <a href='/qlog/"+segment+"'>qlog</a> | <a href='/rlog/"+segment+"'>rlog</a> )<br>"
+    links += "raw videos: [ <a href='/fcam/"+segment+"'>fcamera</a> | <a href='/ecam/"+segment+"'>ecamera</a> | <a href='/ecam/"+segment+"'>qcamera</a> ]<br>"
     segments += "'"+segment+"',"
   return render_template("route.html", route=route, query_type=query_type, links=links, segments=segments, query_segment=query_segment)
 
 @app.route("/qlog/<segment>")
 def qlog_downlod_file(segment):
-  # return send_from_directory("/data/media/0/realdata/", segment + "/qlog", as_attachment=True)
   return send_file("/data/media/0/realdata/"+segment+"/qlog", as_attachment=True, download_name=segment+".qlog")
+
+@app.route("/rlog/<segment>")
+def rlog_downlod_file(segment):
+  return send_file("/data/media/0/realdata/"+segment+"/rlog", as_attachment=True, download_name=segment+".rlog")
+
+@app.route("/fcam/<segment>")
+def fcam_downlod_file(segment):
+  return send_file("/data/media/0/realdata/"+segment+"/fcamera.hevc", as_attachment=True, download_name=segment+"_fcamera.hevc")
+
+@app.route("/ecam/<segment>")
+def ecam_downlod_file(segment):
+  return send_file("/data/media/0/realdata/"+segment+"/ecamera.hevc", as_attachment=True, download_name=segment+"_ecamera.hevc")
+
+@app.route("/qcam/<segment>")
+def qcam_downlod_file(segment):
+  return send_file("/data/media/0/realdata/"+segment+"/qcamera.ts", as_attachment=True, download_name=segment+"_qcamera.ts")
 
 @app.route("/footage/")
 @app.route("/footage")
