@@ -94,7 +94,7 @@ class VCruiseHelper:
           break
 
     # Reverse the long press value for reverse cruise increase
-    if frogpilot_variables.reverse_cruise_increase:
+    if frogpilot_variables.reverse_cruise_increase and self.params_memory.get_bool("ReverseCruiseRunTime"):
       long_press = not long_press
 
     if button_type is None:

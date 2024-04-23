@@ -196,6 +196,7 @@ def manager_init() -> None:
     ("NavChill", "0"),
     ("NNFF", "1"),
     ("NoLogging", "0"),
+    ("NoDashCam", "0"),
     ("NoUploads", "0"),
     ("NudgelessLaneChange", "1"),
     ("NumericalTemp", "0"),
