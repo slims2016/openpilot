@@ -357,6 +357,42 @@ def store_toggle_values_route():
   except Exception as e:
     return jsonify({"error": "Failed to update values", "details": str(e)}), 400
 
+@app.route("/screen_recorder_button", methods=['POST'])
+def screen_recorder_button_route():
+  try:
+    toggle = int(request.args.get('toggle'))
+    msg = ""
+    if toggle == 1: #start
+      msg = "Started"
+    elif toggle == 2: #stop
+      msg = "Stopped"
+    elif toggle == 3: #toggle
+      msg = "Toggled"
+    else:
+      return "Screen Recorder Wrong Value", 400
+    fleet.screen_recorder_button(toggle)
+    return "Screen Recorder "+ msg +" successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
+@app.route("/sidebar_button", methods=['POST'])
+def sidebar_button_route():
+  try:
+    toggle = int(request.args.get('toggle'))
+    msg = ""
+    if toggle == 1: #show
+      msg = "Shown"
+    elif toggle == 2: #hide
+      msg = "Hidden"
+    elif toggle == 3: #toggle
+      msg = "Toggled"
+    else:
+      return "Sidebar Wrong Value", 400
+    fleet.sidebar_button(toggle)
+    return "Sidebar "+ msg +" successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
 def main():
   try:
     set_core_affinity([0, 1, 2, 3])

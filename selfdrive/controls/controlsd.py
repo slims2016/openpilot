@@ -179,11 +179,13 @@ class Controls:
     self.params_memory = Params("/dev/shm/params")
 
     #self.frogpilot_variables.reverse_cruise_increase
-    self.params_memory.put_bool("ReverseCruiseRunTime", self.params.get_bool("ReverseCruise"))
+    reverse_cruise = self.params.get_bool("ReverseCruise")
+    self.params_memory.put_bool("ReverseCruiseRunTime", reverse_cruise)
 
     self.ignore_controls_mismatch = False
 
     self.frogpilot_variables = SimpleNamespace()
+    self.frogpilot_variables.reverse_cruise_increase = reverse_cruise
 
     self.driving_gear = False
     self.fcw_random_event_triggered = False
@@ -484,8 +486,8 @@ class Controls:
       if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= 200:
         if self.random_events: #Show Controls Mismatch Error
           self.events.add(EventName.controlsMismatch)
-        elif not self.ignore_controls_mismatch: #Shown as GPS alert
-          self.events.add(EventName.noGps)
+        elif not self.ignore_controls_mismatch: #Show Controls Mismatch Error 2
+          self.events.add(EventName.controlsMismatch2)
           self.ignore_controls_mismatch = True
 
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
@@ -1258,7 +1260,15 @@ class Controls:
 
     quality_of_life = self.params.get_bool("QOLControls")
     self.pause_lateral_on_signal = self.params.get_int("PauseLateralOnSignal") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
-    self.frogpilot_variables.reverse_cruise_increase = quality_of_life and self.params.get_bool("ReverseCruise")
+    # drive_helpers.py改用ReverseCruiseRunTime控制
+    # if frogpilot_variables.reverse_cruise_increase and self.params_memory.get_bool("ReverseCruiseRunTime"):
+    reverse_cruise_increase = quality_of_life and self.params_memory.get_bool("ReverseCruiseRunTime")
+    if self.frogpilot_variables.reverse_cruise_increase != reverse_cruise_increase and self.params_memory.get_bool("FrogPilotTogglesUpdated"):
+      self.params_memory.put_bool("FrogPilotTogglesUpdated", False)
+    self.frogpilot_variables.reverse_cruise_increase = reverse_cruise_increase
+    
+    self.frogpilot_variables.custom_cruise_increase = self.params.get_int("CustomCruise") if quality_of_life else 1
+    self.frogpilot_variables.custom_cruise_increase_long = self.params.get_int("CustomCruiseLong") if quality_of_life else 5
     self.frogpilot_variables.set_speed_offset = self.params.get_int("SetSpeedOffset") * (1 if self.is_metric else CV.MPH_TO_KPH) if quality_of_life else 0
     #MinSteerSpeedStandard, convert to MS
     self.min_steer_speed_standard = self.params.get_int("MinSteerSpeedStandard") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0

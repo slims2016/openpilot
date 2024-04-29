@@ -44,6 +44,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     calibrationInvalid @21;
     calibrationRecalibrating @117;
     controlsMismatch @22;
+    controlsMismatch2 @137;
     pcmEnable @23;
     pcmDisable @24;
     radarFault @26;

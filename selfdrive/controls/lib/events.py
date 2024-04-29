@@ -266,12 +266,12 @@ def no_gps_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, m
       "Hardware malfunctioning if sky is visible",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
-  else: #Show Controls Mismatch Error
-    return Alert(
-      "Controls Mismatch",
-      "请谨慎驾驶，人工接管方向盘",
-      AlertStatus.normal, AlertSize.mid,
-      Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
+  # else: #Show Controls Mismatch Error
+  #   return Alert(
+  #     "Controls Mismatch",
+  #     "请谨慎驾驶，人工接管方向盘",
+  #     AlertStatus.normal, AlertSize.mid,
+  #     Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
 
 def torque_nn_load_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   model_name = params_memory.get("NNFFModelName")
@@ -901,6 +901,16 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   EventName.controlsMismatch: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Controls Mismatch"),
     ET.NO_ENTRY: NoEntryAlert("Controls Mismatch"),
+  },
+
+  EventName.controlsMismatch2: {
+    # ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Controls Mismatch"),
+    ET.PERMANENT: Alert(
+      "Controls Mismatch 2",
+      "请谨慎驾驶，人工接管方向盘",
+      AlertStatus.normal, AlertSize.small,
+      Priority.LOWER, VisualAlert.none, AudibleAlert.promptRepeat, 10.),
+    ET.NO_ENTRY: NoEntryAlert("Controls Mismatch 2"),
   },
 
   EventName.roadCameraError: {

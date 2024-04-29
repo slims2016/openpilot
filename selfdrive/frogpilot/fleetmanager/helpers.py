@@ -495,3 +495,17 @@ def store_toggle_values(updated_values):
   params_memory.put_bool("FrogPilotTogglesUpdated", True)
   time.sleep(1)
   params_memory.put_bool("FrogPilotTogglesUpdated", False)
+
+def screen_recorder_button(toggle):
+  params_memory.put_int("ScreenRecorderToggle", toggle)
+
+  params_memory.put_bool("FrogPilotTogglesUpdated", True)
+  time.sleep(1)
+  params_memory.put_bool("FrogPilotTogglesUpdated", False)
+
+def sidebar_button(toggle):
+  params_memory.put_int("SidebarToggle", toggle)
+
+  params_memory.put_bool("FrogPilotTogglesUpdated", True)
+  time.sleep(1)
+  params_memory.put_bool("FrogPilotTogglesUpdated", False)  

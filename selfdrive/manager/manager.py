@@ -225,6 +225,8 @@ def manager_init() -> None:
     ("RelaxedJerk", "1.0"),
     ("ReverseCruise", "0"),
     ("ReverseCruiseUI", "1"),
+    ("CustomCruise", "1"),
+    ("CustomCruiseLong", "5"),
     ("RoadEdgesWidth", "5"), #2 inches -> 5 cm
     ("RoadNameUI", "1"),
     ("RotatingWheel", "1"),
