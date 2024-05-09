@@ -94,7 +94,9 @@ class VCruiseHelper:
           break
 
     # Reverse the long press value for reverse cruise increase
-    if frogpilot_variables.reverse_cruise_increase and self.params_memory.get_bool("ReverseCruiseRunTime"):
+    # 0-没有初值，1-false, 2-true
+    intReverseCruiseRunTime = self.params_memory.get_int("ReverseCruiseRunTime")
+    if (frogpilot_variables.reverse_cruise_increase and intReverseCruiseRunTime==0) or intReverseCruiseRunTime==2:
       long_press = not long_press
 
     if button_type is None:
@@ -123,11 +125,13 @@ class VCruiseHelper:
     v_cruise_delta_interval = frogpilot_variables.custom_cruise_increase_long if long_press else frogpilot_variables.custom_cruise_increase
     # v_cruise_delta = v_cruise_delta * (5 if long_press else 1)
     v_cruise_delta = v_cruise_delta * v_cruise_delta_interval
+    # 没有用，昂科旗巡航速度不是整数
     # if long_press and self.v_cruise_kph % v_cruise_delta != 0:  # partial interval
-    if v_cruise_delta_interval % 5 == 0 and self.v_cruise_kph % v_cruise_delta != 0:  # partial interval
-      self.v_cruise_kph = CRUISE_NEAREST_FUNC[button_type](self.v_cruise_kph / v_cruise_delta) * v_cruise_delta
-    else:
-      self.v_cruise_kph += v_cruise_delta * CRUISE_INTERVAL_SIGN[button_type]
+    # if v_cruise_delta_interval % 5 == 0 and self.v_cruise_kph % v_cruise_delta != 0:  # partial interval
+    #   self.v_cruise_kph = CRUISE_NEAREST_FUNC[button_type](self.v_cruise_kph / v_cruise_delta) * v_cruise_delta
+    # else:
+    #   self.v_cruise_kph += v_cruise_delta * CRUISE_INTERVAL_SIGN[button_type]
+    self.v_cruise_kph += v_cruise_delta * CRUISE_INTERVAL_SIGN[button_type]
 
     # Apply offset
     v_cruise_offset = (frogpilot_variables.set_speed_offset * CRUISE_INTERVAL_SIGN[button_type]) if long_press else 0

@@ -909,7 +909,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "Controls Mismatch 2",
       "请谨慎驾驶，人工接管方向盘",
       AlertStatus.normal, AlertSize.small,
-      Priority.LOWER, VisualAlert.none, AudibleAlert.promptRepeat, 10.),
+      Priority.LOWER, VisualAlert.none, AudibleAlert.none, 10.),
     ET.NO_ENTRY: NoEntryAlert("Controls Mismatch 2"),
   },
 

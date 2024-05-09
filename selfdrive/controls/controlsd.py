@@ -178,14 +178,11 @@ class Controls:
     self.params = Params()
     self.params_memory = Params("/dev/shm/params")
 
-    #self.frogpilot_variables.reverse_cruise_increase
-    reverse_cruise = self.params.get_bool("ReverseCruise")
-    self.params_memory.put_bool("ReverseCruiseRunTime", reverse_cruise)
-
     self.ignore_controls_mismatch = False
 
     self.frogpilot_variables = SimpleNamespace()
-    self.frogpilot_variables.reverse_cruise_increase = reverse_cruise
+    #self.frogpilot_variables.reverse_cruise_increase
+    self.frogpilot_variables.reverse_cruise_increase = self.params.get_bool("QOLControls") and self.params.get_bool("ReverseCruise")
 
     self.driving_gear = False
     self.fcw_random_event_triggered = False
@@ -910,7 +907,8 @@ class Controls:
     standstill = CS.vEgo <= max(self.CP.minSteerSpeed, MIN_LATERAL_CONTROL_SPEED) or CS.standstill
     CC.latActive = (self.active or self.FPCC.alwaysOnLateral) and signal_check and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
                    (not standstill or self.joystick_mode) and not self.openpilot_crashed and \
-                   min_steer_speed_check
+                   min_steer_speed_check and \
+                   (not self.lateral_disable_runtime)
     CC.longActive = self.enabled and not self.events.contains(ET.OVERRIDE_LONGITUDINAL) and self.CP.openpilotLongitudinalControl and not self.openpilot_crashed
 
     actuators = CC.actuators
@@ -1223,7 +1221,7 @@ class Controls:
   def update_frogpilot_params(self):
     self.frogpilot_variables.conditional_experimental_mode = self.params.get_bool("ConditionalExperimental")
     self.frogpilot_variables.CSLC = self.params.get_bool("CSLCEnabled")
-
+    
     custom_alerts = self.params.get_bool("CustomAlerts")
     self.green_light_alert = custom_alerts and self.params.get_bool("GreenLightAlert")
     self.lead_departing_alert = custom_alerts and self.params.get_bool("LeadDepartingAlert")
@@ -1259,14 +1257,21 @@ class Controls:
     self.frogpilot_variables.sng_hack = self.params.get_bool("SNGHack")
 
     quality_of_life = self.params.get_bool("QOLControls")
+
     self.pause_lateral_on_signal = self.params.get_int("PauseLateralOnSignal") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
     # drive_helpers.py改用ReverseCruiseRunTime控制
     # if frogpilot_variables.reverse_cruise_increase and self.params_memory.get_bool("ReverseCruiseRunTime"):
-    reverse_cruise_increase = quality_of_life and self.params_memory.get_bool("ReverseCruiseRunTime")
-    if self.frogpilot_variables.reverse_cruise_increase != reverse_cruise_increase and self.params_memory.get_bool("FrogPilotTogglesUpdated"):
-      self.params_memory.put_bool("FrogPilotTogglesUpdated", False)
-    self.frogpilot_variables.reverse_cruise_increase = reverse_cruise_increase
-    
+    # 0-没有初值，1-false, 2-true
+    if quality_of_life:
+      intReverseCruiseRunTime = self.params_memory.get_int("ReverseCruiseRunTime")
+      if intReverseCruiseRunTime==0:
+        self.frogpilot_variables.reverse_cruise_increase = self.params.get_bool("ReverseCruise")
+        self.params_memory.put_int("ReverseCruiseRunTime", 2 if self.params.get_bool("ReverseCruise") else 1)
+      else:
+        self.frogpilot_variables.reverse_cruise_increase = (intReverseCruiseRunTime==2)
+    else:
+      self.frogpilot_variables.reverse_cruise_increase = False
+
     self.frogpilot_variables.custom_cruise_increase = self.params.get_int("CustomCruise") if quality_of_life else 1
     self.frogpilot_variables.custom_cruise_increase_long = self.params.get_int("CustomCruiseLong") if quality_of_life else 5
     self.frogpilot_variables.set_speed_offset = self.params.get_int("SetSpeedOffset") * (1 if self.is_metric else CV.MPH_TO_KPH) if quality_of_life else 0
@@ -1274,6 +1279,8 @@ class Controls:
     self.min_steer_speed_standard = self.params.get_int("MinSteerSpeedStandard") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
     #MinSteerSpeedEngage, convert to MS
     self.min_steer_speed_engage = self.params.get_int("MinSteerSpeedEngage") * (CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS) if quality_of_life else 0
+    #运行时开启、关闭横向控制
+    self.lateral_disable_runtime = self.params_memory.get_bool("LateralDisableRunTime")
 
     self.random_events = self.params.get_bool("RandomEvents")
     self.frogpilot_variables.use_ev_tables = self.params.get_bool("EVTable")

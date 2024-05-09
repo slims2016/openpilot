@@ -393,11 +393,67 @@ def sidebar_button_route():
   except Exception as e:
     return jsonify({"error": "Failed to update values", "details": str(e)}), 400
 
+@app.route("/reverse_cruise_button", methods=['POST'])
+def reverse_cruise_button_route():
+  try:
+    toggle = int(request.args.get('toggle'))
+    msg = ""
+    if toggle == 1: #show
+      msg = "Enabled"
+    elif toggle == 2: #hide
+      msg = "Disabled"
+    elif toggle == 3: #toggle
+      msg = "Toggled"
+    else:
+      return "Reverse Cruise Wrong Value", 400
+    fleet.reverse_cruise_button(toggle)
+    return "Reverse Cruise "+ msg +" successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
+@app.route("/nudgeless_button", methods=['POST'])
+def nudgeless_button_route():
+  try:
+    toggle = int(request.args.get('toggle'))
+    msg = ""
+    if toggle == 1: #show
+      msg = "Enabled"
+    elif toggle == 2: #hide
+      msg = "Disabled"
+    elif toggle == 3: #toggle
+      msg = "Toggled"
+    else:
+      return "Nudgeless Lane Change Wrong Value", 400
+    fleet.nudgeless_button(toggle)
+    return "Nudgeless Lane Change "+ msg +" successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
+@app.route("/lateral_control_button", methods=['POST'])
+def lateral_control_button_route():
+  try:
+    toggle = int(request.args.get('toggle'))
+    msg = ""
+    if toggle == 1: #show
+      msg = "Enabled"
+    elif toggle == 2: #hide
+      msg = "Disabled"
+    elif toggle == 3: #toggle
+      msg = "Toggled"
+    else:
+      return "Lateral Control Wrong Value", 400
+    fleet.lateral_control_button(toggle)
+    return "Lateral Control "+ msg +" successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
 def main():
   try:
     set_core_affinity([0, 1, 2, 3])
   except Exception:
     cloudlog.exception("fleet_manager: failed to set core affinity")
+  #UDP测试
+  #threading.Thread(target=fleet.udp_send_message).start()
   app.secret_key = secrets.token_hex(32)
   app.run(host="0.0.0.0", port=8082)
 

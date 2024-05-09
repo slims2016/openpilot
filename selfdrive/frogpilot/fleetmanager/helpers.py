@@ -26,6 +26,7 @@ import os
 import requests
 import subprocess
 import time
+import socket #UDP测试
 # otisserv conversion
 from common.params import Params
 from flask import render_template, request, session
@@ -55,6 +56,9 @@ PRESERVE_ATTR_NAME = 'user.preserve'
 PRESERVE_ATTR_VALUE = b'1'
 PRESERVE_COUNT = 5
 
+#UDP测试
+UDP_IP = "0.0.0.0"
+UDP_PORT = 6499
 
 # path to openpilot screen recordings and error logs
 if PC:
@@ -64,6 +68,16 @@ else:
   SCREENRECORD_PATH = "/data/media/0/videos/"
   ERROR_LOGS_PATH = "/data/community/crashes/"
 
+#UDP测试
+def udp_send_message():
+  UDP_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+  while True:
+    message = b"UDP OpenPilot Comma 3!"
+    UDP_SOCKET.sendto(message, (UDP_IP, UDP_PORT))
+    time.sleep(1)
+
+  UDP_SOCKET.close()
 
 def list_files(path): # still used for footage
   return sorted(listdir_by_creation(path), reverse=True)
@@ -500,8 +514,8 @@ def screen_recorder_button(toggle):
   params_memory.put_int("ScreenRecorderToggle", toggle)
 
   params_memory.put_bool("FrogPilotTogglesUpdated", True)
-  time.sleep(1)
-  params_memory.put_bool("FrogPilotTogglesUpdated", False)
+  # time.sleep(1)
+  # params_memory.put_bool("FrogPilotTogglesUpdated", False)
 
 def sidebar_button(toggle):
   params_memory.put_int("SidebarToggle", toggle)
@@ -509,3 +523,39 @@ def sidebar_button(toggle):
   params_memory.put_bool("FrogPilotTogglesUpdated", True)
   time.sleep(1)
   params_memory.put_bool("FrogPilotTogglesUpdated", False)  
+
+def reverse_cruise_button(toggle):
+  if toggle==1: #enabled
+    params_memory.put_int("ReverseCruiseRunTime", 2)
+  elif toggle==2: #disabled
+    params_memory.put_int("ReverseCruiseRunTime", 1)
+  else: #toggled
+    params_memory.put_int("ReverseCruiseRunTime", 1 if params_memory.get_int("ReverseCruiseRunTime")==2 else 2)
+
+  params_memory.put_bool("FrogPilotTogglesUpdated", True)
+  time.sleep(1)
+  params_memory.put_bool("FrogPilotTogglesUpdated", False)  
+
+def nudgeless_button(toggle):
+  if toggle==1: #enabled
+    params.put_bool_nonblocking("NudgelessLaneChange", True)
+  elif toggle==2: #disabled
+    params.put_bool_nonblocking("NudgelessLaneChange", False)
+  else: #toggled
+    params.put_bool_nonblocking("NudgelessLaneChange", not params.get_bool("NudgelessLaneChange"))
+
+  params_memory.put_bool("FrogPilotTogglesUpdated", True)
+  time.sleep(1)
+  params_memory.put_bool("FrogPilotTogglesUpdated", False)
+
+def lateral_control_button(toggle):
+  if toggle==1: #enabled
+    params_memory.put_bool("LateralDisableRunTime", False)
+  elif toggle==2: #disabled
+    params_memory.put_bool("LateralDisableRunTime", True)
+  else: #toggled
+    params_memory.put_int("LateralDisableRunTime", not params_memory.get_bool("LateralDisableRunTime"))
+
+  params_memory.put_bool("FrogPilotTogglesUpdated", True)
+  time.sleep(1)
+  params_memory.put_bool("FrogPilotTogglesUpdated", False)
