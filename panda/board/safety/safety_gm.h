@@ -68,9 +68,9 @@ RxCheck gm_rx_checks[] = {
   {.msg = {{0x184, 0, 8, .frequency = 10U}, { 0 }, { 0 }}},
   {.msg = {{0x34A, 0, 5, .frequency = 10U}, { 0 }, { 0 }}},
   {.msg = {{0x1E1, 0, 7, .frequency = 10U},   // Non-SDGM Car
-           {0x1E1, 2, 7, .frequency = 100000U}}}, // SDGM Car
+           {0x1E1, 2, 7, .frequency = 33U}}}, // SDGM Car 100000U
   {.msg = {{0xF1, 0, 6, .frequency = 10U},   // Non-SDGM Car
-           {0xF1, 2, 6, .frequency = 100000U}}}, // SDGM Car
+           {0xF1, 2, 6, .frequency = 100U}}}, // SDGM Car 100000U
   {.msg = {{0x1C4, 0, 8, .frequency = 10U}, { 0 }, { 0 }}},
   {.msg = {{0xC9, 0, 8, .frequency = 10U}, { 0 }, { 0 }}},
 };
