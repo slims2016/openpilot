@@ -199,6 +199,7 @@ def manager_init() -> None:
     ("NoDashCam", "0"),
     ("NoUploads", "0"),
     ("NudgelessLaneChange", "1"),
+    ("NudgelessSmooth", "0"), # Smoother Nudgeless Lane Change
     ("NumericalTemp", "0"),
     ("OfflineMode", "0"),
     ("Offset1", "8"), #5mph -> 8kph
@@ -289,7 +290,8 @@ def manager_init() -> None:
     ("CalibrationCycles", "1"), 
     ("OnStarGPS", "0"),    
     ("GearNumber", "0"), #GEAR_NUMBER_TEST
-    ("GearNumber", "0"), #FROGPILOT_PREBUILT_TEST
+    ("FrogPilotPrebuilt", "0"), #FROGPILOT_PREBUILT_TEST
+    ("UseRedPanda", "0"), #Red Panda Config BUS 0/1/2/3 -> 4/5/6/7
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))

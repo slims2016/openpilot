@@ -114,6 +114,10 @@ class CarController:
         apply_steer = 0
 
       self.last_steer_frame = self.frame
+      #Smoother Nudgeless Lane Change
+      if frogpilot_variables.smoother_lane_change > 1: #wait for next time
+        apply_steer = int(apply_steer * (1 - frogpilot_variables.smoother_lane_change / 100))
+        frogpilot_variables.smoother_lane_change = 1 #only 1 time
       self.apply_steer_last = apply_steer
       idx = self.lka_steering_cmd_counter % 4
       can_sends.append(gmcan.create_steering_control(self.packer_pt, CanBus.POWERTRAIN, apply_steer, idx, CC.latActive))

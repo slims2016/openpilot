@@ -183,6 +183,8 @@ class Controls:
     self.frogpilot_variables = SimpleNamespace()
     #self.frogpilot_variables.reverse_cruise_increase
     self.frogpilot_variables.reverse_cruise_increase = self.params.get_bool("QOLControls") and self.params.get_bool("ReverseCruise")
+    #Smoother Nudgeless Lane Change
+    self.frogpilot_variables.smoother_lane_change = 0
 
     self.driving_gear = False
     self.fcw_random_event_triggered = False
@@ -445,7 +447,7 @@ class Controls:
       direction = self.sm['modelV2'].meta.laneChangeDirection
       desired_lane = frogpilot_plan.laneWidthLeft if direction == LaneChangeDirection.left else frogpilot_plan.laneWidthRight
       lane_available = desired_lane >= self.lane_detection_width
-
+      self.frogpilot_variables.smoother_lane_change = 0 # clear pre-value
       if (CS.leftBlindspot and direction == LaneChangeDirection.left) or \
          (CS.rightBlindspot and direction == LaneChangeDirection.right):
         if self.loud_blindspot_alert:
@@ -459,8 +461,20 @@ class Controls:
           self.events.add(EventName.preLaneChangeLeft)
         else:
           self.events.add(EventName.preLaneChangeRight)
-    elif self.sm['modelV2'].meta.laneChangeState in (LaneChangeState.laneChangeStarting,
-                                                    LaneChangeState.laneChangeFinishing):
+    # elif self.sm['modelV2'].meta.laneChangeState in (LaneChangeState.laneChangeStarting,
+    #                                                 LaneChangeState.laneChangeFinishing):
+    #   self.events.add(EventName.laneChange)
+    #Smoother Nudgeless Lane Change
+    elif self.sm['modelV2'].meta.laneChangeState == LaneChangeState.laneChangeStarting:
+      self.events.add(EventName.laneChange)
+      if self.nudgeless_smooth and self.frogpilot_variables.smoother_lane_change <= 0:
+        long_personality = self.params.get_int("LongitudinalPersonality")
+        if long_personality == 2: #relaxed
+          self.frogpilot_variables.smoother_lane_change = 5 #95%
+        elif long_personality == 1: #standard
+          self.frogpilot_variables.smoother_lane_change = 2.5 #97.5%
+    elif self.sm['modelV2'].meta.laneChangeState == LaneChangeState.laneChangeFinishing:
+      self.frogpilot_variables.smoother_lane_change = 0 # clear pre-value
       self.events.add(EventName.laneChange)
 
     # Handle turning
@@ -1219,6 +1233,8 @@ class Controls:
       t.join()
 
   def update_frogpilot_params(self):
+    self.nudgeless_smooth = self.params.get_bool("NudgelessSmooth")
+
     self.frogpilot_variables.conditional_experimental_mode = self.params.get_bool("ConditionalExperimental")
     self.frogpilot_variables.CSLC = self.params.get_bool("CSLCEnabled")
     

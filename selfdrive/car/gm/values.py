@@ -197,6 +197,15 @@ class AccState:
   FAULTED = 3
   STANDSTILL = 4
 
+# Red Panda Config BUS 0/1/2/3 -> 4/5/6/7
+# class CanBus:
+#   POWERTRAIN = 4 #0
+#   OBSTACLE = 5 #1
+#   CAMERA = 6 #2
+#   CHASSIS = 6 #2
+#   LOOPBACK = 132 #128
+#   DROPPED = 196 #192
+# Internal Panda Config BUS 0/1/2/3
 class CanBus:
   POWERTRAIN = 0
   OBSTACLE = 1
@@ -204,6 +213,25 @@ class CanBus:
   CHASSIS = 2
   LOOPBACK = 128
   DROPPED = 192
+
+  @staticmethod
+  def checkPanda():
+    if Params().get_bool("UseRedPanda"):
+      CanBus.POWERTRAIN = 0 + 4
+      CanBus.OBSTACLE = 1 + 4
+      CanBus.CAMERA = 2 + 4
+      CanBus.CHASSIS = 2 + 4
+      CanBus.LOOPBACK = 128 + 4
+      CanBus.DROPPED = 192 + 4
+    else:
+      CanBus.POWERTRAIN = 0
+      CanBus.OBSTACLE = 1
+      CanBus.CAMERA = 2
+      CanBus.CHASSIS = 2
+      CanBus.LOOPBACK = 128
+      CanBus.DROPPED = 192
+
+CanBus.checkPanda()
 
 class GMFlags(IntFlag):
   PEDAL_LONG = 1
