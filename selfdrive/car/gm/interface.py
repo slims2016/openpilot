@@ -131,7 +131,10 @@ class CarInterface(CarInterfaceBase):
       ret.networkLocation = NetworkLocation.fwdCamera
       ret.radarUnavailable = True  # no radar
       ret.pcmCruise = True
-      ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM
+      if params.get_bool("UseRedPanda"):
+        ret.safetyConfigs[-1].safetyParam |= Panda.FLAG_GM_HW_CAM
+      else:
+        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM
       ret.minEnableSpeed = 5 * CV.KPH_TO_MS
       ret.minSteerSpeed = 10 * CV.KPH_TO_MS
 
@@ -149,7 +152,10 @@ class CarInterface(CarInterfaceBase):
       if experimental_long:
         ret.pcmCruise = False
         ret.openpilotLongitudinalControl = True
-        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
+        if params.get_bool("UseRedPanda"):
+          ret.safetyConfigs[-1].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
+        else:
+          ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
 
     elif candidate in SDGM_CAR:
       ret.experimentalLongitudinalAvailable = False
