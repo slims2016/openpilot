@@ -23,16 +23,38 @@ def is_registered_device() -> bool:
   dongle = Params().get("DongleId", encoding='utf-8')
   return dongle not in (None, UNREGISTERED_DONGLE_ID)
 
+def local_register():
+  serial = HARDWARE.get_serial()
+  imei1: Optional[str] = None
+  imei2: Optional[str] = None
+  while imei1 is None and imei2 is None:
+    try:
+      imei1, imei2 = HARDWARE.get_imei(0), HARDWARE.get_imei(1)
+    except Exception:
+      time.sleep(1)
+
+  params = Params()
+  params.put("IMEI", imei1)
+  params.put("HardwareSerial", serial)
+
+  return serial, imei1
 
 def register(show_spinner=False) -> Optional[str]:
   params = Params()
 
   IMEI = params.get("IMEI", encoding='utf8')
   HardwareSerial = params.get("HardwareSerial", encoding='utf8')
+  if None in (IMEI, HardwareSerial):
+    HardwareSerial, IMEI = local_register()
+    
   dongle_id: Optional[str] = params.get("DongleId", encoding='utf8')
+  if dongle_id in (None, ""):
+    dongle_id = IMEI[0:8]
+    params.put("DongleId", dongle_id)
+
   needs_registration = None in (IMEI, HardwareSerial, dongle_id)
   # 不检查dongle_id
-  return UNREGISTERED_DONGLE_ID
+  return dongle_id #UNREGISTERED_DONGLE_ID
   pubkey = Path(Paths.persist_root()+"/comma/id_rsa.pub")
   if not pubkey.is_file():
     dongle_id = UNREGISTERED_DONGLE_ID

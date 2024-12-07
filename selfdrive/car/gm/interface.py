@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import time
 from cereal import car
 from math import fabs, exp
 from panda import Panda
@@ -484,13 +485,18 @@ class CarInterface(CarInterfaceBase):
     if below_min_enable_speed and not (ret.standstill and ret.brake >= 20 and
                                        (self.CP.networkLocation == NetworkLocation.fwdCamera and not self.CP.carFingerprint in SDGM_CAR)):
       events.add(EventName.belowEngageSpeed)
+    # only show 5 seconds
     if ret.cruiseState.standstill and not self.CP.autoResumeSng and not self.disable_resumeRequired:
       events.add(EventName.resumeRequired)
       self.resumeRequired_shown = True
+      if not self.resumeRequired_time:
+        self.resumeRequired_time = int(time.time())
 
     # Disable the "resumeRequired" event after it's been shown once to not annoy the driver
-    if self.resumeRequired_shown and not ret.cruiseState.standstill:
-      self.disable_resumeRequired = True
+    #if self.resumeRequired_shown and not ret.cruiseState.standstill:
+    if self.resumeRequired_shown and not self.disable_resumeRequired:
+      if self.resumeRequired_time and (int(time.time()) - self.resumeRequired_time >= 5):
+        self.disable_resumeRequired = True
 
     if ret.vEgo < self.CP.minSteerSpeed and not self.disable_belowSteerSpeed:
       events.add(EventName.belowSteerSpeed)

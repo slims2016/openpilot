@@ -456,13 +456,32 @@ def udp_broadcast_ip_route():
   except Exception as e:
     return jsonify({"error": "Failed to update values", "details": str(e)}), 400
 
+@app.route("/get_broadcast_ip", methods=['GET'])
+def get_broadcast_ip_route():
+  ipaddr = fleet.get_broadcast_ip()
+  return ipaddr
+
+@app.route("/get_esp32_ipaddr", methods=['GET'])
+def get_esp32_ipaddr_route():
+  ipaddr = fleet.get_esp32_ipaddr()
+  return ipaddr
+
+@app.route("/esp32_ipaddr", methods=['POST'])
+def esp32_ipaddr_route():
+  try:
+    ipaddr = request.args.get('ipaddr')
+    fleet.esp32_ipaddr(ipaddr)
+    return "ESP32 IP Address set to " + ipaddr + " successfully", 200
+  except Exception as e:
+    return jsonify({"error": "Failed to update values", "details": str(e)}), 400
+
 def main():
   try:
     set_core_affinity([0, 1, 2, 3])
   except Exception:
     cloudlog.exception("fleet_manager: failed to set core affinity")
   #UDP测试
-  #threading.Thread(target=fleet.udp_send_message).start()
+  threading.Thread(target=fleet.udp_send_message).start()
   app.secret_key = secrets.token_hex(32)
   app.run(host="0.0.0.0", port=8082)
 

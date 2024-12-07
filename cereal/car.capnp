@@ -126,6 +126,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     holidayActive @124;
     laneChangeBlockedLoud @125;
     leadDeparting @126;
+    autoResumeEvent @138; # auto_resume
     noLaneAvailable @127;
     openpilotCrashed @128;
     openpilotCrashedRandomEvents @129;

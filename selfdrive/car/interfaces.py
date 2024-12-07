@@ -219,6 +219,7 @@ class CarInterfaceBase(ABC):
 
     self.resumeRequired_shown = False
     self.disable_resumeRequired = False
+    self.resumeRequired_time = 0 # only show 5 seconds
 
   def get_ff_nn(self, x):
     return self.lat_torque_nn_model.evaluate(x)

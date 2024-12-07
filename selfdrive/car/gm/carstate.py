@@ -10,6 +10,7 @@ from openpilot.selfdrive.controls.lib.drive_helpers import CRUISE_LONG_PRESS
 
 from openpilot.common.params import Params #Fixed XT5 OnStar CAN Errors
 params = Params()
+params_memory = Params("/dev/shm/params") # UDP Broadcast Params
 
 TransmissionType = car.CarParams.TransmissionType
 NetworkLocation = car.CarParams.NetworkLocation
@@ -71,6 +72,9 @@ class CarState(CarStateBase):
 
       ret.currentGearNumber = pt_cp.vl["ECMPRDNL2"]["CurrentGearNumber"] # ONSTAR_GPS_TEST
       ret.nextGearNumber = pt_cp.vl["ECMPRDNL2"]["NextGearNumber"] # ONSTAR_GPS_TEST
+
+    # UDP Broadcast Params
+    params_memory.put_int("UDP_CurrentGearNumber", ret.currentGearNumber)
 
     self.pscm_status = copy.copy(pt_cp.vl["PSCMStatus"])
     # This is to avoid a fault where you engage while still moving backwards after shifting to D.
@@ -143,6 +147,7 @@ class CarState(CarStateBase):
     ret.steerFaultTemporary = self.lkas_status == 2
     ret.steerFaultPermanent = self.lkas_status == 3
 
+    hazardLights = 0
     if self.CP.carFingerprint not in SDGM_CAR:
       # 1 - open, 0 - closed
       ret.doorOpen = (pt_cp.vl["BCMDoorBeltStatus"]["FrontLeftDoor"] == 1 or
@@ -167,8 +172,21 @@ class CarState(CarStateBase):
       ret.seatbeltUnlatched = cam_cp.vl["BCMDoorBeltStatus"]["LeftSeatBelt"] == 0
       ret.leftBlinker = cam_cp.vl["BCMTurnSignals"]["TurnSignals"] == 1
       ret.rightBlinker = cam_cp.vl["BCMTurnSignals"]["TurnSignals"] == 2
+      # HazardLights
+      hazardLights = cam_cp.vl["BCMTurnSignals"]["HazardLights"]
 
       ret.parkingBrake = cam_cp.vl["BCMGeneralPlatformStatus"]["ParkBrakeSwActive"] == 1
+
+    # UDP Broadcast Params
+    if ret.leftBlinker:
+      params_memory.put_int("UDP_TurnSignals", 1)
+    elif ret.rightBlinker:
+      params_memory.put_int("UDP_TurnSignals", 2)
+    else:
+      params_memory.put_int("UDP_TurnSignals", 0)
+    # HazardLights
+    params_memory.put_int("UDP_HazardLights", hazardLights)
+
     ret.cruiseState.available = pt_cp.vl["ECMEngineStatus"]["CruiseMainOn"] != 0
     ret.espDisabled = pt_cp.vl["ESPStatus"]["TractionControlOn"] != 1
     ret.accFaulted = (pt_cp.vl["AcceleratorPedal2"]["CruiseState"] == AccState.FAULTED or
@@ -198,6 +216,9 @@ class CarState(CarStateBase):
       else:
         ret.leftBlindspot = cam_cp.vl["BCMBlindSpotMonitor"]["LeftBSM"] == 1
         ret.rightBlindspot = cam_cp.vl["BCMBlindSpotMonitor"]["RightBSM"] == 1
+    # Blindspot
+    params_memory.put_int("UDP_LeftBlindspot", 1 if ret.leftBlindspot else 0)
+    params_memory.put_int("UDP_RightBlindspot", 1 if ret.rightBlindspot else 0)
 
     # FrogPilot functions
     has_camera = self.CP.networkLocation == NetworkLocation.fwdCamera

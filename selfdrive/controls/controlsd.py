@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+# 12345
 import os
 import math
 import time
 import threading
 from types import SimpleNamespace
 from typing import SupportsFloat
+
+import requests #auto_resume
 
 import cereal.messaging as messaging
 import openpilot.selfdrive.sentry as sentry
@@ -177,6 +180,8 @@ class Controls:
     # FrogPilot variables
     self.params = Params()
     self.params_memory = Params("/dev/shm/params")
+    # auto_resume
+    self.standstill_time = 0
 
     self.ignore_controls_mismatch = False
 
@@ -470,9 +475,9 @@ class Controls:
       if self.nudgeless_smooth and self.frogpilot_variables.smoother_lane_change <= 0:
         long_personality = self.params.get_int("LongitudinalPersonality")
         if long_personality == 2: #relaxed
-          self.frogpilot_variables.smoother_lane_change = 5 #95%
+          self.frogpilot_variables.smoother_lane_change = 5 if CS.vEgo < 70 else 8 #old_value: 5 95%
         elif long_personality == 1: #standard
-          self.frogpilot_variables.smoother_lane_change = 2.5 #97.5%
+          self.frogpilot_variables.smoother_lane_change = 2.5 if CS.vEgo < 70 else 4 #old_value: 2.5 #97.5%
     elif self.sm['modelV2'].meta.laneChangeState == LaneChangeState.laneChangeFinishing:
       self.frogpilot_variables.smoother_lane_change = 0 # clear pre-value
       self.events.add(EventName.laneChange)
@@ -649,6 +654,12 @@ class Controls:
       if green_light:
         self.events.add(EventName.greenLight)
 
+    # auto_resume
+    if CS.standstill and self.standstill_time == 0:
+      self.standstill_time = int(time.time())
+    elif not CS.standstill and self.standstill_time != 0:
+      self.standstill_time = 0
+
     # Lead departing alert
     if self.lead_departing_alert and self.sm.frame % 50 == 0:
       lead = self.sm['radarState'].leadOne
@@ -659,9 +670,21 @@ class Controls:
       lead_departing &= not CS.gasPressed
       lead_departing &= lead.vLead > 1
       lead_departing &= self.driving_gear
-
+      
+      # auto_resume
       if lead_departing:
-        self.events.add(EventName.leadDeparting)
+        # wait time 3 seconds
+        if (int(time.time()) - self.standstill_time) >= 3:
+          # read param only when lead_departing = true
+          cruise_auto_resume = self.params.get_bool("CruiseAutoResume") and self.params_memory.get_bool("ESP32HasIP") #auto_resume
+          long_personality = self.params.get_int("LongitudinalPersonality") == 0
+          if long_personality and cruise_auto_resume and self.state == State.enabled and not CS.brakePressed and self.v_cruise_helper.v_cruise_cluster_kph < 24.0:
+            self.params_memory.put_bool("ESP32AutoResume", True)
+            self.events.add(EventName.autoResumeEvent)
+          else:
+            self.events.add(EventName.leadDeparting)
+        else:
+          self.events.add(EventName.leadDeparting)
 
     # Speed limit changed alert
     if self.speed_limit_alert or self.speed_limit_confirmation:

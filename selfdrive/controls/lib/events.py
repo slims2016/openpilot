@@ -1089,6 +1089,14 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       AlertStatus.frogpilot, AlertSize.small,
       Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
   },
+  # auto_resume
+  EventName.autoResumeEvent: {
+    ET.PERMANENT: Alert(
+      "Pay Attention",
+      "Vehicle Cruise Auto Resume",
+      AlertStatus.frogpilot, AlertSize.mid,
+      Priority.MID, VisualAlert.none, AudibleAlert.engage, 3.),
+  },
 
   EventName.noLaneAvailable : {
     ET.PERMANENT: no_lane_available_alert,
