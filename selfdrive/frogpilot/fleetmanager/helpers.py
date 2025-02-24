@@ -196,7 +196,9 @@ def get_broadcast_ip():
   return url
 
 def get_esp32_ipaddr():
-  url = "http://" + esp32.ipaddr + "/admin?CMD=104&Type=2"
+  #url = "http://" + esp32.ipaddr + "/admin?CMD=104&Type=2"
+  ipaddr = params_memory.get("ESP32IPAddress")
+  url = "http://" + ipaddr + "/admin?CMD=104&Type=2"
   return url
 
 # auto_resume
@@ -721,7 +723,8 @@ def lateral_control_button(toggle):
   params_memory.put_bool("FrogPilotTogglesUpdated", False)
 
 def udp_broadcast_ip(ipaddr):
-  params_memory.put_bool("ESP32AutoResume", True)
+  # 测试用途
+  # params_memory.put_bool("ESP32AutoResume", True)
   # 禁用upd消息
   can_msg.ipaddr = ipaddr if ipaddr else ""
 

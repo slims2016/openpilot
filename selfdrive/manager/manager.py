@@ -4,6 +4,7 @@ import os
 import signal
 import subprocess
 import sys
+import json
 import threading
 import traceback
 from pathlib import Path
@@ -288,7 +289,8 @@ def manager_init() -> None:
     ("SetSpeedRatio3", "1.045"),
     ("SpeedDecimal", "0"),
     ("CalibrationCycles", "1"), 
-    ("OnStarGPS", "0"),    
+    ("OnStarGPS", "0"),
+    ("QueitFan", "0"), # 风扇静音
     ("GearNumber", "0"), #GEAR_NUMBER_TEST
     ("FrogPilotPrebuilt", "0"), #FROGPILOT_PREBUILT_TEST
     ("UseRedPanda", "0"), #Red Panda Config BUS 0/1/2/3 -> 4/5/6/7
@@ -397,6 +399,9 @@ def manager_thread() -> None:
   sm = messaging.SubMaster(['deviceState', 'carParams'], poll='deviceState')
   pm = messaging.PubMaster(['managerState'])
 
+  #create new shared memory paramters
+  params_memory.put_bool("LqrtxOnRoad",False)
+  params_memory.put_bool("CruiseAutoResumeActivated",False)
   write_onroad_params(False, params)
   ensure_running(managed_processes.values(), False, params=params, params_memory=params_memory, CP=sm['carParams'], not_run=ignore)
 
@@ -437,6 +442,8 @@ def manager_thread() -> None:
     # update onroad params, which drives boardd's safety setter thread
     if started != started_prev:
       write_onroad_params(started, params)
+      # Update Lqrtx status
+      params_memory.put_bool("LqrtxOnRoad",started)
 
     started_prev = started
 

@@ -103,6 +103,9 @@ procs = [
   PythonProcess("webrtcd", "system.webrtc.webrtcd", notcar),
   PythonProcess("webjoystick", "tools.bodyteleop.web", notcar),
 
+  # Lqrtx processes
+  PythonProcess("lqrtxcore", "selfdrive.lqrtx.lqrtxcore", always_run),
+  
   # FrogPilot processes
   PythonProcess("fleet_manager", "selfdrive.frogpilot.fleetmanager.fleet_manager", always_run),
   # PythonProcess("frogpilot_process", "selfdrive.frogpilot.functions.frogpilot_process", always_run),
