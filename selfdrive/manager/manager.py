@@ -259,7 +259,7 @@ def manager_init() -> None:
     ("SLCPriority2", "Offline Maps"),
     ("SLCPriority3", "Navigation"),
     ("SmoothBraking", "1"),
-    ("SNGHack", "1"),
+    ("SNGHack", "1"),    
     ("SpeedLimitChangedAlert", "1"),
     ("SpeedLimitController", "1"),
     ("StandardFollow", "1.45"),
@@ -295,6 +295,7 @@ def manager_init() -> None:
     ("FrogPilotPrebuilt", "0"), #FROGPILOT_PREBUILT_TEST
     ("UseRedPanda", "0"), #Red Panda Config BUS 0/1/2/3 -> 4/5/6/7
     ("CruiseAutoResume", "0"), #auto_resume
+    ("AutoResumeDistance", "10"),
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))

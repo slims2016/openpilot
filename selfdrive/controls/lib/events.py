@@ -21,7 +21,6 @@ VisualAlert = car.CarControl.HUDControl.VisualAlert
 AudibleAlert = car.CarControl.HUDControl.AudibleAlert
 EventName = car.CarEvent.EventName
 
-
 # Alert priorities
 class Priority(IntEnum):
   LOWEST = 0
@@ -247,6 +246,15 @@ def below_steer_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.S
     "",
     AlertStatus.userPrompt, AlertSize.small,
     Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 0.4)
+
+def lead_departing_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
+  params_memory = Params("/dev/shm/params")
+  dis = params_memory.get_int("LeadDepartDistance") / 10
+  return Alert(
+      f"Lead departed {dis} meters",
+      "",
+      AlertStatus.frogpilot, AlertSize.small,
+      Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.)
 
 
 def calibration_incomplete_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
@@ -1082,13 +1090,17 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       Priority.LOW, VisualAlert.none, AudibleAlert.warningSoft, .1),
   },
 
+  # EventName.leadDeparting: {
+  #   ET.PERMANENT: Alert(
+  #     "Lead departed",
+  #     "",
+  #     AlertStatus.frogpilot, AlertSize.small,
+  #     Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
+  # },
   EventName.leadDeparting: {
-    ET.PERMANENT: Alert(
-      "Lead departed",
-      "",
-      AlertStatus.frogpilot, AlertSize.small,
-      Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
+    ET.PERMANENT: lead_departing_alert,
   },
+  
   # auto_resume
   EventName.autoResumeEvent: {
     ET.PERMANENT: Alert(
