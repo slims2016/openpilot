@@ -623,7 +623,7 @@ def get_all_toggle_values():
     "ExperimentalModeActivation", "ExperimentalModeViaDistance", "ExperimentalModeViaLKAS", "ExperimentalModeViaScreen", "FireTheBabysitter",
     "NoLogging", "NoDashCam", "NoUploads", "MuteOverheated", "OfflineMode", "LateralTune", "ForceAutoTune", "NNFF", "SteerRatio", "UseLateralJerk", "LongitudinalTune",
     "AccelerationProfile", "DecelerationProfile", "AggressiveAcceleration", "StoppingDistance", "SmoothBraking", "Model", "MTSCEnabled",
-    "DisableMTSCSmoothing", "MTSCAggressiveness", "MTSCCurvatureCheck", "MTSCLimit", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection",
+    "DisableMTSCSmoothing", "MTSCAggressiveness", "MTSCCurvatureCheck", "MTSCLimit", "NudgelessLaneChange", "LaneChangeTime", "LaneDetection", "NudgelessSpeed", "NudgelessSmooth",
     "LaneDetectionWidth", "OneLaneChange", "QOLControls", "DisableOnroadUploads", "HigherBitrate", "NavChill", "PauseLateralOnSignal",
     "ReverseCruise", "ReverseCruiseUI", "SetSpeedLimit", "SetSpeedOffset",  "SpeedLimitController", "Offset1", "Offset2", "Offset3", "Offset4",
     "SLCConfirmation", "SLCConfirmationLower", "SLCConfirmationHigher", "SLCFallback", "SLCPriority1", "SLCPriority2", "SLCPriority3", "SLCOverride",
@@ -642,10 +642,10 @@ def get_all_toggle_values():
     "ShowStorageLeft", "ShowStorageUsed", "Sidebar",
 
     "MinSteerSpeedStandard", "MinSteerSpeedEngage",
-    "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SetSpeedRatio1", "SetSpeedRatio2", "SetSpeedRatio3", "SpeedDecimal",
+    "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SpeedDecimal", "UseAccSpeedMaps",
     "FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes", "CarMake", "CarModel", 
     "DriverPrivacyProtectionFake", "CSLCEnabled", "CalibrationCycles", 
-    "UseRedPanda", "CruiseAutoResume"
+    "UseRedPanda", "CruiseAutoResume", "AutoResumeDistance"
   ]
 
   toggle_values = {}

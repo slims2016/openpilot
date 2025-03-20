@@ -164,28 +164,33 @@ class Soundd:
 
       cloudlog.info(f"soundd stream started: {stream.samplerate=} {stream.channels=} {stream.dtype=} {stream.device=}, {stream.blocksize=}")
       while True:
-        sm.update(0)
+        try:
+          sm.update(0)
 
-        if sm.updated['microphone'] and self.current_alert == AudibleAlert.none and not self.alert_volume_control: # only update volume filter when not playing alert
-          self.spl_filter_weighted.update(sm["microphone"].soundPressureWeightedDb)
-          self.current_volume = self.calculate_volume(float(self.spl_filter_weighted.x))
+          if sm.updated['microphone'] and self.current_alert == AudibleAlert.none and not self.alert_volume_control: # only update volume filter when not playing alert
+            self.spl_filter_weighted.update(sm["microphone"].soundPressureWeightedDb)
+            self.current_volume = self.calculate_volume(float(self.spl_filter_weighted.x))
 
-        elif self.alert_volume_control and self.current_alert in self.volume_map:
-          self.current_volume = self.volume_map[self.current_alert] / 100.0
+          elif self.alert_volume_control and self.current_alert in self.volume_map:
+            self.current_volume = self.volume_map[self.current_alert] / 100.0
 
-        # Increase the volume for Random Events
-        elif self.current_alert in self.random_events_map:
-          self.current_volume = self.random_events_map[self.current_alert]
+          # Increase the volume for Random Events
+          elif self.current_alert in self.random_events_map:
+            self.current_volume = self.random_events_map[self.current_alert]
 
-        self.get_audible_alert(sm)
+          self.get_audible_alert(sm)
 
-        rk.keep_time()
+          rk.keep_time()
 
-        assert stream.active
+          assert stream.active
 
-        # Update FrogPilot parameters
-        if self.params_memory.get_bool("FrogPilotTogglesUpdated"):
-          self.update_frogpilot_params()
+          # Update FrogPilot parameters
+          if self.params_memory.get_bool("FrogPilotTogglesUpdated"):
+            self.update_frogpilot_params()
+        
+        except Exception as e:
+          time.sleep(5)
+          continue
 
   def update_frogpilot_params(self):
     self.random_events_map = {

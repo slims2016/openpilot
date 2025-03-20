@@ -283,6 +283,13 @@ class CarState(CarStateBase):
 
       self.distance_previously_pressed = distance_pressed
 
+    # Override FrogPilot Personality Profile Bug for Enclave
+    if has_camera:
+      pp = cam_cp.vl["ASCMActiveCruiseControlStatus"]["ACCGapLevel"] - 1
+      if self.personality_profile != pp:
+        self.personality_profile = pp
+        self.fpf.distance_button_function(self.personality_profile)
+
     # Toggle Experimental Mode from steering wheel function
     if frogpilot_variables.experimental_mode_via_lkas and ret.cruiseState.available:
       if self.CP.carFingerprint in SDGM_CAR:

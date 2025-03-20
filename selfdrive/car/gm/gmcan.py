@@ -4,7 +4,7 @@ from openpilot.common.conversions import Conversions as CV
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.car import make_can_msg
 from openpilot.selfdrive.car.gm.values import CAR, CruiseButtons, CanBus
-
+from openpilot.selfdrive.lqrtx.speed import SpeedMap
 
 def create_buttons(packer, bus, idx, button):
   values = {
@@ -289,30 +289,49 @@ def create_gm_acc_spam_command(packer, controller, CS, slcSet, bus, Vego, frogpi
 
 # using ms
 def create_gm_acc_spam_command_ms(packer, controller, CS, slcSet_ms, bus, Vego, frogpilot_variables, accel):
+  #SpeedMap
+  speed_map = SpeedMap()
+  speed_map.enable_acc_speed_maps(frogpilot_variables.use_acc_speed_maps)
+
   is_metric = controller.is_metric
   MS_CONVERT = CV.MS_TO_KPH if is_metric else CV.MS_TO_MPH
-  slcSet = slcSet_ms * MS_CONVERT
+  
+  #slcSet = slcSet_ms * MS_CONVERT
+  slcSet = speed_map.get_acc_speed_display(slcSet_ms * MS_CONVERT) if frogpilot_variables.use_acc_speed_maps else slcSet_ms * MS_CONVERT
 
   cruiseBtn = CruiseButtons.INIT
   byfive = 0
-  speedSetPoint = int(round(CS.out.cruiseState.speed * MS_CONVERT))
+  #speedSetPoint = int(round(CS.out.cruiseState.speed * MS_CONVERT))
+  speedSetPoint = speed_map.get_acc_speed_display(CS.out.cruiseState.speed * MS_CONVERT) if frogpilot_variables.use_acc_speed_maps else int(round(CS.out.cruiseState.speed * MS_CONVERT))
 
   FRAMES_ON = 6
   FRAMES_OFF = 30 - FRAMES_ON
 
-  if not frogpilot_variables.experimentalMode:
-    if slcSet + 5 < Vego * MS_CONVERT:
-      slcSet = slcSet - 10
+  #SpeedMap
+  if frogpilot_variables.use_acc_speed_maps:
+    if not frogpilot_variables.experimentalMode:
+      if slcSet + 5 < speed_map.get_acc_speed_display(Vego * MS_CONVERT):
+        slcSet = slcSet - 10
+    else:
+      slcSet = speed_map.get_acc_speed_display((Vego * 1.01 + 4.6 * accel + 0.7 * accel ** 3 - 1 / 35 * accel ** 5) * MS_CONVERT)
+    v_max = 30
+    v_min = 25
   else:
-    slcSet = int(round((Vego * 1.01 + 4.6 * accel + 0.7 * accel ** 3 - 1 / 35 * accel ** 5) * MS_CONVERT)) # 1.01 factor to match cluster speed better
+    if not frogpilot_variables.experimentalMode:
+      if slcSet + 5 < Vego * MS_CONVERT:
+        slcSet = slcSet - 10
+    else:
+      slcSet = int(round((Vego * 1.01 + 4.6 * accel + 0.7 * accel ** 3 - 1 / 35 * accel ** 5) * MS_CONVERT)) # 1.01 factor to match cluster speed better
+    v_max = 28
+    v_min = 24
   
-  if slcSet <= int(math.floor((speedSetPoint - 1)/5.0)*5.0) and speedSetPoint > (28 if is_metric else 20):
+  if slcSet <= int(math.floor((speedSetPoint - 1)/5.0)*5.0) and speedSetPoint > (v_max if is_metric else 20):
     cruiseBtn = CruiseButtons.DECEL_SET
     byfive = 1
   elif slcSet >= int(math.ceil((speedSetPoint + 1)/5.0)*5.0):
     cruiseBtn = CruiseButtons.RES_ACCEL
     byfive = 1
-  elif slcSet <= (speedSetPoint - 1) and speedSetPoint > (24 if is_metric else 16):
+  elif slcSet <= (speedSetPoint - 1) and speedSetPoint > (v_min if is_metric else 16):
     cruiseBtn = CruiseButtons.DECEL_SET
     byfive = 0
   elif slcSet >= (speedSetPoint + 1):

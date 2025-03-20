@@ -204,6 +204,7 @@ class Controls:
     self.max_acceleration = 0
     self.previous_drive_distance = 0
     self.previous_lead_distance = 0
+    self.standstill_lead_distance = 0
     self.previous_speed_limit = SpeedLimitController.desired_speed_limit
     self.random_event_timer = 0
 
@@ -666,7 +667,16 @@ class Controls:
     if self.lead_departing_alert and self.sm.frame % 50 == 0:
       lead = self.sm['radarState'].leadOne
       lead_distance = lead.dRel
-      lead_departing = lead_distance - self.previous_lead_distance > 0.5 and CS.standstill #and self.previous_lead_distance != 0
+
+      #记录停止时的第一个跟车距离，防止红绿灯头车错误提示
+      if CS.standstill:
+        if self.standstill_lead_distance == 0:
+          self.standstill_lead_distance = lead_distance
+      else:
+        self.standstill_lead_distance = 0
+      lead_departing = self.standstill_lead_distance > 0 and lead_distance > self.standstill_lead_distance
+
+      lead_departing &= lead_distance - self.previous_lead_distance > 0.5 and CS.standstill #and self.previous_lead_distance != 0
       # below 15 meters
       lead_departing &= self.previous_lead_distance > 0 and self.previous_lead_distance <= 15 
       previous_lead = self.previous_lead_distance
@@ -678,7 +688,7 @@ class Controls:
       
       # auto_resume
       if lead_departing:
-        self.params_memory.put_int("LeadDepartDistance", previous_lead * 10)
+        self.params_memory.put_int("LeadDepartDistance", previous_lead * 10) #dm分米
         # wait time 3 seconds
         if (int(time.time()) - self.standstill_time) >= 3:
           # read param only when lead_departing = true
@@ -1274,6 +1284,7 @@ class Controls:
 
     self.frogpilot_variables.conditional_experimental_mode = self.params.get_bool("ConditionalExperimental")
     self.frogpilot_variables.CSLC = self.params.get_bool("CSLCEnabled")
+    self.frogpilot_variables.use_acc_speed_maps = self.params.get_bool("QOLVisuals") and self.params.get_bool("UseAccSpeedMaps")
     
     custom_alerts = self.params.get_bool("CustomAlerts")
     self.green_light_alert = custom_alerts and self.params.get_bool("GreenLightAlert")
