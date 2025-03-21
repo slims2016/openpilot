@@ -197,10 +197,11 @@ class CarState(CarStateBase):
     if self.CP.networkLocation == NetworkLocation.fwdCamera and not self.CP.flags & GMFlags.NO_CAMERA.value:
       if self.CP.carFingerprint not in CC_ONLY_CAR:
         ret.cruiseState.speed = cam_cp.vl["ASCMActiveCruiseControlStatus"]["ACCSpeedSetpoint"] * CV.KPH_TO_MS
-      if self.CP.carFingerprint not in SDGM_CAR:
-        ret.stockAeb = cam_cp.vl["AEBCmd"]["AEBCmdActive"] != 0
-      else:
-        ret.stockAeb = False
+      ##### CT6 ADJUST
+      ##### if self.CP.carFingerprint not in SDGM_CAR:
+      #####   ret.stockAeb = cam_cp.vl["AEBCmd"]["AEBCmdActive"] != 0
+      ##### else:
+      #####   ret.stockAeb = False
       # openpilot controls nonAdaptive when not pcmCruise
       if self.CP.pcmCruise:
         ret.cruiseState.nonAdaptive = cam_cp.vl["ASCMActiveCruiseControlStatus"]["ACCCruiseState"] not in (2, 3)
@@ -330,11 +331,12 @@ class CarState(CarStateBase):
 
         if CP.enableBsm:
           messages.append(("BCMBlindSpotMonitor", 10))
-      else:
-        messages += [
-          ("AEBCmd", 10),
-          # ("ECMPRDNL2", 10), #10Hz # ONSTAR_GPS_TEST
-        ]
+      ##### CT6 ADJUST
+      ##### else:
+      #####   messages += [
+      #####     ("AEBCmd", 10),
+      #####     # ("ECMPRDNL2", 10), #10Hz # ONSTAR_GPS_TEST
+      #####   ]
       if CP.carFingerprint not in CC_ONLY_CAR:
         messages += [
           ("ASCMActiveCruiseControlStatus", 25),
