@@ -109,7 +109,8 @@ class CAR(StrEnum):
   BOLT_EUV = "CHEVROLET BOLT EUV 2022"
   SILVERADO = "CHEVROLET SILVERADO 1500 2020"
   EQUINOX = "CHEVROLET EQUINOX 2019"
-  TRAILBLAZER = "CHEVROLET TRAILBLAZER 2021"
+  #TRAILBLAZER = "CHEVROLET TRAILBLAZER 2021"
+  TRAILBLAZER = "CADILLAC CT6 SGM 2020"
   # Separate car def is required when there is no ASCM
   # (for now) unless there is a way to detect it when it has been unplugged...
   VOLT_CC = "CHEVROLET VOLT NO ACC"
@@ -165,7 +166,8 @@ CAR_INFO: Dict[str, Union[GMCarInfo, List[GMCarInfo]]] = {
     GMCarInfo("GMC Sierra 1500 2020-21", "Driver Alert Package II", video_link="https://youtu.be/5HbNoBLzRwE"),
   ],
   CAR.EQUINOX: GMCarInfo("Chevrolet Equinox 2019-22"),
-  CAR.TRAILBLAZER: GMCarInfo("Chevrolet Trailblazer 2021-22"),
+  #CAR.TRAILBLAZER: GMCarInfo("Chevrolet Trailblazer 2021-22"),
+  CAR.TRAILBLAZER: GMCarInfo("Cadillac CT6 SGM 2020"),
 
   CAR.VOLT_CC: GMCarInfo("Chevrolet Volt No ACC"),
   CAR.BOLT_CC: GMCarInfo("Chevrolet Bolt No ACC"),

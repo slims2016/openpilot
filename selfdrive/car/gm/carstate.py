@@ -39,6 +39,9 @@ class CarState(CarStateBase):
     self.display_menu = False
 
     self.display_timer = 0
+    #CT6 SGM 2020
+    self.ct6_sgm = params.get("CarModel", encoding='utf-8')=="CADILLAC CT6 SGM 2020"
+    self.onstar_gps = params.get_bool("OnStarGPS")
 
   def update(self, pt_cp, cam_cp, loopback_cp, frogpilot_variables):
     ret = car.CarState.new_message()
@@ -59,7 +62,7 @@ class CarState(CarStateBase):
       self.cruise_buttons = cam_cp.vl["ASCMSteeringButton"]["ACCButtons"]
       self.buttons_counter = cam_cp.vl["ASCMSteeringButton"]["RollingCounter"]
 
-      if params.get_bool("OnStarGPS"):
+      if self.onstar_gps:
         ret.onstarGpsLongitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLongitude"] # ONSTAR_GPS_TEST
         ret.onstarGpsLatitude = cam_cp.vl["TCICOnStarGPSPosition"]["GPSLatitude"] # ONSTAR_GPS_TEST
         ret.onstarGpsAltitude = 0. #pt_cp.vl["WrongGPSAltitude"]["GPSAltitude"] # ONSTAR_GPS_TEST
@@ -197,11 +200,12 @@ class CarState(CarStateBase):
     if self.CP.networkLocation == NetworkLocation.fwdCamera and not self.CP.flags & GMFlags.NO_CAMERA.value:
       if self.CP.carFingerprint not in CC_ONLY_CAR:
         ret.cruiseState.speed = cam_cp.vl["ASCMActiveCruiseControlStatus"]["ACCSpeedSetpoint"] * CV.KPH_TO_MS
-      ##### CT6 ADJUST
-      ##### if self.CP.carFingerprint not in SDGM_CAR:
-      #####   ret.stockAeb = cam_cp.vl["AEBCmd"]["AEBCmdActive"] != 0
-      ##### else:
-      #####   ret.stockAeb = False
+      #CT6 SGM 2020
+      if self.ct6_sgm == False:
+        if self.CP.carFingerprint not in SDGM_CAR:
+          ret.stockAeb = cam_cp.vl["AEBCmd"]["AEBCmdActive"] != 0
+        else:
+          ret.stockAeb = False
       # openpilot controls nonAdaptive when not pcmCruise
       if self.CP.pcmCruise:
         ret.cruiseState.nonAdaptive = cam_cp.vl["ASCMActiveCruiseControlStatus"]["ACCCruiseState"] not in (2, 3)
@@ -331,12 +335,12 @@ class CarState(CarStateBase):
 
         if CP.enableBsm:
           messages.append(("BCMBlindSpotMonitor", 10))
-      ##### CT6 ADJUST
-      ##### else:
-      #####   messages += [
-      #####     ("AEBCmd", 10),
-      #####     # ("ECMPRDNL2", 10), #10Hz # ONSTAR_GPS_TEST
-      #####   ]
+      #CT6 SGM 2020
+      elif self.ct6_sgm == False:
+        messages += [
+          ("AEBCmd", 10),
+          # ("ECMPRDNL2", 10), #10Hz # ONSTAR_GPS_TEST
+        ]
       if CP.carFingerprint not in CC_ONLY_CAR:
         messages += [
           ("ASCMActiveCruiseControlStatus", 25),

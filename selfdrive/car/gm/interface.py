@@ -132,7 +132,8 @@ class CarInterface(CarInterfaceBase):
       ret.networkLocation = NetworkLocation.fwdCamera
       ret.radarUnavailable = True  # no radar
       ret.pcmCruise = True
-      ##### CT6 ADJUST
+      #CT6 SGM 2020
+      #ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM
       if params.get_bool("UseRedPanda"):
         ret.safetyConfigs[-1].safetyParam |= Panda.FLAG_GM_HW_CAM
       else:
@@ -154,7 +155,8 @@ class CarInterface(CarInterfaceBase):
       if experimental_long:
         ret.pcmCruise = False
         ret.openpilotLongitudinalControl = True
-        ##### CT6 ADJUST
+        #CT6 SGM 2020
+        #ret.safetyConfigs[0].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
         if params.get_bool("UseRedPanda"):
           ret.safetyConfigs[-1].safetyParam |= Panda.FLAG_GM_HW_CAM_LONG
         else:
