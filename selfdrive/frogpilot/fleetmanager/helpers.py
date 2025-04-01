@@ -645,7 +645,7 @@ def get_all_toggle_values():
     "DashSpeedRatio1", "DashSpeedRatio2", "DashSpeedRatio3", "SpeedDecimal", "UseAccSpeedMaps",
     "FrogPilotDrives", "FrogPilotKilometers", "FrogPilotMinutes", "CarMake", "CarModel", 
     "DriverPrivacyProtectionFake", "CSLCEnabled", "CalibrationCycles", 
-    "UseRedPanda", "CruiseAutoResume", "AutoResumeDistance"
+    "UseRedPanda", "CruiseAutoResume", "AutoResumeDistance", "AutoResumeSetSpeed"
   ]
 
   toggle_values = {}
