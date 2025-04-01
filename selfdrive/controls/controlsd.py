@@ -9,6 +9,7 @@ from types import SimpleNamespace
 from typing import SupportsFloat
 
 import requests #auto_resume
+from openpilot.selfdrive.lqrtx.speed import SpeedMap
 
 import cereal.messaging as messaging
 import openpilot.selfdrive.sentry as sentry
@@ -182,7 +183,8 @@ class Controls:
     self.params = Params()
     self.params_memory = Params("/dev/shm/params")
     # auto_resume
-    self.standstill_time = 0
+    self.speed_map = SpeedMap()
+    #self.standstill_time = 0
     self.leaddepart_time = 0
 
     self.ignore_controls_mismatch = False
@@ -658,10 +660,10 @@ class Controls:
         self.events.add(EventName.greenLight)
 
     # auto_resume
-    if CS.standstill and self.standstill_time == 0:
-      self.standstill_time = int(time.time())
-    elif not CS.standstill and self.standstill_time != 0:
-      self.standstill_time = 0
+    # if CS.standstill and self.standstill_time == 0:
+    #   self.standstill_time = int(time.time())
+    # elif not CS.standstill and self.standstill_time != 0:
+    #   self.standstill_time = 0
 
     # Lead departing alert
     if self.lead_departing_alert and self.sm.frame % 50 == 0:
@@ -669,7 +671,8 @@ class Controls:
       lead_distance = lead.dRel
 
       #记录停止时的第一个跟车距离，防止红绿灯头车错误提示
-      if CS.standstill:
+      #改用AccState:STANDSTILL = 4
+      if CS.cruiseState.standstill: #CS.standstill:
         if self.standstill_lead_distance == 0:
           self.standstill_lead_distance = lead_distance
       else:
@@ -690,18 +693,26 @@ class Controls:
       if lead_departing:
         self.params_memory.put_int("LeadDepartDistance", previous_lead * 10) #dm分米
         # wait time 3 seconds
-        if (int(time.time()) - self.standstill_time) >= 3:
+        #if (int(time.time()) - self.standstill_time) >= 3:
+        #改用AccState:STANDSTILL = 4
+        if CS.cruiseState.standstill:
           # read param only when lead_departing = true
           cruise_auto_resume = self.params.get_bool("CruiseAutoResume") and self.params_memory.get_bool("ESP32HasIP") #auto_resume
           conversion = 1 if self.is_metric else CV.FOOT_TO_METER
           cruise_auto_resume &= previous_lead <= self.params.get_int("AutoResumeDistance")*conversion
+
+          speedconv = 1 if self.is_metric else CV.MPH_TO_KPH
+          #SpeedMap
+          autoresume_setspeed = self.speed_map.get_acc_speed_actual(self.params.get_int("AutoResumeSetSpeed"))
+          autoresume_setspeed *= conversion
           # long_personality = self.params.get_int("LongitudinalPersonality") == 0
           # if long_personality and cruise_auto_resume and self.state == State.enabled and not CS.brakePressed and self.v_cruise_helper.v_cruise_cluster_kph < 24.0:
-          if cruise_auto_resume and self.state == State.enabled and not CS.brakePressed and self.v_cruise_helper.v_cruise_cluster_kph < 24.0:
+          #增加AccState:STANDSTILL = 4
+          if cruise_auto_resume and self.state == State.enabled and not CS.brakePressed and self.v_cruise_helper.v_cruise_cluster_kph <= autoresume_setspeed:
             self.params_memory.put_bool("ESP32AutoResume", True)
             self.events.add(EventName.autoResumeEvent)
             self.previous_lead_distance = 0
-            self.standstill_time = int(time.time()) + 10
+            #self.standstill_time = int(time.time()) + 10
             self.leaddepart_time = int(time.time()) + 10
           elif (int(time.time()) - self.leaddepart_time) > 10:
             self.events.add(EventName.leadDeparting)
@@ -1285,7 +1296,9 @@ class Controls:
     self.frogpilot_variables.conditional_experimental_mode = self.params.get_bool("ConditionalExperimental")
     self.frogpilot_variables.CSLC = self.params.get_bool("CSLCEnabled")
     self.frogpilot_variables.use_acc_speed_maps = self.params.get_bool("QOLVisuals") and self.params.get_bool("UseAccSpeedMaps")
-    
+    #SpeedMap
+    self.speed_map.enable_acc_speed_maps(self.frogpilot_variables.use_acc_speed_maps)
+
     custom_alerts = self.params.get_bool("CustomAlerts")
     self.green_light_alert = custom_alerts and self.params.get_bool("GreenLightAlert")
     self.lead_departing_alert = custom_alerts and self.params.get_bool("LeadDepartingAlert")
